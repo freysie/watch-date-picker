@@ -1,0 +1,662 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		099027FA272DD7AA00B5B6AA /* Locale+DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */; };
+		099027FC272DD7DF00B5B6AA /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FB272DD7DF00B5B6AA /* DatePickerView.swift */; };
+		099027FE272DD80A00B5B6AA /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FD272DD80A00B5B6AA /* TimePickerView.swift */; };
+		09902800272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */; };
+		09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		09954B90272DCAC500475F57 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */; };
+		09954BE2272DCCEC00475F57 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 09954BDC272DCCEC00475F57 /* Localizable.strings */; };
+		09954BE3272DCCEC00475F57 /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09954BE0272DCCEC00475F57 /* DatePicker.swift */; };
+		09954BE4272DCCEC00475F57 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		09954B7F272DCAC300475F57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09954B73272DCAC300475F57 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09954B7C272DCAC300475F57;
+			remoteInfo = "WatchDatePickerExamples WatchKit App";
+		};
+		09954B8A272DCAC500475F57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09954B73272DCAC300475F57 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09954B87272DCAC500475F57;
+			remoteInfo = "WatchDatePickerExamples WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		09954B9E272DCAC700475F57 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09954BA2272DCAC700475F57 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09954BD7272DCCA800475F57 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+DatePicker.swift"; sourceTree = "<group>"; };
+		099027FB272DD7DF00B5B6AA /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
+		099027FD272DD80A00B5B6AA /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+TimePickerView.swift"; sourceTree = "<group>"; };
+		09902801272DF13500B5B6AA /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902802272DF15D00B5B6AA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902803272DF19F00B5B6AA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902804272DF1B900B5B6AA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902805272DF22700B5B6AA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902806272DF3FB00B5B6AA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902807272DF3FF00B5B6AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09902808272DF43B00B5B6AA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		09902809272DF43F00B5B6AA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0990280A272DF4C900B5B6AA /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0990280B272DF4EF00B5B6AA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0990280C272DF55F00B5B6AA /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0990280D272DF5A900B5B6AA /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09954B79272DCAC300475F57 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09954B7D272DCAC300475F57 /* Examples WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Examples WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
+		09954B98272DCAC700475F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09954BA8272DCC3000475F57 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		09954BB6272DCC3000475F57 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		09954BC0272DCC3F00475F57 /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Screenshots; sourceTree = "<group>"; };
+		09954BCD272DCCA800475F57 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		09954BDD272DCCEC00475F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09954BDE272DCCEC00475F57 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09954BDF272DCCEC00475F57 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		09954BE0272DCCEC00475F57 /* DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
+		09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		09954B85272DCAC500475F57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0990280E272DF5C700B5B6AA /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				09954BDC272DCCEC00475F57 /* Localizable.strings */,
+			);
+			path = Localizations;
+			sourceTree = "<group>";
+		};
+		09954B72272DCAC300475F57 = {
+			isa = PBXGroup;
+			children = (
+				09954BB6272DCC3000475F57 /* Package.swift */,
+				09954BA8272DCC3000475F57 /* README.md */,
+				09954BCD272DCCA800475F57 /* Documentation.docc */,
+				09954BC0272DCC3F00475F57 /* Screenshots */,
+				09954BD9272DCCEC00475F57 /* Sources */,
+				0990280E272DF5C700B5B6AA /* Localizations */,
+				09954B8C272DCAC500475F57 /* Examples */,
+				09954B7A272DCAC300475F57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		09954B7A272DCAC300475F57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				09954B79272DCAC300475F57 /* Examples.app */,
+				09954B7D272DCAC300475F57 /* Examples WatchKit App.app */,
+				09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		09954B8C272DCAC500475F57 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				09954B98272DCAC700475F57 /* Info.plist */,
+				09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */,
+				09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		09954BD9272DCCEC00475F57 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				09954BDA272DCCEC00475F57 /* WatchDatePicker */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		09954BDA272DCCEC00475F57 /* WatchDatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */,
+				09954BE0272DCCEC00475F57 /* DatePicker.swift */,
+				099027FB272DD7DF00B5B6AA /* DatePickerView.swift */,
+				099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */,
+				099027FD272DD80A00B5B6AA /* TimePickerView.swift */,
+			);
+			path = WatchDatePicker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09954B78272DCAC300475F57 /* Examples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09954BA3272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples" */;
+			buildPhases = (
+				09954B77272DCAC300475F57 /* Resources */,
+				09954BA2272DCAC700475F57 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09954B80272DCAC300475F57 /* PBXTargetDependency */,
+			);
+			name = Examples;
+			productName = WatchDatePickerExamples;
+			productReference = 09954B79272DCAC300475F57 /* Examples.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		09954B7C272DCAC300475F57 /* Examples WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09954B9F272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples WatchKit App" */;
+			buildPhases = (
+				09954B7B272DCAC300475F57 /* Resources */,
+				09954B9E272DCAC700475F57 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09954B8B272DCAC500475F57 /* PBXTargetDependency */,
+			);
+			name = "Examples WatchKit App";
+			productName = "WatchDatePickerExamples WatchKit App";
+			productReference = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		09954B87272DCAC500475F57 /* Examples WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09954B9B272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples WatchKit Extension" */;
+			buildPhases = (
+				09954B84272DCAC500475F57 /* Sources */,
+				09954B85272DCAC500475F57 /* Frameworks */,
+				09954B86272DCAC500475F57 /* Resources */,
+				09954BD7272DCCA800475F57 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Examples WatchKit Extension";
+			productName = "WatchDatePickerExamples WatchKit Extension";
+			productReference = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		09954B73272DCAC300475F57 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					09954B78272DCAC300475F57 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					09954B7C272DCAC300475F57 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					09954B87272DCAC500475F57 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = 09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePicker" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				da,
+				sv,
+				ro,
+				ru,
+				ja,
+				nl,
+				de,
+				fr,
+				es,
+				"zh-Hans",
+				"zh-Hant",
+				fi,
+				ar,
+				el,
+				he,
+			);
+			mainGroup = 09954B72272DCAC300475F57;
+			productRefGroup = 09954B7A272DCAC300475F57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				09954B78272DCAC300475F57 /* Examples */,
+				09954B7C272DCAC300475F57 /* Examples WatchKit App */,
+				09954B87272DCAC500475F57 /* Examples WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		09954B77272DCAC300475F57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09954B7B272DCAC300475F57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09954B86272DCAC500475F57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09954BE2272DCCEC00475F57 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		09954B84272DCAC500475F57 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				099027FC272DD7DF00B5B6AA /* DatePickerView.swift in Sources */,
+				09902800272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift in Sources */,
+				09954B90272DCAC500475F57 /* DatePickerExamplesApp.swift in Sources */,
+				09954BE4272DCCEC00475F57 /* DatePickerExamples.swift in Sources */,
+				099027FE272DD80A00B5B6AA /* TimePickerView.swift in Sources */,
+				09954BE3272DCCEC00475F57 /* DatePicker.swift in Sources */,
+				099027FA272DD7AA00B5B6AA /* Locale+DatePicker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		09954B80272DCAC300475F57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09954B7C272DCAC300475F57 /* Examples WatchKit App */;
+			targetProxy = 09954B7F272DCAC300475F57 /* PBXContainerItemProxy */;
+		};
+		09954B8B272DCAC500475F57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09954B87272DCAC500475F57 /* Examples WatchKit Extension */;
+			targetProxy = 09954B8A272DCAC500475F57 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		09954BDC272DCCEC00475F57 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				09954BDD272DCCEC00475F57 /* en */,
+				09954BDE272DCCEC00475F57 /* da */,
+				09954BDF272DCCEC00475F57 /* sv */,
+				09902801272DF13500B5B6AA /* ro */,
+				09902802272DF15D00B5B6AA /* ru */,
+				09902803272DF19F00B5B6AA /* ja */,
+				09902804272DF1B900B5B6AA /* nl */,
+				09902805272DF22700B5B6AA /* de */,
+				09902806272DF3FB00B5B6AA /* fr */,
+				09902807272DF3FF00B5B6AA /* es */,
+				09902808272DF43B00B5B6AA /* zh-Hans */,
+				09902809272DF43F00B5B6AA /* zh-Hant */,
+				0990280A272DF4C900B5B6AA /* fi */,
+				0990280B272DF4EF00B5B6AA /* ar */,
+				0990280C272DF55F00B5B6AA /* el */,
+				0990280D272DF5A900B5B6AA /* he */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		09954B99272DCAC700475F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		09954B9A272DCAC700475F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		09954B9C272DCAC700475F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Examples/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Examples WatchKit Extension";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp.watchkitextension;
+				PRODUCT_MODULE_NAME = WatchDatePicker;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		09954B9D272DCAC700475F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Examples/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Examples WatchKit Extension";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp.watchkitextension;
+				PRODUCT_MODULE_NAME = WatchDatePicker;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
+		09954BA0272DCAC700475F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_MODULE = WatchDatePickerExamples_WatchKit_Extension;
+				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		09954BA1272DCAC700475F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IBSC_MODULE = WatchDatePickerExamples_WatchKit_Extension;
+				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
+		09954BA4272DCAC700475F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		09954BA5272DCAC700475F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09954B99272DCAC700475F57 /* Debug */,
+				09954B9A272DCAC700475F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09954B9B272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09954B9C272DCAC700475F57 /* Debug */,
+				09954B9D272DCAC700475F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09954B9F272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09954BA0272DCAC700475F57 /* Debug */,
+				09954BA1272DCAC700475F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09954BA3272DCAC700475F57 /* Build configuration list for PBXNativeTarget "Examples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09954BA4272DCAC700475F57 /* Debug */,
+				09954BA5272DCAC700475F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 09954B73272DCAC300475F57 /* Project object */;
+}
