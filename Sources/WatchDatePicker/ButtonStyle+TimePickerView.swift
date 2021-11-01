@@ -1,18 +1,19 @@
 import SwiftUI
 
 internal extension ButtonStyle where Self == TimePickerComponentButtonStyle {
-  static func timePickerComponent(isFocused: Bool = false, focusColor: Color? = nil) -> Self {
-    .init(isFocused: isFocused, focusColor: focusColor)
+  static func timePickerComponent(isFocused: Bool = false, focusColor: Color? = nil, width: CGFloat? = nil) -> Self {
+    .init(isFocused: isFocused, focusColor: focusColor, width: width)
   }
 }
 
 internal struct TimePickerComponentButtonStyle: ButtonStyle {
   var isFocused: Bool
   var focusColor: Color?
+  var width: CGFloat?
   
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .frame(width: 43, height: 48)
+      .frame(width: width ?? 43, height: 48)
       .overlay {
         RoundedRectangle(cornerRadius: 9)
           .stroke(isFocused ? focusColor ?? .green : .timePickerComponentButtonBorder, lineWidth: 1.5)

@@ -129,7 +129,7 @@ When `mode` is `.time` or nil, this value is ignored.
 var selectionIndicatorRadius: CGFloat?
 ```
 The radius of the time selection indicators.
-Default is 2.0.
+Default is 2.25.
 When `mode` is `.date`, this value is ignored.
 
 ```swift

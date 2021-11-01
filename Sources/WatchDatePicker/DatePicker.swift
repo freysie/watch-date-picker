@@ -1,11 +1,4 @@
-//#if os(watchOS)
-
 import SwiftUI
-import WatchKit
-
-fileprivate let now = Date()
-fileprivate let calendar = Calendar.current
-fileprivate let thisYear = calendar.component(.year, from: now)
 
 // TODO: move most of the configuration options to environment values
 
@@ -26,7 +19,6 @@ public struct DatePicker: View {
   /// The key for the localized title of `self`, describing its purpose.
   public var titleKey: LocalizedStringKey?
   
-  // TODO: fully wire selection up
   /// The date value being displayed and selected.
   @Binding public var selection: Date
   
@@ -68,6 +60,9 @@ public struct DatePicker: View {
     formatter.locale = locale
     formatter.dateStyle = mode == .time ? .none : dateStyle
     formatter.timeStyle = mode == .date ? .none : timeStyle
+    if twentyFourHour == true && mode == .time {
+      formatter.dateFormat = "HH:mm"
+    }
     return formatter.string(from: selection)
   }
   
@@ -104,9 +99,11 @@ public struct DatePicker: View {
           .foregroundStyle(titleKey != nil ? .secondary : .primary)
       }
     }
+    // TODO: determine the exact differences (if any) between `.sheet` and this on watchOS:
     .fullScreenCover(isPresented: $pickerViewIsPresented) {
       NavigationView {
         DatePickerView(
+          selection: $selection,
           mode: mode,
           minimumDate: minimumDate,
           maximumDate: maximumDate,
@@ -122,7 +119,7 @@ public struct DatePicker: View {
 struct DatePicker_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      TimePickerView(mode: .time, selectionIndicatorColor: .mint)
+      TimePickerView(selection: .constant(Date()), mode: .time, selectionIndicatorColor: .mint)
         .toolbar {
           ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel, action: {})
@@ -133,7 +130,7 @@ struct DatePicker_Previews: PreviewProvider {
     .previewDisplayName("Mode: Time")
     
     NavigationView {
-      DatePickerView(mode: .date)
+      DatePickerView(selection: .constant(Date()), mode: .date)
         .toolbar {
           ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel, action: {})
@@ -141,11 +138,23 @@ struct DatePicker_Previews: PreviewProvider {
         }
     }
     .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-    .previewDisplayName("Mode: Date")
+    .previewDisplayName("Mode: Date (Series 6 – 44mm)")
     .environment(\.locale, Locale(identifier: "da-DK"))
     
     NavigationView {
-      DatePickerView(mode: .dateAndTime)
+      DatePickerView(selection: .constant(Date()), mode: .date)
+        .toolbar {
+          ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel", role: .cancel, action: {})
+          }
+        }
+    }
+    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 7 - 45mm"))
+    .previewDisplayName("Mode: Date (Series 7 – 45mm)")
+    .environment(\.locale, Locale(identifier: "da-DK"))
+    
+    NavigationView {
+      DatePickerView(selection: .constant(Date()), mode: .dateAndTime)
         .toolbar {
           ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel, action: {})
@@ -157,7 +166,7 @@ struct DatePicker_Previews: PreviewProvider {
     
     NavigationView {
       NavigationLink(isActive: .constant(true)) {
-        TimePickerView(mode: .dateAndTime, twentyFourHour: true)
+        TimePickerView(selection: .constant(Date()), mode: .dateAndTime, twentyFourHour: true)
           .tint(.pink)
       } label: {
         EmptyView()
@@ -168,5 +177,3 @@ struct DatePicker_Previews: PreviewProvider {
     .previewDisplayName("Mode: Date & Time (Step 2)")
   }
 }
-
-//#endif

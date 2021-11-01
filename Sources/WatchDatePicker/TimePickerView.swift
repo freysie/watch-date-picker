@@ -1,15 +1,15 @@
 import SwiftUI
 import WatchKit
 
-fileprivate let now = Date()
-fileprivate let calendar = Calendar.current
+// TODO: selection indicator with default size is cut off by status bar when in 12 o’clock position
 
 public struct TimePickerView: View {
-  @State public var date: Date = now
+  @Binding public var selection: Date
   public var mode: DatePicker.Mode = .time
-  public var twentyFourHour: Bool = false
-  public var selectionIndicatorRadius: CGFloat = 4.5
-  public var selectionIndicatorColor: Color = .orange
+  public var twentyFourHour: Bool?
+  public var showsTwentyFourHourIndicator: Bool?
+  public var selectionIndicatorRadius: CGFloat?
+  public var selectionIndicatorColor: Color?
   public var focusColor: Color?
   public var amPMHighlightColor: Color?
   public var markSize: CGSize?
@@ -17,6 +17,8 @@ public struct TimePickerView: View {
   public var emphasizedMarkSize: CGSize?
   public var emphasizedMarkFill: AnyShapeStyle?
   public var onCompletion: ((Date) -> Void)?
+
+  @Environment(\.locale) private var locale
   @Environment(\.dismiss) private var dismiss
   private enum HourPeriod: Int { case am = 0, pm = 12; var offset: Int { rawValue } }
   private enum Component { case hour, minute }
@@ -26,23 +28,34 @@ public struct TimePickerView: View {
   @State private var minute = 0
   private var hourBinding: Binding<Double> { Binding { Double(hour) } set: { hour = Int($0) } }
   private var minuteBinding: Binding<Double> { Binding { Double(minute) } set: { minute = Int($0) } }
-  private var hourMultiple: Int { twentyFourHour ? 24 : 12 }
+  private var hourMultiple: Int { twentyFourHour == true ? 24 : 12 }
+  private var minuteMultiple: Int { 60 }
   private var normalizedHour: Int { (hour < 0 ? hourMultiple - (abs(hour) % hourMultiple) : hour) % hourMultiple }
-  private var normalizedMinute: Int { (minute < 0 ? 60 - (abs(minute) % 60) : minute) % 60 }
+  private var normalizedMinute: Int { (minute < 0 ? minuteMultiple - (abs(minute) % minuteMultiple) : minute) % minuteMultiple }
   
   private var formattedHour: String {
-    String(twentyFourHour ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour)
+    String(twentyFourHour == true ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour)
   }
   
   private var formattedMinute: String {
     String(format: "%02d", normalizedMinute)
   }
   
+  private var newSelection: Date {
+    locale.calendar.date(
+      bySettingHour: normalizedHour + (twentyFourHour == true ? 0 : hourPeriod.offset),
+      minute: normalizedMinute,
+      second: 0,
+      of: selection
+    )!
+  }
+  
   public init(
-    date: Date? = nil,
+    selection: Binding<Date>,
     mode: DatePicker.Mode = .time,
     twentyFourHour: Bool? = nil,
-    selectionIndicatorRadius: Double = 4.5,
+    showsTwentyFourHourIndicator: Bool? = nil,
+    selectionIndicatorRadius: CGFloat? = nil,
     selectionIndicatorColor: Color? = nil,
     focusColor: Color? = nil,
     amPMHighlightColor: Color? = nil,
@@ -52,11 +65,12 @@ public struct TimePickerView: View {
     emphasizedMarkFill: AnyShapeStyle? = nil,
     onCompletion: ((Date) -> Void)? = nil
   ) {
-    self.date = date ?? now
+    _selection = selection
     self.mode = mode
-    if let value = twentyFourHour { self.twentyFourHour = value }
+    self.twentyFourHour = twentyFourHour
+    self.showsTwentyFourHourIndicator = showsTwentyFourHourIndicator
     self.selectionIndicatorRadius = selectionIndicatorRadius
-    if let value = selectionIndicatorColor { self.selectionIndicatorColor = value }
+    self.selectionIndicatorColor = selectionIndicatorColor
     self.focusColor = focusColor
     self.amPMHighlightColor = amPMHighlightColor
     self.markSize = markSize
@@ -64,22 +78,12 @@ public struct TimePickerView: View {
     self.emphasizedMarkSize = emphasizedMarkSize
     self.emphasizedMarkFill = emphasizedMarkFill
     self.onCompletion = onCompletion
-    hour = calendar.component(.hour, from: self.date)
-    minute = calendar.component(.minute, from: self.date)
-  }
-  
-  private var selection: Date {
-    calendar.date(
-      bySettingHour: normalizedHour + 1 + (twentyFourHour ? 0 : hourPeriod.offset),
-      minute: normalizedMinute,
-      second: 0,
-      of: date
-    )!
-  }
-  
-  private func _onCompletion() {
-    if mode == .time { dismiss() }
-    onCompletion?(selection)
+    _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
+    _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
+    if !(twentyFourHour == true) {
+      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
+      // if hourPeriod == .pm { hour %= 12 }
+    }
   }
   
   public var body: some View {
@@ -98,6 +102,11 @@ public struct TimePickerView: View {
     //    .onChange(of: $value) { newValue in
     //      if newValue.
     //    }
+  }
+  
+  private func _onCompletion() {
+    if mode == .time { dismiss() }
+    onCompletion?(newSelection)
   }
   
   private var clockFace: some View {
@@ -121,7 +130,7 @@ public struct TimePickerView: View {
   private func labels(with geometry: GeometryProxy) -> some View {
     switch focusedComponent {
     case .hour:
-      if twentyFourHour {
+      if twentyFourHour == true {
         return ForEach(0..<12) { index in
           label(String(format: "%02d", Int(index * 2)), at: index, with: geometry)
         }
@@ -148,7 +157,7 @@ public struct TimePickerView: View {
   }
   
   private func marks(for component: Component, with geometry: GeometryProxy) -> some View {
-    if twentyFourHour && component == .hour {
+    if twentyFourHour == true && component == .hour {
       return ForEach(0..<48) { index in
         mark(at: index, multiple: 48, isEmphasized: index % 4 == 0, with: geometry)
       }
@@ -175,7 +184,7 @@ public struct TimePickerView: View {
       .offset(y: geometry.size.height / 3)
     // FIXME: opposite should work too
       .offset(y: isEmphasized ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0)
-      .rotation(.degrees(Double(index) * 360 / multiple), anchor: UnitPoint.init(x: 0, y: 0))
+      .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
       .fill(
         isEmphasized
         ? emphasizedMarkFill ?? AnyShapeStyle(HierarchicalShapeStyle.primary)
@@ -185,31 +194,36 @@ public struct TimePickerView: View {
   }
   
   private func selectionIndicator(for value: Int, multiple: Int, with geometry: GeometryProxy) -> some View {
+    let effectiveRadius = selectionIndicatorRadius ?? 2.25
     let effectiveEmphasizedMarkSize = emphasizedMarkSize ?? CGSize(width: 1.5, height: 3)
     let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 7)
-    
+    let rotationDegrees = Double(value) * 360 / Double(multiple)
+    // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
+
     return Circle()
-      .size(width: selectionIndicatorRadius * 2, height: selectionIndicatorRadius * 2)
-      .offset(x: -selectionIndicatorRadius, y: -selectionIndicatorRadius)
+      .size(width: effectiveRadius * 2, height: effectiveRadius * 2)
+      .offset(x: -effectiveRadius, y: -effectiveRadius)
       .offset(y: geometry.size.height / 3)
       .offset(y: max(effectiveEmphasizedMarkSize.height, effectiveMarkSize.height))
-      .rotation(.degrees(Double(value) * 360 / Double(multiple)), anchor: UnitPoint.init(x: 0, y: 0))
-      .fill(selectionIndicatorColor)
+      .rotation(.degrees(180 + rotationDegrees), anchor: .topLeading)
+      .fill(selectionIndicatorColor ?? .orange)
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
+      .border(.mint)
   }
   
   private var pickerButtons: some View {
     VStack {
       Spacer()
       
-      if twentyFourHour {
+      if twentyFourHour == true {
         Button("24 hour", action: {})
           .buttonStyle(.timePickerAMPM(isHighlighted: false))
           .textCase(.uppercase)
           .disabled(true)
+          .opacity(showsTwentyFourHourIndicator != false ? 1 : 0)
       } else {
-        Button(calendar.amSymbol, action: { hourPeriod = .am })
+        Button(locale.calendar.amSymbol, action: { hourPeriod = .am })
           .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .am, highlightColor: amPMHighlightColor))
       }
       
@@ -267,10 +281,10 @@ public struct TimePickerView: View {
       }
       .font(.title2)
       
-      Button(calendar.pmSymbol, action: { hourPeriod = .pm })
+      Button(locale.calendar.pmSymbol, action: { hourPeriod = .pm })
         .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .pm, highlightColor: amPMHighlightColor))
-        .disabled(twentyFourHour)
-        .opacity(!twentyFourHour ? 1 : 0)
+        .disabled(twentyFourHour == true)
+        .opacity(twentyFourHour == true ? 0 : 1)
       
       Spacer()
     }
@@ -281,10 +295,10 @@ public struct TimePickerView: View {
 struct TimePickerView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      TimePickerView()
+      TimePickerView(selection: .constant(Date()))
         .previewDisplayName("Default")
       
-      TimePickerView(twentyFourHour: true)
+      TimePickerView(selection: .constant(Date()), twentyFourHour: true)
         .environment(\.locale, Locale(identifier: "sv"))
         .previewDisplayName("24-Hour Mode — Swedish")
     }

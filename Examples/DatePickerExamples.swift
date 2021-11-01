@@ -3,16 +3,54 @@
 import SwiftUI
 
 struct DatePickerExamples: View {
-  @State var value0 = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
-  @State var value1 = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
-  @State var value2 = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
-  @State var value3 = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
-  
+  @State var value = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
+
   var body: some View {
     TabView {
+      Form {
+        WatchDatePicker.DatePicker("Date & Time", selection: $value, twentyFourHour: false)
+        WatchDatePicker.DatePicker("Date & Time (24h)", selection: $value, twentyFourHour: true)
+      }
+      
+      Form {
+        DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
+      }
+      
+      Form {
+        DatePicker("Time", selection: $value, mode: .time, twentyFourHour: false)
+        DatePicker("Time (24h)", selection: $value, mode: .time, twentyFourHour: true)
+      }
+
+      NavigationView {
+        DatePickerView(selection: $value)
+      }
+
+      NavigationView {
+        DatePickerView(selection: $value, mode: .date)
+          .environment(\.locale, Locale(identifier: "fr"))
+      }
+
+      NavigationView {
+        DatePickerView(selection: $value, mode: .date, confirmationTitleKey: "Yaaas", confirmationColor: .mint)
+          .environment(\.locale, Locale(identifier: "ja"))
+      }
+
       NavigationView {
         TimePickerView(
+          selection: $value,
+          selectionIndicatorRadius: 5,
+          selectionIndicatorColor: .brown,
+          focusColor: .purple,
+          amPMHighlightColor: .brown
+        )
+//          .offset(y: 5)
+      }
+
+      NavigationView {
+        TimePickerView(
+          selection: $value,
           twentyFourHour: true,
+          showsTwentyFourHourIndicator: false,
           selectionIndicatorColor: .yellow,
           focusColor: .pink,
           amPMHighlightColor: .yellow,
@@ -21,9 +59,10 @@ struct DatePickerExamples: View {
         )
 //          .offset(y: 5)
       }
-
+      
       NavigationView {
         TimePickerView(
+          selection: $value,
           selectionIndicatorRadius: 7,
           selectionIndicatorColor: .mint,
           focusColor: .purple,
@@ -32,54 +71,6 @@ struct DatePickerExamples: View {
           markFill: AnyShapeStyle(Color.white.opacity(0.75)),
           emphasizedMarkSize: CGSize(width: 2, height: 7),
           emphasizedMarkFill: AnyShapeStyle(Color.pink)
-        )
-//          .offset(y: 5)
-      }
-
-      Form {
-        DatePicker("Date & Time", selection: $value1, onCompletion: { value1 = $0 })
-      }
-      
-      Form {
-        WatchDatePicker.DatePicker(
-          "Date",
-          selection: $value2,
-          mode: .date,
-          maximumDate: Date(),
-          onCompletion: { value2 = $0 }
-        )
-      }
-      
-      Form {
-        DatePicker(
-          "Time",
-          selection: $value3,
-          mode: .time,
-          twentyFourHour: true,
-          onCompletion: { value3 = $0 }
-        )
-      }
-      
-      NavigationView {
-        DatePickerView()
-      }
-      
-      NavigationView {
-        DatePickerView(mode: .date)
-          .environment(\.locale, Locale(identifier: "fr"))
-      }
-      
-      NavigationView {
-        DatePickerView(mode: .date, confirmationTitleKey: "Yaaas", confirmationColor: .mint)
-          .environment(\.locale, Locale(identifier: "ja"))
-      }
-      
-      NavigationView {
-        TimePickerView(
-          selectionIndicatorRadius: 5,
-          selectionIndicatorColor: .brown,
-          focusColor: .purple,
-          amPMHighlightColor: .brown
         )
 //          .offset(y: 5)
       }

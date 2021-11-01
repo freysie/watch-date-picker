@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0971BE17272E9CBD00028C46 /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971BE16272E9CBD00028C46 /* DatePickerView.swift */; };
 		099027FA272DD7AA00B5B6AA /* Locale+DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */; };
-		099027FC272DD7DF00B5B6AA /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FB272DD7DF00B5B6AA /* DatePickerView.swift */; };
 		099027FE272DD80A00B5B6AA /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FD272DD80A00B5B6AA /* TimePickerView.swift */; };
 		09902800272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */; };
 		09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -72,8 +72,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0971BE16272E9CBD00028C46 /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
 		099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+DatePicker.swift"; sourceTree = "<group>"; };
-		099027FB272DD7DF00B5B6AA /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
 		099027FD272DD80A00B5B6AA /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+TimePickerView.swift"; sourceTree = "<group>"; };
 		09902801272DF13500B5B6AA /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 			children = (
 				099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */,
 				09954BE0272DCCEC00475F57 /* DatePicker.swift */,
-				099027FB272DD7DF00B5B6AA /* DatePickerView.swift */,
+				0971BE16272E9CBD00028C46 /* DatePickerView.swift */,
 				099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */,
 				099027FD272DD80A00B5B6AA /* TimePickerView.swift */,
 			);
@@ -319,12 +319,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				099027FC272DD7DF00B5B6AA /* DatePickerView.swift in Sources */,
 				09902800272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift in Sources */,
 				09954B90272DCAC500475F57 /* DatePickerExamplesApp.swift in Sources */,
 				09954BE4272DCCEC00475F57 /* DatePickerExamples.swift in Sources */,
 				099027FE272DD80A00B5B6AA /* TimePickerView.swift in Sources */,
 				09954BE3272DCCEC00475F57 /* DatePicker.swift in Sources */,
+				0971BE17272E9CBD00028C46 /* DatePickerView.swift in Sources */,
 				099027FA272DD7AA00B5B6AA /* Locale+DatePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
