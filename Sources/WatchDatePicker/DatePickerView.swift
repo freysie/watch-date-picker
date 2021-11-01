@@ -1,7 +1,5 @@
 import SwiftUI
 
-// FIXME: use `locale.calendar` instead of `Calendar.current` throughout as to support non-Gregorian calendars etc.
-
 public struct DatePickerView: View {
   @Binding public var selection: Date
   public var mode: DatePicker.Mode?
@@ -120,7 +118,7 @@ public struct DatePickerView: View {
   private var confirmationAction: some View {
     Group {
       if let mode = mode, mode == .dateAndTime {
-        NavigationLink(confirmationTitleKey ?? "Continue") {
+        NavigationLink {
           TimePickerView(
             selection: .constant(newSelection),
             mode: mode,
@@ -130,9 +128,21 @@ public struct DatePickerView: View {
           // TODO: make this navigation title white somehow?
             .navigationTitle(formattedSelection)
             .navigationBarTitleDisplayMode(.inline)
+        } label: {
+          if let confirmationTitleKey = confirmationTitleKey {
+            Text(confirmationTitleKey)
+          } else {
+            Text("Continue", bundle: .module)
+          }
         }
       } else {
-        Button(confirmationTitleKey ?? "Done", action: { confirm(newSelection) })
+        Button(action: { confirm(newSelection) }) {
+          if let confirmationTitleKey = confirmationTitleKey {
+            Text(confirmationTitleKey)
+          } else {
+            Text("Done", bundle: .module)
+          }
+        }
       }
     }
     .buttonStyle(.borderedProminent)
@@ -153,35 +163,44 @@ public struct DatePickerView: View {
     }
     .pickerStyle(.wheel)
     .textCase(.uppercase)
-    .minimumScaleFactor(0.5)
+    // .minimumScaleFactor(0.5)
   }
   
   private var yearPicker: some View {
-    Picker("Year", selection: $year) {
+    Picker(selection: $year) {
       ForEach(yearRange) { year in
         Text(String(year))
+          .minimumScaleFactor(0.5)
           .tag(year)
       }
+    } label: {
+      Text("Year", bundle: .module)
     }
     //.focusable()
   }
   
   private var monthPicker: some View {
-    Picker("Month", selection: $month) {
+    Picker(selection: $month) {
       ForEach(monthSymbols, id: \.offset) { offset, symbol in
         Text(symbol)
+          .minimumScaleFactor(0.5)
           .tag(offset + 1)
       }
+    } label: {
+      Text("Month", bundle: .module)
     }
     //.focusable()
   }
   
   private var dayPicker: some View {
-    Picker("Day", selection: $day) {
+    Picker(selection: $day) {
       ForEach(dayRange) { day in
         Text(String(day))
+          .minimumScaleFactor(0.5)
           .tag(day)
       }
+    } label: {
+      Text("Day", bundle: .module)
     }
     //.focusable()
     .id([month, year].map(String.init).joined(separator: "."))

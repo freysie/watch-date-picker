@@ -1,6 +1,5 @@
-//#if os(watchOS)
-
 import SwiftUI
+import WatchDatePicker
 
 struct DatePickerExamples: View {
   @State var value = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
@@ -88,5 +87,3 @@ struct DatePickerExamples_Previews: PreviewProvider {
     .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
   }
 }
-
-//#endif
