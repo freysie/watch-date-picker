@@ -48,7 +48,7 @@ DatePicker("Time", selection: $value, mode: .time, twentyFourHours: true)
 
 ### Outside of Lists
 
-Both `DatePickerView` and `TimePickerView` can be used indepedently of `DatePicker`.
+Both `DatePickerView` and `TimePickerView` can be used independently of `DatePicker`.
 
 
 #### Date Picker View
@@ -121,7 +121,7 @@ When `mode` is not `.dateAndTime`, this value is ignored.
 ```swift
 var confirmationTitleKey: LocalizedStringKey?
 ```
-The radius of the date & time confirmation button.
+The title of the date & time confirmation button.
 Default is “Continue” if `mode` is `.dateAndTime`, or “Done” if `mode` is `.date`.
 When `mode` is `.time` or nil, this value is ignored.
 
