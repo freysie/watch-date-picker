@@ -3,48 +3,37 @@ import SwiftUI
 // TODO: move most of the configuration options to environment values
 
 /// A control for the inputting of date and time values.
+///
+/// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interfaces for selecting date and time. The view binds to a `Date` instance.
+///
+/// ![](DateAndTimeMode.png)
+@available(watchOS 8, *)
 public struct DatePicker: View {
   /// Styles that determine the appearance of a date picker.
   public enum Mode {
     /// Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
+    /// ![](TimeMode.png)
     case time
     
     /// Displays month, day, and year depending on the locale setting (e.g. November | 15 | 2007)
+    /// ![](DateMode.png)
     case date
     
     /// Displays date, hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. Wed Nov 15 | 6 | 53 | PM)
+    /// ![](DateAndTimeMode.png)
     case dateAndTime
   }
-  
-  /// The key for the localized title of `self`, describing its purpose.
-  public var titleKey: LocalizedStringKey?
-  
-  /// The date value being displayed and selected.
-  @Binding public var selection: Date
-  
-  /// The style that the date picker is using for its layout.
-  public var mode: Mode = .dateAndTime
-  
-  /// The minimum date that a date picker can show.
-  public var minimumDate: Date?
-  
-  /// The maximum date that a date picker can show.
-  public var maximumDate: Date?
-  
-  /// The date style of the displayed value.
-  public var dateStyle: DateFormatter.Style = .short
-  
-  /// The time style of the displayed value.
-  public var timeStyle: DateFormatter.Style = .short
-  
-  /// Whether to display month before day. (MM DD YYYY vs. DD MM YYYY)
-  public var showsMonthBeforeDay: Bool?
-  
-  /// Whether to use a 24-hour clock system where the day runs from midnight to midnight, dividing into 24 hours.
-  public var twentyFourHour: Bool?
-  
-  /// A callback that will be invoked when the operation has succeeded.
-  public var onCompletion: ((Date) -> Void)?
+
+  var titleKey: LocalizedStringKey?
+  @Binding var selection: Date
+  var mode: Mode = .dateAndTime
+  var minimumDate: Date?
+  var maximumDate: Date?
+  var dateStyle: DateFormatter.Style = .short
+  var timeStyle: DateFormatter.Style = .short
+  var showsMonthBeforeDay: Bool?
+  var twentyFourHour: Bool?
+  var onCompletion: ((Date) -> Void)?
   
   private func _onCompletion(_ date: Date) {
     pickerViewIsPresented = false
@@ -66,7 +55,16 @@ public struct DatePicker: View {
     return formatter.string(from: selection)
   }
   
-  /// Creates a date picker instance.
+  /// Creates a date picker instance with the specified properties.
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection:The date value being displayed and selected.
+  ///   - mode: The style that the date picker is using for its layout.
+  ///   - minimumDate: The minimum date that a date picker can show.
+  ///   - maximumDate: The maximum date that a date picker can show.
+  ///   - showsMonthBeforeDay: Whether to display month before day. (MM DD YYYY vs. DD MM YYYY)
+  ///   - twentyFourHour: Whether to use a 24-hour clock system where the day runs from midnight to midnight, dividing into 24 hours.
+  ///   - onCompletion: A callback that will be invoked when the operation has succeeded.
   public init(
     _ label: LocalizedStringKey,
     selection: Binding<Date>,

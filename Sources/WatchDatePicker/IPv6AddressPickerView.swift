@@ -8,7 +8,8 @@ public extension IPv6Address {
   }
 }
 
-public struct IPv6AddressPickerView: View {
+@available(watchOS 8, *)
+public struct _IPv6AddressPickerView: View {
   let address = IPv6Address("2001:0db8:85a3:0000:0000:8a2e:0370:7334")!
   @State private var focusedComponent = 0
   
@@ -51,7 +52,7 @@ public struct IPv6AddressPickerView: View {
 struct IPv6AddressPickerView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      IPv6AddressPickerView()
+      _IPv6AddressPickerView()
     }
     .accentColor(.orange)
   }

@@ -1,15 +1,22 @@
 import SwiftUI
 
+/// A control for the inputting of date values.
+///
+/// The `DatePickerView` displays three pickers or month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
+///
+/// ![](DatePickerView.png)
+/// ![](DatePickerView~fr.png)
+@available(watchOS 8, *)
 public struct DatePickerView: View {
-  @Binding public var selection: Date
-  public var mode: DatePicker.Mode?
-  public var minimumDate: Date?
-  public var maximumDate: Date?
-  public var showsMonthBeforeDay: Bool?
-  public var twentyFourHour: Bool?
-  public var confirmationTitleKey: LocalizedStringKey?
-  public var confirmationColor: Color?
-  public var onCompletion: ((Date) -> Void)?
+  @Binding var selection: Date
+  var mode: DatePicker.Mode?
+  var minimumDate: Date?
+  var maximumDate: Date?
+  var showsMonthBeforeDay: Bool?
+  var twentyFourHour: Bool?
+  var confirmationTitleKey: LocalizedStringKey?
+  var confirmationColor: Color?
+  var onCompletion: ((Date) -> Void)?
   
   @State private var year = 0
   @State private var month = 0

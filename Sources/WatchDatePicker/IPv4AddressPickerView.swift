@@ -1,7 +1,8 @@
 import SwiftUI
 import Network
 
-public struct IPv4AddressPickerView: View {
+@available(watchOS 8, *)
+public struct _IPv4AddressPickerView: View {
   let address = IPv4Address("255.254.253.252")!
   @State private var focusedComponent = 0
   
@@ -37,7 +38,7 @@ public struct IPv4AddressPickerView: View {
 struct IPv4AddressPickerView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      IPv4AddressPickerView()
+      _IPv4AddressPickerView()
     }
     .accentColor(.orange)
   }

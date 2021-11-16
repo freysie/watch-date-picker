@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0925D35327316A6000BB69E5 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */; };
+		0925D35427316A6000BB69E5 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925D35127316A6000BB69E5 /* DatePickerExamples.swift */; };
+		09340BFF27316BDB00A2AFAD /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 09340BFE27316BDB00A2AFAD /* WatchDatePicker */; };
 		093463692730905E0022266C /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 093463682730905E0022266C /* WatchDatePicker */; };
 		09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		09954B90272DCAC500475F57 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */; };
-		09954BE4272DCCEC00475F57 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,40 +68,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		093463652730904B0022266C /* WatchDatePicker */ = {isa = PBXFileReference; lastKnownFileType = text; name = WatchDatePicker; sourceTree = SOURCE_ROOT; };
-		0934636A273090730022266C /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
-		0934636B273090850022266C /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Screenshots; sourceTree = "<group>"; };
-		0971BE16272E9CBD00028C46 /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
-		0971BE18272E9FB400028C46 /* IPv6AddressPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv6AddressPickerView.swift; sourceTree = "<group>"; };
-		099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+DatePicker.swift"; sourceTree = "<group>"; };
-		099027FB272DD7DF00B5B6AA /* IPv4AddressPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4AddressPickerView.swift; sourceTree = "<group>"; };
-		099027FD272DD80A00B5B6AA /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
-		099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+TimePickerView.swift"; sourceTree = "<group>"; };
-		09902801272DF13500B5B6AA /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902802272DF15D00B5B6AA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902803272DF19F00B5B6AA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902804272DF1B900B5B6AA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902805272DF22700B5B6AA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902806272DF3FB00B5B6AA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902807272DF3FF00B5B6AA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09902808272DF43B00B5B6AA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		09902809272DF43F00B5B6AA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		0990280A272DF4C900B5B6AA /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0990280B272DF4EF00B5B6AA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0990280C272DF55F00B5B6AA /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0990280D272DF5A900B5B6AA /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
+		0925D35127316A6000BB69E5 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
+		0925D35227316A6000BB69E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0932963F27316C9B00E7770E /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "watch-date-picker"; sourceTree = "<group>"; };
+		0933BD6827316D040002D23F /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "watch-date-picker"; sourceTree = "<group>"; };
 		09954B79272DCAC300475F57 /* WatchDatePicker Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchDatePicker Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B7D272DCAC300475F57 /* Examples WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Examples WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
-		09954B98272DCAC700475F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09954BA8272DCC3000475F57 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		09954BB6272DCC3000475F57 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		09954BDD272DCCEC00475F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09954BDE272DCCEC00475F57 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09954BDF272DCCEC00475F57 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		09954BE0272DCCEC00475F57 /* DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
-		09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09340BFF27316BDB00A2AFAD /* WatchDatePicker in Frameworks */,
 				093463692730905E0022266C /* WatchDatePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,32 +91,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0934635A27308F7E0022266C /* Frameworks */ = {
+		0925D34F27316A6000BB69E5 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				0925D35127316A6000BB69E5 /* DatePickerExamples.swift */,
+				0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */,
+				0925D35227316A6000BB69E5 /* Info.plist */,
 			);
-			name = Frameworks;
+			path = Examples;
 			sourceTree = "<group>";
 		};
-		0990280E272DF5C700B5B6AA /* Localizations */ = {
+		0932963E27316C9B00E7770E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				09954BDC272DCCEC00475F57 /* Localizable.strings */,
+				0932963F27316C9B00E7770E /* watch-date-picker */,
+				0933BD6827316D040002D23F /* watch-date-picker */,
 			);
-			path = Localizations;
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		09954B72272DCAC300475F57 = {
 			isa = PBXGroup;
 			children = (
-				09954BB6272DCC3000475F57 /* Package.swift */,
-				09954BA8272DCC3000475F57 /* README.md */,
-				0934636B273090850022266C /* Screenshots */,
-				0934636A273090730022266C /* Documentation.docc */,
-				09954BD9272DCCEC00475F57 /* Sources */,
-				09954B8C272DCAC500475F57 /* Examples */,
+				0932963E27316C9B00E7770E /* Packages */,
+				0925D34F27316A6000BB69E5 /* Examples */,
 				09954B7A272DCAC300475F57 /* Products */,
-				0934635A27308F7E0022266C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,40 +127,6 @@
 				09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		09954B8C272DCAC500475F57 /* Examples */ = {
-			isa = PBXGroup;
-			children = (
-				093463652730904B0022266C /* WatchDatePicker */,
-				09954B98272DCAC700475F57 /* Info.plist */,
-				09954BE1272DCCEC00475F57 /* DatePickerExamples.swift */,
-				09954B8F272DCAC500475F57 /* DatePickerExamplesApp.swift */,
-			);
-			path = Examples;
-			sourceTree = "<group>";
-		};
-		09954BD9272DCCEC00475F57 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				09954BDA272DCCEC00475F57 /* WatchDatePicker */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		09954BDA272DCCEC00475F57 /* WatchDatePicker */ = {
-			isa = PBXGroup;
-			children = (
-				0990280E272DF5C700B5B6AA /* Localizations */,
-				099027FF272DD81000B5B6AA /* ButtonStyle+TimePickerView.swift */,
-				09954BE0272DCCEC00475F57 /* DatePicker.swift */,
-				0971BE16272E9CBD00028C46 /* DatePickerView.swift */,
-				099027FB272DD7DF00B5B6AA /* IPv4AddressPickerView.swift */,
-				0971BE18272E9FB400028C46 /* IPv6AddressPickerView.swift */,
-				099027F9272DD7AA00B5B6AA /* Locale+DatePicker.swift */,
-				099027FD272DD80A00B5B6AA /* TimePickerView.swift */,
-			);
-			path = WatchDatePicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +183,7 @@
 			name = "Examples WatchKit Extension";
 			packageProductDependencies = (
 				093463682730905E0022266C /* WatchDatePicker */,
+				09340BFE27316BDB00A2AFAD /* WatchDatePicker */,
 			);
 			productName = "WatchDatePickerExamples WatchKit Extension";
 			productReference = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */;
@@ -265,10 +207,11 @@
 					};
 					09954B87272DCAC500475F57 = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
-			buildConfigurationList = 09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePicker" */;
+			buildConfigurationList = 09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePickerExamples" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -292,6 +235,9 @@
 				he,
 			);
 			mainGroup = 09954B72272DCAC300475F57;
+			packageReferences = (
+				09340BFD27316BDB00A2AFAD /* XCRemoteSwiftPackageReference "watch-date-picker" */,
+			);
 			productRefGroup = 09954B7A272DCAC300475F57 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -332,8 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09954B90272DCAC500475F57 /* DatePickerExamplesApp.swift in Sources */,
-				09954BE4272DCCEC00475F57 /* DatePickerExamples.swift in Sources */,
+				0925D35427316A6000BB69E5 /* DatePickerExamples.swift in Sources */,
+				0925D35327316A6000BB69E5 /* DatePickerExamplesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,32 +301,6 @@
 			targetProxy = 09954B8A272DCAC500475F57 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		09954BDC272DCCEC00475F57 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				09954BDD272DCCEC00475F57 /* en */,
-				09954BDE272DCCEC00475F57 /* da */,
-				09954BDF272DCCEC00475F57 /* sv */,
-				09902801272DF13500B5B6AA /* ro */,
-				09902802272DF15D00B5B6AA /* ru */,
-				09902803272DF19F00B5B6AA /* ja */,
-				09902804272DF1B900B5B6AA /* nl */,
-				09902805272DF22700B5B6AA /* de */,
-				09902806272DF3FB00B5B6AA /* fr */,
-				09902807272DF3FF00B5B6AA /* es */,
-				09902808272DF43B00B5B6AA /* zh-Hans */,
-				09902809272DF43F00B5B6AA /* zh-Hant */,
-				0990280A272DF4C900B5B6AA /* fi */,
-				0990280B272DF4EF00B5B6AA /* ar */,
-				0990280C272DF55F00B5B6AA /* el */,
-				0990280D272DF5A900B5B6AA /* he */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		09954B99272DCAC700475F57 /* Debug */ = {
@@ -503,6 +423,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -523,6 +444,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 8.0;
@@ -533,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -636,7 +559,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePicker" */ = {
+		09954B76272DCAC300475F57 /* Build configuration list for PBXProject "WatchDatePickerExamples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				09954B99272DCAC700475F57 /* Debug */,
@@ -674,7 +597,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		09340BFD27316BDB00A2AFAD /* XCRemoteSwiftPackageReference "watch-date-picker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/freyaariel/watch-date-picker.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		09340BFE27316BDB00A2AFAD /* WatchDatePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09340BFD27316BDB00A2AFAD /* XCRemoteSwiftPackageReference "watch-date-picker" */;
+			productName = WatchDatePicker;
+		};
 		093463662730905A0022266C /* WatchDatePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WatchDatePicker;

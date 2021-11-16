@@ -3,20 +3,27 @@ import WatchKit
 
 // TODO: selection indicator with default size is cut off by status bar when in 12 o’clock position
 
+/// A control for the inputting of time values.
+///
+/// The `TimePickerView` displays a clockface interface that allows the user to select a hour and minute. The view binds to a `Date` instance.
+///
+/// ![](TimePickerView.png)
+/// ![](TimePickerView~custom.png)
+@available(watchOS 8, *)
 public struct TimePickerView: View {
-  @Binding public var selection: Date
-  public var mode: DatePicker.Mode = .time
-  public var twentyFourHour: Bool?
-  public var showsTwentyFourHourIndicator: Bool?
-  public var selectionIndicatorRadius: CGFloat?
-  public var selectionIndicatorColor: Color?
-  public var focusColor: Color?
-  public var amPMHighlightColor: Color?
-  public var markSize: CGSize?
-  public var markFill: AnyShapeStyle?
-  public var emphasizedMarkSize: CGSize?
-  public var emphasizedMarkFill: AnyShapeStyle?
-  public var onCompletion: ((Date) -> Void)?
+  @Binding var selection: Date
+  var mode: DatePicker.Mode = .time
+  var twentyFourHour: Bool?
+  var showsTwentyFourHourIndicator: Bool?
+  var selectionIndicatorRadius: CGFloat?
+  var selectionIndicatorColor: Color?
+  var focusColor: Color?
+  var amPMHighlightColor: Color?
+  var markSize: CGSize?
+  var markFill: AnyShapeStyle?
+  var emphasizedMarkSize: CGSize?
+  var emphasizedMarkFill: AnyShapeStyle?
+  var onCompletion: ((Date) -> Void)?
 
   @Environment(\.locale) private var locale
   @Environment(\.dismiss) private var dismiss
@@ -50,6 +57,26 @@ public struct TimePickerView: View {
     )!
   }
   
+  /// Creates a time picker view instance with the specified properties.
+  /// - Parameters:
+  ///   - selection:The date value being displayed and selected.
+  ///   - mode: The style that the date picker is using for its layout.
+  ///   - twentyFourHour: …
+  ///   - showsTwentyFourHourIndicator: …
+  ///   - selectionIndicatorRadius: The radius of the time selection indicators.
+  ///   Default is 2.25.
+  ///   When `mode` is `.date`, this value is ignored.
+  ///   - selectionIndicatorColor: The color for the time selection indicators.
+  ///   Default is accent color.
+  ///   When `mode` is `.date`, this value is ignored.
+  ///   - focusColor: The color for the focus outline of time fields.
+  ///   Default is green.
+  ///   - amPMHighlightColor: …
+  ///   - markSize: …
+  ///   - markFill: …
+  ///   - emphasizedMarkSize: …
+  ///   - emphasizedMarkFill: …
+  ///   - onCompletion: A callback that will be invoked when the operation has succeeded.
   public init(
     selection: Binding<Date>,
     mode: DatePicker.Mode = .time,
