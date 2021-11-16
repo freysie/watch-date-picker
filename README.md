@@ -14,6 +14,11 @@ import WatchDatePicker
 ```
 
 
+## Documentation
+
+Online documentation is available at [freyaariel.github.io/documentation/watchdatepicker](https://freyaariel.github.io/documentation/watchdatepicker/).
+
+
 ## Overview
 
 The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interfaces for selecting date and time.
@@ -25,7 +30,7 @@ The `DatePicker` view displays a button with a title and the selected value. Whe
 DatePicker("Date & Time", selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DateAndTimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DateAndTimeMode-2.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DateAndTimeMode-3.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-2.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-3.png?raw=true" alt="" width="242" />
 
 
 ### Date Mode
@@ -34,7 +39,7 @@ DatePicker("Date & Time", selection: $value)
 DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DateMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DateMode-2.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode-2.png?raw=true" alt="" width="242" />
 
 
 ### Time Mode
@@ -43,7 +48,7 @@ DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
 DatePicker("Time", selection: $value, mode: .time, twentyFourHours: true)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/TimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/TimeMode-2.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode-2.png?raw=true" alt="" width="242" />
 
 
 ### Outside of Lists
@@ -57,7 +62,7 @@ Both `DatePickerView` and `TimePickerView` can be used independently of `DatePic
 DatePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DatePickerView.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView.png?raw=true" alt="" width="242" />
 
 
 ```swift
@@ -65,7 +70,7 @@ DatePickerView(selection: $value)
   .environment(\.locale, Locale(identifier: "fr"))
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="242" />
 
 
 #### Time Picker View
@@ -74,7 +79,7 @@ DatePickerView(selection: $value)
 TimePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/TimePickerView.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView.png?raw=true" alt="" width="242" />
 
 
 ```swift
@@ -91,8 +96,9 @@ TimePickerView(
 )
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="242" />
 
+<!--
 
 **ℹ️ Note:**
 
@@ -145,5 +151,6 @@ var focusColor: Color?
 The color for the focus outline of time fields.
 Default is `.green`.
 
-<!-- TODO: add more -->
+-->
 
+<!-- TODO: add more -->
