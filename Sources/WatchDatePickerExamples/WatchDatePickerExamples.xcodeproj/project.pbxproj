@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0925D35327316A6000BB69E5 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */; };
-		0925D35427316A6000BB69E5 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925D35127316A6000BB69E5 /* DatePickerExamples.swift */; };
 		09340BFF27316BDB00A2AFAD /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 09340BFE27316BDB00A2AFAD /* WatchDatePicker */; };
 		093463692730905E0022266C /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 093463682730905E0022266C /* WatchDatePicker */; };
+		097155C92744356200F476F0 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097155C62744356200F476F0 /* DatePickerExamplesApp.swift */; };
+		097155CC2744356200F476F0 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097155C82744356200F476F0 /* DatePickerExamples.swift */; };
 		09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -68,11 +68,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
-		0925D35127316A6000BB69E5 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
-		0925D35227316A6000BB69E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0932963F27316C9B00E7770E /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "watch-date-picker"; sourceTree = "<group>"; };
-		0933BD6827316D040002D23F /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "watch-date-picker"; sourceTree = "<group>"; };
+		097155C62744356200F476F0 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
+		097155C72744356200F476F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		097155C82744356200F476F0 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
 		09954B79272DCAC300475F57 /* WatchDatePicker Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchDatePicker Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B7D272DCAC300475F57 /* Examples WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Examples WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,30 +89,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0925D34F27316A6000BB69E5 /* Examples */ = {
-			isa = PBXGroup;
-			children = (
-				0925D35127316A6000BB69E5 /* DatePickerExamples.swift */,
-				0925D35027316A6000BB69E5 /* DatePickerExamplesApp.swift */,
-				0925D35227316A6000BB69E5 /* Info.plist */,
-			);
-			path = Examples;
-			sourceTree = "<group>";
-		};
-		0932963E27316C9B00E7770E /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				0932963F27316C9B00E7770E /* watch-date-picker */,
-				0933BD6827316D040002D23F /* watch-date-picker */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		09954B72272DCAC300475F57 = {
 			isa = PBXGroup;
 			children = (
-				0932963E27316C9B00E7770E /* Packages */,
-				0925D34F27316A6000BB69E5 /* Examples */,
+				097155C82744356200F476F0 /* DatePickerExamples.swift */,
+				097155C62744356200F476F0 /* DatePickerExamplesApp.swift */,
+				097155C72744356200F476F0 /* Info.plist */,
 				09954B7A272DCAC300475F57 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -197,17 +177,18 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					09954B78272DCAC300475F57 = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1310;
 					};
 					09954B7C272DCAC300475F57 = {
 						CreatedOnToolsVersion = 13.0;
 					};
 					09954B87272DCAC500475F57 = {
 						CreatedOnToolsVersion = 13.0;
-						LastSwiftMigration = 1300;
+						LastSwiftMigration = 1310;
 					};
 				};
 			};
@@ -278,8 +259,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0925D35427316A6000BB69E5 /* DatePickerExamples.swift in Sources */,
-				0925D35327316A6000BB69E5 /* DatePickerExamplesApp.swift in Sources */,
+				097155CC2744356200F476F0 /* DatePickerExamples.swift in Sources */,
+				097155C92744356200F476F0 /* DatePickerExamplesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +288,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -368,6 +350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -428,7 +411,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Examples/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples WatchKit Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -460,7 +443,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Examples/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples WatchKit Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -533,12 +516,19 @@
 		09954BA4272DCAC700475F57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples;
 				PRODUCT_NAME = "WatchDatePicker Examples";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -546,9 +536,15 @@
 		09954BA5272DCAC700475F57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples;
 				PRODUCT_NAME = "WatchDatePicker Examples";
