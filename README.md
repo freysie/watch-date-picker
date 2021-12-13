@@ -30,7 +30,7 @@ The `DatePicker` view displays a button with a title and the selected value. Whe
 DatePicker("Date & Time", selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-2.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode-3.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode.png?raw=true" alt="" width="594" />
 
 
 ### Date Mode
@@ -39,7 +39,7 @@ DatePicker("Date & Time", selection: $value)
 DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode-2.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode.png?raw=true" alt="" width="396" />
 
 
 ### Time Mode
@@ -48,7 +48,7 @@ DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
 DatePicker("Time", selection: $value, mode: .time, twentyFourHours: true)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode-1.png?raw=true" alt="" width="242" /> <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode-2.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode.png?raw=true" alt="" width="396" />
 
 
 ### Outside of Lists
@@ -62,7 +62,7 @@ Both `DatePickerView` and `TimePickerView` can be used independently of `DatePic
 DatePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView.png?raw=true" alt="" width="198" />
 
 
 ```swift
@@ -70,7 +70,7 @@ DatePickerView(selection: $value)
   .environment(\.locale, Locale(identifier: "fr"))
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="198" />
 
 
 #### Time Picker View
@@ -79,7 +79,7 @@ DatePickerView(selection: $value)
 TimePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView.png?raw=true" alt="" width="198" />
 
 
 ```swift
@@ -96,7 +96,7 @@ TimePickerView(
 )
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="242" />
+<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="198" />
 
 <!--
 
