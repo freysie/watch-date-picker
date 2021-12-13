@@ -4,7 +4,7 @@ import SwiftUI
 
 /// A control for the inputting of time values.
 ///
-/// The `TimePickerView` displays a clockface interface that allows the user to select a hour and minute. The view binds to a `Date` instance.
+/// The `TimePickerView` displays a clockface interface that allows the user to select hour and minute. The view binds to a `Date` instance.
 ///
 /// ![](TimePickerView.png)
 /// ![](TimePickerView~custom.png)

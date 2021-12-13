@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A control for the inputting of date values.
 ///
-/// The `DatePickerView` displays three pickers or month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
+/// The `DatePickerView` displays three pickers for month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
 ///
 /// ![](DatePickerView.png)
 /// ![](DatePickerView~fr.png)
