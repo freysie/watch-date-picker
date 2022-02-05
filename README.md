@@ -6,7 +6,7 @@ A customizable date picker for watchOS and SwiftUI.
 ## Installation
 
 ```swift
-.package(url: "https://github.com/freyaariel/watch-date-picker.git", branch: "main")
+.package(url: "https://github.com/freyaariel/watch-date-picker.git", from: "0.1.0")
 ```
 
 ```swift
