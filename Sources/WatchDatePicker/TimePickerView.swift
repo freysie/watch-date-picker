@@ -1,5 +1,6 @@
 import SwiftUI
 
+// TODO: use locale-specific time separators (like “.” instead of “:”)
 // TODO: selection indicator with default size is cut off by status bar when in 12 o’clock position
 
 /// A control for the inputting of time values.

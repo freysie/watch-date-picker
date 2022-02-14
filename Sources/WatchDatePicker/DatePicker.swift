@@ -9,18 +9,9 @@ import SwiftUI
 /// ![](DateAndTimeMode.png)
 @available(watchOS 8, *)
 public struct DatePicker: View {
-  /// Styles that determine the appearance of a date picker.
   public enum Mode {
-    /// Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
-    /// ![](TimeMode.png)
     case time
-    
-    /// Displays month, day, and year depending on the locale setting (e.g. November | 15 | 2007)
-    /// ![](DateMode.png)
     case date
-    
-    /// Displays date, hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. Wed Nov 15 | 6 | 53 | PM)
-    /// ![](DateAndTimeMode.png)
     case dateAndTime
   }
 
@@ -55,10 +46,90 @@ public struct DatePicker: View {
     return formatter.string(from: selection)
   }
   
+  /// Option set that determines the displayed components of a date picker.
+  ///
+  /// Specifying ``date`` displays month, day, and year depending on the locale setting:
+  /// ![](TimeMode.png)
+  /// Specifying ``hourAndMinute`` displays hour, minute, and optionally AM/PM designation depending on the locale setting:
+  /// ![](DateMode.png)
+  /// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting:
+  /// ![](DateAndTimeMode.png)
+  public struct Components: OptionSet {
+    public let rawValue: UInt
+    public init(rawValue: UInt) { self.rawValue = rawValue }
+    
+    /// Displays day, month, and year based on the locale.
+    public static let date = Self(rawValue: 1 << 0)
+    /// Displays hour and minute components based on the locale.
+    public static let hourAndMinute = Self(rawValue: 1 << 1)
+  }
+  
+  /// Creates an instance that selects a Date with an unbounded range.
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The date value being displayed and selected.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.hourAndMinute, .date]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date>,
+    displayedComponents: Components = [.hourAndMinute, .date]
+  ) {
+    self.titleKey = titleKey
+    _selection = selection
+  }
+  
+  /// Creates an instance that selects a Date in a closed range.
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The date value being displayed and selected.
+  ///   - range: The inclusive range of selectable dates.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.hourAndMinute, .date]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date>,
+    in range: ClosedRange<Date>,
+    displayedComponents: Components = [.hourAndMinute, .date]
+  ) {
+    self.titleKey = titleKey
+    _selection = selection
+  }
+  
+  /// Creates an instance that selects a Date on or after some start date.
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The date value being displayed and selected.
+  ///   - range: The open range from some selectable start date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.hourAndMinute, .date]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date>,
+    in range: PartialRangeFrom<Date>,
+    displayedComponents: Components = [.hourAndMinute, .date]
+  ) {
+    self.titleKey = titleKey
+    _selection = selection
+  }
+  
+  /// Creates an instance that selects a Date on or before some end date.
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The date value being displayed and selected.
+  ///   - range: The open range before some selectable end date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.hourAndMinute, .date]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date>,
+    in range: PartialRangeThrough<Date>,
+    displayedComponents: Components = [.hourAndMinute, .date]
+  ) {
+    self.titleKey = titleKey
+    _selection = selection
+  }
+
   /// Creates a date picker instance with the specified properties.
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
-  ///   - selection:The date value being displayed and selected.
+  ///   - selection: The date value being displayed and selected.
   ///   - mode: The style that the date picker is using for its layout.
   ///   - minimumDate: The minimum date that a date picker can show.
   ///   - maximumDate: The maximum date that a date picker can show.
