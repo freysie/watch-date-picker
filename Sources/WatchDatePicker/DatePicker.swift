@@ -84,7 +84,8 @@ public struct DatePicker: View {
     self.twentyFourHour = twentyFourHour
     self.onCompletion = onCompletion
   }
-  
+
+  /// The content and behavior of the view.
   public var body: some View {
     Button(action: { pickerViewIsPresented = true }) {
       VStack(alignment: .leading) {

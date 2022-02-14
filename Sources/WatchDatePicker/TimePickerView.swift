@@ -112,6 +112,7 @@ public struct TimePickerView: View {
     }
   }
   
+  /// The content and behavior of the view.
   public var body: some View {
     ZStack(alignment: .bottom) {
       clockFace

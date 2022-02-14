@@ -90,6 +90,7 @@ public struct DatePickerView: View {
     _day = State(initialValue: locale.calendar.component(.day, from: self.selection))
   }
   
+  /// The content and behavior of the view.
   public var body: some View {
     if let mode = mode, mode == .time {
       TimePickerView(
