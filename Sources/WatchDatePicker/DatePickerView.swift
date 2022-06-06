@@ -7,6 +7,9 @@ import SwiftUI
 /// ![](DatePickerView.png)
 /// ![](DatePickerView~fr.png)
 @available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 public struct DatePickerView: View {
   @Binding var selection: Date
   var mode: DatePicker.Mode?
