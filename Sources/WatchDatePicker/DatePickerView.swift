@@ -179,7 +179,7 @@ public struct DatePickerView: View {
   
   private var yearPicker: some View {
     Picker(selection: $year) {
-      ForEach(yearRange) { year in
+      ForEach(yearRange, id: \.self) { year in
         Text(String(year))
           .minimumScaleFactor(0.5)
           .tag(year)
@@ -205,7 +205,7 @@ public struct DatePickerView: View {
   
   private var dayPicker: some View {
     Picker(selection: $day) {
-      ForEach(dayRange) { day in
+      ForEach(dayRange, id: \.self) { day in
         Text(String(day))
           .minimumScaleFactor(0.5)
           .tag(day)
