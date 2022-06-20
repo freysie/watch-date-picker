@@ -1,6 +1,8 @@
 import SwiftUI
 
 // TODO: move most of the configuration options to environment values
+// TODO: determine `datePickerTwentyFourHour` automatically based on locale
+// TODO: showsMonthBeforeDay: showsMonthBeforeDay ?? locale.monthComesBeforeDay
 
 /// A control for the inputting of date and time values.
 ///
@@ -22,8 +24,7 @@ public struct DatePicker: View {
   var maximumDate: Date?
   var dateStyle: DateFormatter.Style = .short
   var timeStyle: DateFormatter.Style = .short
-  var showsMonthBeforeDay: Bool?
-  var twentyFourHour: Bool?
+  let displayedComponents: Components
   var onCompletion: ((Date) -> Void)?
   
   private func _onCompletion(_ date: Date) {
@@ -32,6 +33,9 @@ public struct DatePicker: View {
   }
   
   @State private var pickerViewIsPresented = false
+  
+  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
+  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
   
   @Environment(\.locale) private var locale
   
@@ -76,6 +80,7 @@ public struct DatePicker: View {
   ) {
     self.titleKey = titleKey
     _selection = selection
+    self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a Date in a closed range.
@@ -92,6 +97,9 @@ public struct DatePicker: View {
   ) {
     self.titleKey = titleKey
     _selection = selection
+    minimumDate = range.lowerBound
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a Date on or after some start date.
@@ -108,6 +116,8 @@ public struct DatePicker: View {
   ) {
     self.titleKey = titleKey
     _selection = selection
+    minimumDate = range.lowerBound
+    self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a Date on or before some end date.
@@ -124,6 +134,8 @@ public struct DatePicker: View {
   ) {
     self.titleKey = titleKey
     _selection = selection
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
   }
 
   /// Creates a date picker instance with the specified properties.
@@ -142,8 +154,6 @@ public struct DatePicker: View {
     mode: Mode? = nil,
     minimumDate: Date? = nil,
     maximumDate: Date? = nil,
-    showsMonthBeforeDay: Bool? = nil,
-    twentyFourHour: Bool? = nil,
     onCompletion: ((Date) -> Void)? = nil
   ) {
     self.titleKey = label
@@ -151,9 +161,8 @@ public struct DatePicker: View {
     if let value = mode { self.mode = value }
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
-    self.showsMonthBeforeDay = showsMonthBeforeDay
-    self.twentyFourHour = twentyFourHour
     self.onCompletion = onCompletion
+    displayedComponents = [.hourAndMinute, .date]
   }
 
   /// The content and behavior of the view.
@@ -177,8 +186,6 @@ public struct DatePicker: View {
           mode: mode,
           minimumDate: minimumDate,
           maximumDate: maximumDate,
-          showsMonthBeforeDay: showsMonthBeforeDay ?? locale.monthComesBeforeDay,
-          twentyFourHour: twentyFourHour ?? false, // TODO: determine automatically based on locale
           onCompletion: _onCompletion
         )
       }
@@ -189,7 +196,8 @@ public struct DatePicker: View {
 struct DatePicker_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      TimePickerView(selection: .constant(Date()), mode: .time, selectionIndicatorColor: .mint)
+      TimePickerView(selection: .constant(Date()), mode: .time)
+        .datePickerSelectionIndicatorFill(.mint)
         .toolbar {
           ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel, action: {})
@@ -236,7 +244,8 @@ struct DatePicker_Previews: PreviewProvider {
     
     NavigationView {
       NavigationLink(isActive: .constant(true)) {
-        TimePickerView(selection: .constant(Date()), mode: .dateAndTime, twentyFourHour: true)
+        TimePickerView(selection: .constant(Date()), mode: .dateAndTime)
+          .datePickerTwentyFourHour()
           .tint(.pink)
       } label: {
         EmptyView()

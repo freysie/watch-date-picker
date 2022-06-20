@@ -22,7 +22,7 @@ internal struct TimePickerComponentButtonStyle: ButtonStyle {
 }
 
 internal extension Color {
-  static var timePickerComponentButtonBorder: Self { Color(white: 0.298) }
+  static let timePickerComponentButtonBorder = Color(white: 0.298)
 }
 
 internal extension ButtonStyle where Self == TimePickerAMPMButtonStyle {

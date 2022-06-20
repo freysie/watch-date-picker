@@ -36,7 +36,7 @@ DatePicker("Date & Time", selection: $value)
 ### Date Mode
 
 ```swift
-DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
+DatePicker("Date", selection: $value, displayedComponents: [.date])
 ```
 
 <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode.png?raw=true" alt="" width="396" />
@@ -45,7 +45,7 @@ DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
 ### Time Mode
 
 ```swift
-DatePicker("Time", selection: $value, mode: .time, twentyFourHours: true)
+DatePicker("Time", selection: $value, displayedComponents: [.hourAndMinute])
 ```
 
 <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode.png?raw=true" alt="" width="396" />
@@ -83,18 +83,26 @@ TimePickerView(selection: $value)
 
 
 ```swift
-TimePickerView(
-  selection: $value,
-  selectionIndicatorRadius: 7,
-  selectionIndicatorColor: .mint,
-  focusColor: .purple,
-  amPMHighlightColor: .yellow,
-  markSize: CGSize(width: 5.5, height: 3),
-  markFill: AnyShapeStyle(Color.white.opacity(0.75)),
-  emphasizedMarkSize: CGSize(width: 2, height: 7),
-  emphasizedMarkFill: AnyShapeStyle(Color.pink)
-)
+TimePickerView(selection: $value)
+  .datePickerShowsMonthBeforeDay(true)
+  .datePickerConfirmationTitle("Select Time")
+  .datePickerConfirmationTint(.pink)
+  .datePickerFocusTint(.purple)
+  .datePickerAMPMHighlightTint(.red)
+  .datePickerMark { Circle() }
+  .datePickerHeavyMark { Rectangle() }
+  .datePickerSelectionIndicator { Circle().size(width: 7, height: 7).fill(.mint) }
+  .datePickerTwentyFourHour(true)
+  .datePickerTwentyFourHourIndicator(.hidden)
 ```
+<!--  selectionIndicatorRadius: 7,-->
+<!--  selectionIndicatorColor: .mint,-->
+<!--  focusColor: .purple,-->
+<!--  amPMHighlightColor: .yellow,-->
+<!--  markSize: CGSize(width: 5.5, height: 3),-->
+<!--  markFill: AnyShapeStyle(Color.white.opacity(0.75)),-->
+<!--  emphasizedMarkSize: CGSize(width: 2, height: 7),-->
+<!--  emphasizedMarkFill: AnyShapeStyle(Color.pink)-->
 
 <img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="198" />
 

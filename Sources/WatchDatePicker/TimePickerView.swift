@@ -13,17 +13,23 @@ import SwiftUI
 public struct TimePickerView: View {
   @Binding var selection: Date
   var mode: DatePicker.Mode = .time
-  var twentyFourHour: Bool?
-  var showsTwentyFourHourIndicator: Bool?
-  var selectionIndicatorRadius: CGFloat?
-  var selectionIndicatorColor: Color?
-  var focusColor: Color?
-  var amPMHighlightColor: Color?
-  var markSize: CGSize?
-  var markFill: AnyShapeStyle?
-  var emphasizedMarkSize: CGSize?
-  var emphasizedMarkFill: AnyShapeStyle?
   var onCompletion: ((Date) -> Void)?
+
+  // @Environment(\.datePickerSelectionIndicator) var selectionIndicator
+  // @Environment(\.datePickerMark) var mark
+  // @Environment(\.datePickerHeavyMark) var heavyMark
+
+  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
+  @Environment(\.datePickerTwentyFourHourIndicator) private var twentyFourHourIndicator
+  @Environment(\.datePickerAMPMHighlightTint) private var amPMHighlightTint
+  @Environment(\.datePickerFocusTint) private var focusTint
+  @Environment(\.datePickerMarkSize) private var markSize
+  @Environment(\.datePickerMarkFill) private var markFill
+  @Environment(\.datePickerHeavyMarkSize) private var heavyMarkSize
+  @Environment(\.datePickerHeavyMarkFill) private var heavyMarkFill
+  // @Environment(\.datePickerSelectionIndicatorShape) private var selectionIndicatorShape
+  @Environment(\.datePickerSelectionIndicatorRadius) private var selectionIndicatorRadius
+  @Environment(\.datePickerSelectionIndicatorFill) private var selectionIndicatorFill
 
   @Environment(\.locale) private var locale
   @Environment(\.dismiss) private var dismiss
@@ -61,8 +67,6 @@ public struct TimePickerView: View {
   /// - Parameters:
   ///   - selection:The date value being displayed and selected.
   ///   - mode: The style that the date picker is using for its layout.
-  ///   - twentyFourHour: …
-  ///   - showsTwentyFourHourIndicator: …
   ///   - selectionIndicatorRadius: The radius of the time selection indicators.
   ///   Default is 2.25.
   ///   When `mode` is `.date`, this value is ignored.
@@ -71,7 +75,6 @@ public struct TimePickerView: View {
   ///   When `mode` is `.date`, this value is ignored.
   ///   - focusColor: The color for the focus outline of time fields.
   ///   Default is green.
-  ///   - amPMHighlightColor: …
   ///   - markSize: …
   ///   - markFill: …
   ///   - emphasizedMarkSize: …
@@ -80,37 +83,31 @@ public struct TimePickerView: View {
   public init(
     selection: Binding<Date>,
     mode: DatePicker.Mode = .time,
-    twentyFourHour: Bool? = nil,
-    showsTwentyFourHourIndicator: Bool? = nil,
-    selectionIndicatorRadius: CGFloat? = nil,
-    selectionIndicatorColor: Color? = nil,
-    focusColor: Color? = nil,
-    amPMHighlightColor: Color? = nil,
-    markSize: CGSize? = nil,
-    markFill: AnyShapeStyle? = nil,
-    emphasizedMarkSize: CGSize? = nil,
-    emphasizedMarkFill: AnyShapeStyle? = nil,
+//    selectionIndicatorRadius: CGFloat? = nil,
+//    selectionIndicatorColor: Color? = nil,
+//    markSize: CGSize? = nil,
+//    markFill: AnyShapeStyle? = nil,
+//    emphasizedMarkSize: CGSize? = nil,
+//    emphasizedMarkFill: AnyShapeStyle? = nil,
     onCompletion: ((Date) -> Void)? = nil
   ) {
     _selection = selection
     self.mode = mode
-    self.twentyFourHour = twentyFourHour
-    self.showsTwentyFourHourIndicator = showsTwentyFourHourIndicator
-    self.selectionIndicatorRadius = selectionIndicatorRadius
-    self.selectionIndicatorColor = selectionIndicatorColor
-    self.focusColor = focusColor
-    self.amPMHighlightColor = amPMHighlightColor
-    self.markSize = markSize
-    self.markFill = markFill
-    self.emphasizedMarkSize = emphasizedMarkSize
-    self.emphasizedMarkFill = emphasizedMarkFill
+//    self.selectionIndicatorRadius = selectionIndicatorRadius
+//    self.selectionIndicatorColor = selectionIndicatorColor
+//    self.markSize = markSize
+//    self.markFill = markFill
+//    self.emphasizedMarkSize = emphasizedMarkSize
+//    self.emphasizedMarkFill = emphasizedMarkFill
     self.onCompletion = onCompletion
     _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
     _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
-    if !(twentyFourHour == true) {
-      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
-      // if hourPeriod == .pm { hour %= 12 }
-    }
+    
+    // FIXME: rework this now that we’re using environment:
+//    if !(twentyFourHour == true) {
+//      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
+//      // if hourPeriod == .pm { hour %= 12 }
+//    }
   }
   
   /// The content and behavior of the view.
@@ -187,57 +184,54 @@ public struct TimePickerView: View {
   private func marks(for component: Component, with geometry: GeometryProxy) -> some View {
     if twentyFourHour == true && component == .hour {
       return ForEach(0..<48) { index in
-        mark(at: index, multiple: 48, isEmphasized: index % 4 == 0, with: geometry)
+        mark(at: index, multiple: 48, heavy: index % 4 == 0, with: geometry)
       }
     } else {
       return ForEach(0..<60) { index in
-        mark(at: index, multiple: 60, isEmphasized: index % 5 == 0, with: geometry)
+        mark(at: index, multiple: 60, heavy: index % 5 == 0, with: geometry)
       }
     }
   }
   
-  private func mark(
-    at index: Int,
-    multiple: Double,
-    isEmphasized: Bool = false,
-    with geometry: GeometryProxy
-  ) -> some View {
-    let effectiveEmphasizedMarkSize = emphasizedMarkSize ?? CGSize(width: 1.5, height: 3)
+  private func mark(at index: Int, multiple: Double, heavy: Bool = false, with geometry: GeometryProxy) -> some View {
+    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 3)
     let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 7)
-    let size = isEmphasized ? effectiveEmphasizedMarkSize : effectiveMarkSize
+    let size = heavy ? effectiveEmphasizedMarkSize : effectiveMarkSize
     
     return Rectangle()
       .size(size)
-      .offset(x: -size.width / 2, y: 0)
+      .offset(x: -size.width / 2.0, y: 0)
       .offset(y: geometry.size.height / 3)
-    // FIXME: opposite should work too
-      .offset(y: isEmphasized ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0)
+      // FIXME: opposite should work too
+      .offset(y: heavy ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
-      .fill(
-        isEmphasized
-        ? emphasizedMarkFill ?? AnyShapeStyle(HierarchicalShapeStyle.primary)
-        : markFill ?? AnyShapeStyle(HierarchicalShapeStyle.tertiary)
-      )
+      .fill(heavy ? heavyMarkFill ?? AnyShapeStyle(.primary) : markFill ?? AnyShapeStyle(.tertiary))
       .position(x: geometry.size.width, y: geometry.size.height)
   }
   
   private func selectionIndicator(for value: Int, multiple: Int, with geometry: GeometryProxy) -> some View {
     let effectiveRadius = selectionIndicatorRadius ?? 2.25
-    let effectiveEmphasizedMarkSize = emphasizedMarkSize ?? CGSize(width: 1.5, height: 3)
+    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 3)
     let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 7)
     let rotationDegrees = Double(value) * 360 / Double(multiple)
     // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
-
+    
     return Circle()
       .size(width: effectiveRadius * 2, height: effectiveRadius * 2)
       .offset(x: -effectiveRadius, y: -effectiveRadius)
       .offset(y: geometry.size.height / 3)
       .offset(y: max(effectiveEmphasizedMarkSize.height, effectiveMarkSize.height))
       .rotation(.degrees(180 + rotationDegrees), anchor: .topLeading)
-      .fill(selectionIndicatorColor ?? .orange)
+      .fill(selectionIndicatorFill ?? AnyShapeStyle(.orange))
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
       .border(.mint)
+    
+//    return self.selectionIndicator!
+//      .offset(y: geometry.size.height / 3)
+//      .rotationEffect(.degrees(180 + rotationDegrees), anchor: .topLeading)
+//      .animation(.spring(), value: value)
+//      .position(x: geometry.size.width, y: geometry.size.height)
   }
   
   private var pickerButtons: some View {
@@ -249,15 +243,15 @@ public struct TimePickerView: View {
           .buttonStyle(.timePickerAMPM(isHighlighted: false))
           .textCase(.uppercase)
           .disabled(true)
-          .opacity(showsTwentyFourHourIndicator != false ? 1 : 0)
+          .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
       } else {
         Button(locale.calendar.amSymbol, action: { hourPeriod = .am })
-          .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .am, highlightColor: amPMHighlightColor))
+          .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .am, highlightColor: amPMHighlightTint))
       }
       
       HStack {
         Button(formattedHour, action: { focusedComponent = .hour })
-          .buttonStyle(.timePickerComponent(isFocused: focusedComponent == .hour, focusColor: focusColor))
+          .buttonStyle(.timePickerComponent(isFocused: focusedComponent == .hour, focusColor: focusTint))
           .focusable()
           .digitalCrownRotation(
             hourBinding,
@@ -290,7 +284,7 @@ public struct TimePickerView: View {
           .padding(.bottom)
         
         Button(formattedMinute, action: { focusedComponent = .minute })
-          .buttonStyle(.timePickerComponent(isFocused: focusedComponent == .minute, focusColor: focusColor))
+          .buttonStyle(.timePickerComponent(isFocused: focusedComponent == .minute, focusColor: focusTint))
           .focusable()
           .digitalCrownRotation(
             minuteBinding,
@@ -310,7 +304,7 @@ public struct TimePickerView: View {
       .font(.title2)
       
       Button(locale.calendar.pmSymbol, action: { hourPeriod = .pm })
-        .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .pm, highlightColor: amPMHighlightColor))
+        .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .pm, highlightColor: amPMHighlightTint))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
       
@@ -326,7 +320,8 @@ struct TimePickerView_Previews: PreviewProvider {
       TimePickerView(selection: .constant(Date()))
         .previewDisplayName("Default")
       
-      TimePickerView(selection: .constant(Date()), twentyFourHour: true)
+      TimePickerView(selection: .constant(Date()))
+        .datePickerTwentyFourHour()
         .environment(\.locale, Locale(identifier: "sv"))
         .previewDisplayName("24-Hour Mode — Swedish")
     }

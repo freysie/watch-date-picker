@@ -12,16 +12,17 @@ public struct DatePickerView: View {
   var mode: DatePicker.Mode?
   var minimumDate: Date?
   var maximumDate: Date?
-  var showsMonthBeforeDay: Bool?
-  var twentyFourHour: Bool?
-  var confirmationTitleKey: LocalizedStringKey?
-  var confirmationColor: Color?
   var onCompletion: ((Date) -> Void)?
   
   @State private var year = 0
   @State private var month = 0
   @State private var day = 0
-  
+
+  @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
+  @Environment(\.datePickerConfirmationTint) private var confirmationTint
+  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
+  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
+
   @Environment(\.locale) private var locale
   @Environment(\.dismiss) private var dismiss
   
@@ -44,10 +45,8 @@ public struct DatePickerView: View {
   }
   
   private var yearRange: Range<Int> {
-    let thisYear = locale.calendar.component(.year, from: Date())
-    // TODO: make this infinity
-    var lowerBound = thisYear - 100
-    var upperBound = thisYear + 100
+    var lowerBound = 0
+    var upperBound = 9999
     if let minimumDate = minimumDate {
       lowerBound = locale.calendar.component(.year, from: minimumDate)
     }
@@ -70,20 +69,12 @@ public struct DatePickerView: View {
     mode: DatePicker.Mode = .time,
     minimumDate: Date? = nil,
     maximumDate: Date? = nil,
-    showsMonthBeforeDay: Bool? = nil,
-    twentyFourHour: Bool = false,
-    confirmationTitleKey: LocalizedStringKey? = nil,
-    confirmationColor: Color? = nil,
     onCompletion: ((Date) -> Void)? = nil
   ) {
     _selection = selection
     self.mode = mode
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
-    self.showsMonthBeforeDay = showsMonthBeforeDay
-    self.twentyFourHour = twentyFourHour
-    self.confirmationTitleKey = confirmationTitleKey
-    self.confirmationColor = confirmationColor
     self.onCompletion = onCompletion
     _year = State(initialValue: locale.calendar.component(.year, from: self.selection))
     _month = State(initialValue: locale.calendar.component(.month, from: self.selection))
@@ -96,7 +87,6 @@ public struct DatePickerView: View {
       TimePickerView(
         selection: $selection,
         mode: mode,
-        twentyFourHour: twentyFourHour,
         onCompletion: confirm
       )
     } else {
@@ -130,7 +120,6 @@ public struct DatePickerView: View {
           TimePickerView(
             selection: .constant(newSelection),
             mode: mode,
-            twentyFourHour: twentyFourHour,
             onCompletion: confirm
           )
           // TODO: make this navigation title white somehow?
@@ -141,6 +130,7 @@ public struct DatePickerView: View {
             Text(confirmationTitleKey)
           } else {
             Text("Continue", bundle: .module)
+            // Text("\(newSelection)", bundle: .module)
           }
         }
       } else {
@@ -155,7 +145,7 @@ public struct DatePickerView: View {
     }
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
-    .tint(confirmationColor ?? .green)
+    .tint(confirmationTint ?? .green)
   }
   
   private var componentPickers: some View {
@@ -176,13 +166,14 @@ public struct DatePickerView: View {
   
   private var yearPicker: some View {
     Picker(selection: $year) {
-      ForEach(yearRange) { year in
+      ForEach(yearRange, id: \.self) { year in
         Text(String(year))
           .minimumScaleFactor(0.5)
           .tag(year)
       }
     } label: {
       Text("Year", bundle: .module)
+        .minimumScaleFactor(0.8)
     }
     //.focusable()
   }
@@ -196,19 +187,21 @@ public struct DatePickerView: View {
       }
     } label: {
       Text("Month", bundle: .module)
+        .minimumScaleFactor(0.8)
     }
     //.focusable()
   }
   
   private var dayPicker: some View {
     Picker(selection: $day) {
-      ForEach(dayRange) { day in
+      ForEach(dayRange, id: \.self) { day in
         Text(String(day))
           .minimumScaleFactor(0.5)
           .tag(day)
       }
     } label: {
       Text("Day", bundle: .module)
+        .minimumScaleFactor(0.8)
     }
     //.focusable()
     .id([month, year].map(String.init).joined(separator: "."))
