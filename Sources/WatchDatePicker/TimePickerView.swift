@@ -10,6 +10,9 @@ import SwiftUI
 /// ![](TimePickerView.png)
 /// ![](TimePickerView~custom.png)
 @available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 public struct TimePickerView: View {
   @Binding var selection: Date
   var mode: DatePicker.Mode = .time
@@ -314,6 +317,9 @@ public struct TimePickerView: View {
   }
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 struct TimePickerView_Previews: PreviewProvider {
   static var previews: some View {
     Group {

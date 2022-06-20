@@ -1,11 +1,17 @@
 import SwiftUI
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 internal extension ButtonStyle where Self == TimePickerComponentButtonStyle {
   static func timePickerComponent(isFocused: Bool = false, focusColor: Color? = nil, width: CGFloat? = nil) -> Self {
     .init(isFocused: isFocused, focusColor: focusColor, width: width)
   }
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 internal struct TimePickerComponentButtonStyle: ButtonStyle {
   var isFocused: Bool
   var focusColor: Color?
@@ -21,16 +27,25 @@ internal struct TimePickerComponentButtonStyle: ButtonStyle {
   }
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 internal extension Color {
   static let timePickerComponentButtonBorder = Color(white: 0.298)
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 internal extension ButtonStyle where Self == TimePickerAMPMButtonStyle {
   static func timePickerAMPM(isHighlighted: Bool = false, highlightColor: Color? = nil) -> Self {
     .init(isHighlighted: isHighlighted, highlightColor: highlightColor)
   }
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 internal struct TimePickerAMPMButtonStyle: ButtonStyle {
   var isHighlighted: Bool
   var highlightColor: Color?

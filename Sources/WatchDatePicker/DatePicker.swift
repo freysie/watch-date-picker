@@ -10,6 +10,9 @@ import SwiftUI
 ///
 /// ![](DateAndTimeMode.png)
 @available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 public struct DatePicker: View {
   public enum Mode {
     case time
@@ -193,6 +196,9 @@ public struct DatePicker: View {
   }
 }
 
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 struct DatePicker_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
