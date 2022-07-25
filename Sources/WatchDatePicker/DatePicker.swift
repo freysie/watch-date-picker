@@ -29,12 +29,12 @@ public struct DatePicker: View {
   var timeStyle: DateFormatter.Style = .short
   let displayedComponents: Components
   var onCompletion: ((Date) -> Void)?
-  
+
   private func _onCompletion(_ date: Date) {
     pickerViewIsPresented = false
     onCompletion?(date)
   }
-  
+
   @State private var pickerViewIsPresented = false
   
   @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
@@ -45,9 +45,9 @@ public struct DatePicker: View {
   private var formattedSelection: String {
     let formatter = DateFormatter()
     formatter.locale = locale
-    formatter.dateStyle = mode == .time ? .none : dateStyle
-    formatter.timeStyle = mode == .date ? .none : timeStyle
-    if twentyFourHour == true && mode == .time {
+    formatter.dateStyle = displayedComponents == .hourAndMinute ? .none : dateStyle
+    formatter.timeStyle = displayedComponents == .date ? .none : timeStyle
+    if twentyFourHour == true && displayedComponents.contains(.hourAndMinute) {
       formatter.dateFormat = "HH:mm"
     }
     return formatter.string(from: selection)
@@ -71,6 +71,66 @@ public struct DatePicker: View {
     public static let hourAndMinute = Self(rawValue: 1 << 1)
   }
   
+//  /// Creates a date picker instance with the specified properties.
+//  /// - Parameters:
+//  ///   - label: The key for the localized title of `self`, describing its purpose.
+//  ///   - selection: The date value being displayed and selected.
+//  ///   - mode: The style that the date picker is using for its layout.
+//  ///   - minimumDate: The minimum date that a date picker can show.
+//  ///   - maximumDate: The maximum date that a date picker can show.
+//  ///   - showsMonthBeforeDay: Whether to display month before day. (MM DD YYYY vs. DD MM YYYY)
+//  ///   - twentyFourHour: Whether to use a 24-hour clock system where the day runs from midnight to midnight, dividing into 24 hours.
+//  ///   - onCompletion: A callback that will be invoked when the operation has succeeded.
+//  init(
+//    _ label: LocalizedStringKey,
+//    selection: Binding<Date>,
+//    mode: Mode? = nil,
+//    minimumDate: Date? = nil,
+//    maximumDate: Date? = nil,
+//    onCompletion: ((Date) -> Void)? = nil
+//  ) {
+//    self.titleKey = label
+//    _selection = selection
+//    if let value = mode { self.mode = value }
+//    self.minimumDate = minimumDate
+//    self.maximumDate = maximumDate
+//    self.onCompletion = onCompletion
+//    displayedComponents = [.hourAndMinute, .date]
+//  }
+
+  /// The content and behavior of the view.
+  public var body: some View {
+    Button(action: { pickerViewIsPresented = true }) {
+      VStack(alignment: .leading) {
+        if let label = titleKey {
+          Text(label)
+        }
+        
+        Text(formattedSelection)
+          .font(titleKey != nil ? .footnote : .body)
+          .foregroundStyle(titleKey != nil ? .secondary : .primary)
+      }
+    }
+    // TODO: determine the exact differences (if any) between `.sheet` and this on watchOS:
+    .fullScreenCover(isPresented: $pickerViewIsPresented) {
+      NavigationView {
+        DatePickerView(
+          selection: $selection,
+          mode: mode,
+          minimumDate: minimumDate,
+          maximumDate: maximumDate,
+          onCompletion: _onCompletion
+        )
+      }
+    }
+  }
+}
+
+@available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension DatePicker {
   /// Creates an instance that selects a Date with an unbounded range.
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
@@ -140,125 +200,71 @@ public struct DatePicker: View {
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
-
-  /// Creates a date picker instance with the specified properties.
-  /// - Parameters:
-  ///   - label: The key for the localized title of `self`, describing its purpose.
-  ///   - selection: The date value being displayed and selected.
-  ///   - mode: The style that the date picker is using for its layout.
-  ///   - minimumDate: The minimum date that a date picker can show.
-  ///   - maximumDate: The maximum date that a date picker can show.
-  ///   - showsMonthBeforeDay: Whether to display month before day. (MM DD YYYY vs. DD MM YYYY)
-  ///   - twentyFourHour: Whether to use a 24-hour clock system where the day runs from midnight to midnight, dividing into 24 hours.
-  ///   - onCompletion: A callback that will be invoked when the operation has succeeded.
-  public init(
-    _ label: LocalizedStringKey,
-    selection: Binding<Date>,
-    mode: Mode? = nil,
-    minimumDate: Date? = nil,
-    maximumDate: Date? = nil,
-    onCompletion: ((Date) -> Void)? = nil
-  ) {
-    self.titleKey = label
-    _selection = selection
-    if let value = mode { self.mode = value }
-    self.minimumDate = minimumDate
-    self.maximumDate = maximumDate
-    self.onCompletion = onCompletion
-    displayedComponents = [.hourAndMinute, .date]
-  }
-
-  /// The content and behavior of the view.
-  public var body: some View {
-    Button(action: { pickerViewIsPresented = true }) {
-      VStack(alignment: .leading) {
-        if let label = titleKey {
-          Text(label)
-        }
-        
-        Text(formattedSelection)
-          .font(titleKey != nil ? .footnote : .body)
-          .foregroundStyle(titleKey != nil ? .secondary : .primary)
-      }
-    }
-    // TODO: determine the exact differences (if any) between `.sheet` and this on watchOS:
-    .fullScreenCover(isPresented: $pickerViewIsPresented) {
-      NavigationView {
-        DatePickerView(
-          selection: $selection,
-          mode: mode,
-          minimumDate: minimumDate,
-          maximumDate: maximumDate,
-          onCompletion: _onCompletion
-        )
-      }
-    }
-  }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
-struct DatePicker_Previews: PreviewProvider {
-  static var previews: some View {
-    NavigationView {
-      TimePickerView(selection: .constant(Date()), mode: .time)
-        .datePickerSelectionIndicatorFill(.mint)
-        .toolbar {
-          ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", role: .cancel, action: {})
-          }
-        }
-    }
-    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-    .previewDisplayName("Mode: Time")
-    
-    NavigationView {
-      DatePickerView(selection: .constant(Date()), mode: .date)
-        .toolbar {
-          ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", role: .cancel, action: {})
-          }
-        }
-    }
-    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-    .previewDisplayName("Mode: Date (Series 6 – 44mm)")
-    .environment(\.locale, Locale(identifier: "da-DK"))
-    
-    NavigationView {
-      DatePickerView(selection: .constant(Date()), mode: .date)
-        .toolbar {
-          ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", role: .cancel, action: {})
-          }
-        }
-    }
-    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 7 - 45mm"))
-    .previewDisplayName("Mode: Date (Series 7 – 45mm)")
-    .environment(\.locale, Locale(identifier: "da-DK"))
-    
-    NavigationView {
-      DatePickerView(selection: .constant(Date()), mode: .dateAndTime)
-        .toolbar {
-          ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", role: .cancel, action: {})
-          }
-        }
-    }
-    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-    .previewDisplayName("Mode: Date & Time (Step 1)")
-    
-    NavigationView {
-      NavigationLink(isActive: .constant(true)) {
-        TimePickerView(selection: .constant(Date()), mode: .dateAndTime)
-          .datePickerTwentyFourHour()
-          .tint(.pink)
-      } label: {
-        EmptyView()
-      }
-      .opacity(0)
-    }
-    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-    .previewDisplayName("Mode: Date & Time (Step 2)")
-  }
-}
+//@available(macOS, unavailable)
+//@available(iOS, unavailable)
+//@available(tvOS, unavailable)
+//struct DatePicker_Previews: PreviewProvider {
+//  static var previews: some View {
+//    NavigationView {
+//      TimePickerView(selection: .constant(Date()), mode: .time)
+//        .datePickerSelectionIndicatorFill(.mint)
+//        .toolbar {
+//          ToolbarItem(placement: .cancellationAction) {
+//            Button("Cancel", role: .cancel, action: {})
+//          }
+//        }
+//    }
+//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
+//    .previewDisplayName("Mode: Time")
+//
+//    NavigationView {
+//      DatePickerView(selection: .constant(Date()), mode: .date)
+//        .toolbar {
+//          ToolbarItem(placement: .cancellationAction) {
+//            Button("Cancel", role: .cancel, action: {})
+//          }
+//        }
+//    }
+//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
+//    .previewDisplayName("Mode: Date (Series 6 – 44mm)")
+//    .environment(\.locale, Locale(identifier: "da-DK"))
+//
+//    NavigationView {
+//      DatePickerView(selection: .constant(Date()), mode: .date)
+//        .toolbar {
+//          ToolbarItem(placement: .cancellationAction) {
+//            Button("Cancel", role: .cancel, action: {})
+//          }
+//        }
+//    }
+//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 7 - 45mm"))
+//    .previewDisplayName("Mode: Date (Series 7 – 45mm)")
+//    .environment(\.locale, Locale(identifier: "da-DK"))
+//
+//    NavigationView {
+//      DatePickerView(selection: .constant(Date()), mode: .dateAndTime)
+//        .toolbar {
+//          ToolbarItem(placement: .cancellationAction) {
+//            Button("Cancel", role: .cancel, action: {})
+//          }
+//        }
+//    }
+//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
+//    .previewDisplayName("Mode: Date & Time (Step 1)")
+//
+//    NavigationView {
+//      NavigationLink(isActive: .constant(true)) {
+//        TimePickerView(selection: .constant(Date()), mode: .dateAndTime)
+//          .datePickerTwentyFourHour()
+//          .tint(.pink)
+//      } label: {
+//        EmptyView()
+//      }
+//      .opacity(0)
+//    }
+//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
+//    .previewDisplayName("Mode: Date & Time (Step 2)")
+//  }
+//}

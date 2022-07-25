@@ -178,6 +178,11 @@ public struct DatePickerView: View {
       Text("Year", bundle: .module)
         .minimumScaleFactor(0.8)
     }
+    // .overlay {
+    //   RoundedRectangle(cornerRadius: 17, style: .continuous)
+    //     .strokeBorder(.pink, lineWidth: 2)
+    //     .padding(.top, 17)
+    // }
     //.focusable()
   }
   
@@ -217,4 +222,3 @@ public struct DatePickerView: View {
     }
   }
 }
-  

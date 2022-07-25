@@ -1,16 +1,16 @@
 # Watch Date Picker
 
-A customizable date picker for watchOS and SwiftUI.
+A date picker for watchOS and SwiftUI.
 
 
 ## Installation
 
-Add the https://github.com/freyaariel/watch-date-picker package, and add the _WatchDatePicker_ product to your app’s WatchKit extension target.
+Add the https://github.com/freyaalminde/watch-date-picker package, and add the _WatchDatePicker_ product to your app’s WatchKit extension target.
 
 
 ## Documentation
 
-Online documentation is available at [freyaariel.github.io/documentation/watchdatepicker](https://freyaariel.github.io/documentation/watchdatepicker/).
+Online documentation is available at [freyaalminde.github.io/documentation/watchdatepicker](https://freyaalminde.github.io/documentation/watchdatepicker/).
 
 
 ## Overview
@@ -24,25 +24,25 @@ The `DatePicker` view displays a button with a title and the selected value. Whe
 DatePicker("Date & Time", selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode.png?raw=true" alt="" width="594" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode.png?raw=true" alt="" width="594" />
 
 
 ### Date Mode
 
 ```swift
-DatePicker("Date", selection: $value, displayedComponents: [.date])
+DatePicker("Date", selection: $value, displayedComponents: .date)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode.png?raw=true" alt="" width="396" />
 
 
 ### Time Mode
 
 ```swift
-DatePicker("Time", selection: $value, displayedComponents: [.hourAndMinute])
+DatePicker("Time", selection: $value, displayedComponents: .hourAndMinute)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode.png?raw=true" alt="" width="396" />
 
 
 ### Outside of Lists
@@ -56,7 +56,7 @@ Both `DatePickerView` and `TimePickerView` can be used independently of `DatePic
 DatePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView.png?raw=true" alt="" width="198" />
 
 
 ```swift
@@ -64,7 +64,7 @@ DatePickerView(selection: $value)
   .environment(\.locale, Locale(identifier: "fr"))
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DatePickerView~fr.png?raw=true" alt="" width="198" />
 
 
 #### Time Picker View
@@ -73,21 +73,15 @@ DatePickerView(selection: $value)
 TimePickerView(selection: $value)
 ```
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView.png?raw=true" alt="" width="198" />
 
 
 ```swift
 TimePickerView(selection: $value)
-  .datePickerShowsMonthBeforeDay(true)
-  .datePickerConfirmationTitle("Select Time")
-  .datePickerConfirmationTint(.pink)
-  .datePickerFocusTint(.purple)
-  .datePickerAMPMHighlightTint(.red)
-  .datePickerMark { Circle() }
-  .datePickerHeavyMark { Rectangle() }
-  .datePickerSelectionIndicator { Circle().size(width: 7, height: 7).fill(.mint) }
-  .datePickerTwentyFourHour(true)
-  .datePickerTwentyFourHourIndicator(.hidden)
+  .confirmationTint(.pink)
+  .monthBeforeDay(true)
+  .twentyFourHour(true)
+  .twentyFourHourIndicator(.hidden)
 ```
 <!--  selectionIndicatorRadius: 7,-->
 <!--  selectionIndicatorColor: .mint,-->
@@ -98,7 +92,7 @@ TimePickerView(selection: $value)
 <!--  emphasizedMarkSize: CGSize(width: 2, height: 7),-->
 <!--  emphasizedMarkFill: AnyShapeStyle(Color.pink)-->
 
-<img src="https://github.com/freyaariel/watch-date-picker/blob/main/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimePickerView~custom.png?raw=true" alt="" width="198" />
 
 <!--
 

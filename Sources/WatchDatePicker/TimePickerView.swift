@@ -95,7 +95,7 @@ public struct TimePickerView: View {
     // print((calendar, locale.calendar, calendar == locale.calendar))
     // FIXME: rework this now that we’re using environment:
 //    if !(twentyFourHour == true) {
-//      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
+      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
 //      // if hourPeriod == .pm { hour %= 12 }
 //    }
   }
@@ -106,13 +106,13 @@ public struct TimePickerView: View {
       clockFace
       pickerButtons
     }
-    .drawingGroup(opaque: true)
-    .edgesIgnoringSafeArea(.all)
-    .toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button("Done", action: _onCompletion)
-      }
-    }
+    // .drawingGroup(opaque: true)
+    // .edgesIgnoringSafeArea(.all)
+//    .toolbar {
+//      ToolbarItem(placement: .confirmationAction) {
+//        Button("Done", action: _onCompletion)
+//      }
+//    }
     // TODO: AM/PM wrapping
     //    .onChange(of: $value) { newValue in
     //      if newValue.
@@ -137,8 +137,8 @@ public struct TimePickerView: View {
         selectionIndicator(for: minute, multiple: 60, with: geometry)
       }
     }
-    .padding(-10)
-    .offset(y: 10)
+    .padding(-13)
+    .offset(y: 11.5)
   }
   
   private func labels(with geometry: GeometryProxy) -> some View {
@@ -160,14 +160,17 @@ public struct TimePickerView: View {
     }
   }
   
+  private static let offsetLabels = [1, 2, 3, 4, 5, 7, 8, 9].map(String.init)
+  
   private func label(_ string: String, at index: Int, with geometry: GeometryProxy) -> some View {
     ZStack {
       Text(string)
         .rotationEffect(.degrees(-Double(index) * 360 / 12), anchor: .center)
-        .padding(.bottom, geometry.size.height * 0.58)
+        .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(string) ? 0.62 : 0.6))
     }
     .rotationEffect(.degrees(Double(index) * 360 / 12), anchor: .center)
     .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+    .font(.system(size: 15))
   }
   
   private func marks(for component: Component, with geometry: GeometryProxy) -> some View {
@@ -183,15 +186,15 @@ public struct TimePickerView: View {
   }
   
   private func mark(at index: Int, multiple: Double, heavy: Bool = false, with geometry: GeometryProxy) -> some View {
-    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 3)
-    let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 7)
+    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 2.5)
+    let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 6.5)
     let size = heavy ? effectiveEmphasizedMarkSize : effectiveMarkSize
     
     return Rectangle()
       .size(size)
       .offset(x: -size.width / 2.0, y: 0)
       .offset(y: geometry.size.height / 3)
-      // FIXME: opposite should work too
+      // .offset(y: (heavy ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0) + 0.5)
       .offset(y: heavy ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
       .fill(heavy ? heavyMarkFill ?? AnyShapeStyle(.primary) : markFill ?? AnyShapeStyle(.tertiary))
@@ -209,12 +212,11 @@ public struct TimePickerView: View {
       .size(width: effectiveRadius * 2, height: effectiveRadius * 2)
       .offset(x: -effectiveRadius, y: -effectiveRadius)
       .offset(y: geometry.size.height / 3)
-      .offset(y: max(effectiveEmphasizedMarkSize.height, effectiveMarkSize.height))
+      .offset(y: max(effectiveEmphasizedMarkSize.height, effectiveMarkSize.height) - 1)
       .rotation(.degrees(180 + rotationDegrees), anchor: .topLeading)
       .fill(selectionIndicatorFill ?? AnyShapeStyle(.orange))
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
-      .border(.mint)
     
 //    return self.selectionIndicator!
 //      .offset(y: geometry.size.height / 3)
@@ -228,14 +230,19 @@ public struct TimePickerView: View {
       Spacer()
       
       if twentyFourHour == true {
-        Button("24 hour", action: {})
+        Button("24hr", action: {})
           .buttonStyle(.timePickerAMPM(isHighlighted: false))
           .textCase(.uppercase)
           .disabled(true)
           .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
+          .offset(y: 4)
       } else {
-        Button(locale.calendar.amSymbol, action: { hourPeriod = .am })
+        Button(action: { hourPeriod = .am }) {
+          Text(verbatim: locale.calendar.amSymbol)
+            .tracking(-1)
+        }
           .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .am, highlightColor: amPMHighlightTint))
+          .offset(y: -1)
       }
       
       HStack {
@@ -256,7 +263,8 @@ public struct TimePickerView: View {
         //          }
         
         Text(":")
-          .padding(.bottom)
+          .padding(.bottom, 7)
+          .padding(.horizontal, -1)
         
         Button(formattedMinute, action: { focusedComponent = .minute })
           .buttonStyle(.timePickerComponent(isFocused: focusedComponent == .minute, focusColor: focusTint))
@@ -274,12 +282,16 @@ public struct TimePickerView: View {
         //            WKInterfaceDevice.current().play(.click)
         //          }
       }
-      .font(.title2)
+      .font(.system(size: 32))
       
-      Button(locale.calendar.pmSymbol, action: { hourPeriod = .pm })
+      Button(action: { hourPeriod = .pm }) {
+        Text(verbatim: locale.calendar.pmSymbol)
+          .tracking(-0.6)
+      }
         .buttonStyle(.timePickerAMPM(isHighlighted: hourPeriod == .pm, highlightColor: amPMHighlightTint))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
+        .offset(y: 3)
       
       Spacer()
     }

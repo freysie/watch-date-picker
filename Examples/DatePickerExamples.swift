@@ -6,35 +6,43 @@ struct DatePickerExamples: View {
 
   var body: some View {
     TabView {
-      NavigationView {
-        TimePickerView(selection: $value)
-          .datePickerFocusTint(.purple)
-          .datePickerAMPMHighlightTint(.yellow)
-          .datePickerMarkSize(CGSize(width: 5.5, height: 3))
-          .datePickerMarkFill(.white.opacity(0.75))
-          .datePickerHeavyMarkSize(CGSize(width: 2, height: 7))
-          .datePickerHeavyMarkFill(.pink)
-          .datePickerSelectionIndicatorRadius(7)
-          .datePickerSelectionIndicatorFill(.mint)
-
-//        .datePickerSelectionIndicator {
-//          Circle()
-//            .size(width: 14, height: 14)
-//            .fill(.mint)
-//        }
-//        .datePickerMark {
-//          Rectangle()
-//            .size(width: 5.5, height: 3)
-//            .fill(.white.opacity(0.75))
-//        }
-//        .datePickerHeavyMark {
-//          Rectangle()
-//            .size(width: 2, height: 7)
-//            .fill(.pink)
-//        }
+      Form {
+        TimePicker()
         
-//          .offset(y: 5)
+        TimePicker()
+          .datePickerTwentyFourHour()
       }
+      
+      //      NavigationView {
+      TimePickerView(selection: $value)
+        .datePickerFocusTint(.purple)
+        .datePickerAMPMHighlightTint(.yellow)
+        .datePickerMarkSize(CGSize(width: 5.5, height: 3))
+        .datePickerMarkFill(.white.opacity(0.75))
+        .datePickerHeavyMarkSize(CGSize(width: 2, height: 7))
+        .datePickerHeavyMarkFill(.pink)
+        .datePickerSelectionIndicatorRadius(7)
+        .datePickerSelectionIndicatorFill(.mint)
+        .ignoresSafeArea()
+      
+      //        .datePickerSelectionIndicator {
+      //          Circle()
+      //            .size(width: 14, height: 14)
+      //            .fill(.mint)
+      //        }
+      //        .datePickerMark {
+      //          Rectangle()
+      //            .size(width: 5.5, height: 3)
+      //            .fill(.white.opacity(0.75))
+      //        }
+      //        .datePickerHeavyMark {
+      //          Rectangle()
+      //            .size(width: 2, height: 7)
+      //            .fill(.pink)
+      //        }
+      
+      //          .offset(y: 5)
+      //      }
 
       Form {
         WatchDatePicker.DatePicker("Date & Time", selection: $value)
@@ -43,34 +51,36 @@ struct DatePickerExamples: View {
       }
       
       Form {
-        DatePicker("Date", selection: $value, mode: .date, maximumDate: Date())
+        DatePicker("Date", selection: $value, in: ...Date(), displayedComponents: [.date])
       }
       
       Form {
-        DatePicker("Time", selection: $value, mode: .time)
-        DatePicker("Time (24h)", selection: $value, mode: .time)
+        DatePicker("Time", selection: $value, displayedComponents: [.hourAndMinute])
+        DatePicker("Time (24h)", selection: $value, displayedComponents: [.hourAndMinute])
           .datePickerTwentyFourHour()
       }
 
-      NavigationView {
-        DatePickerView(selection: $value)
-      }
-
-      NavigationView {
-        DatePickerView(selection: $value, mode: .date)
-          .datePickerShowsMonthBeforeDay(false)
-      }
-
-      NavigationView {
-        DatePickerView(selection: $value, mode: .date)
-          .environment(\.locale, Locale(identifier: "fr"))
-      }
-
-      NavigationView {
-        DatePickerView(selection: $value, mode: .date)
-          .datePickerConfirmationTint(.mint)
-          .datePickerConfirmationTitle("Yaaas")
-          .environment(\.locale, Locale(identifier: "ja"))
+      Group {
+        NavigationView {
+          DatePickerView(selection: $value)
+        }
+        
+        NavigationView {
+          DatePickerView(selection: $value)
+            .datePickerShowsMonthBeforeDay(false)
+        }
+        
+        NavigationView {
+          DatePickerView(selection: $value)
+            .environment(\.locale, Locale(identifier: "fr"))
+        }
+        
+        NavigationView {
+          DatePickerView(selection: $value)
+            .datePickerConfirmationTint(.mint)
+            .datePickerConfirmationTitle("Yaaas")
+            .environment(\.locale, Locale(identifier: "ja"))
+        }
       }
 
       NavigationView {

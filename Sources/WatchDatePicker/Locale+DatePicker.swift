@@ -22,7 +22,7 @@ extension Locale {
   //    return [.year, .day, .month]
   //  }
 
-  internal static var watchDatePickerAvailableIdentifiers: [String] {
+  static var watchDatePickerAvailableIdentifiers: [String] {
     [
       "ar",
       "da",
