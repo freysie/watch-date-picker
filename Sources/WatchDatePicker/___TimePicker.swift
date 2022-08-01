@@ -5,7 +5,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct TimePicker: View {
-  @State private var pickerViewIsPresented = true
+  @State private var pickerViewIsPresented = false
   
   public init() {}
   
@@ -21,7 +21,7 @@ public struct TimePicker: View {
     }
     .fullScreenCover(isPresented: $pickerViewIsPresented) {
       ZStack(alignment: .bottom) {
-        TimePickerView(selection: .constant(Date()))
+        TimeInputView(selection: .constant(Date()))
         
         HStack {
           Button(action: { pickerViewIsPresented = false }) {
@@ -45,7 +45,8 @@ public struct TimePicker: View {
       // .statusBar(hidden: true)
       .toolbar {
         ToolbarItem(placement: .confirmationAction) {
-          Button("", action: {}).foregroundColor(.clear)
+          Button("", action: {})
+            .accessibilityHidden(true)
         }
       }
       .navigationBarHidden(true)

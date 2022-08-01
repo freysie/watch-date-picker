@@ -2,33 +2,26 @@ import SwiftUI
 
 /// A control for the inputting of date values.
 ///
-/// The `DatePickerView` displays three pickers for month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
+/// The `DateInputView` displays three pickers for month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
 ///
-/// ![](DatePickerView.png)
-/// ![](DatePickerView~fr.png)
+/// ![](DateInputView.png)
+/// ![](DateInputView~fr.png)
 @available(watchOS 8, *)
 @available(macOS, unavailable)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
-public struct DatePickerView: View {
+public struct DateInputView: View {
   @Binding var selection: Date
-  var mode: DatePicker.Mode?
   var minimumDate: Date?
   var maximumDate: Date?
-  var onCompletion: ((Date) -> Void)?
-  
+
   @State private var year = 0
   @State private var month = 0
   @State private var day = 0
 
-  @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
-  @Environment(\.datePickerConfirmationTint) private var confirmationTint
   @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
-  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
-
   @Environment(\.locale) private var locale
-  @Environment(\.dismiss) private var dismiss
-  
+
   private var newSelection: Date {
     locale.calendar.date(from: DateComponents(
       year: year,
@@ -38,15 +31,7 @@ public struct DatePickerView: View {
       minute: locale.calendar.component(.minute, from: selection)
     ))!
   }
-  
-  private var formattedSelection: String {
-    let formatter = DateFormatter()
-    formatter.locale = locale
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .none
-    return formatter.string(from: newSelection)
-  }
-  
+
   private var yearRange: Range<Int> {
     var lowerBound = 0
     var upperBound = 9999
@@ -58,100 +43,55 @@ public struct DatePickerView: View {
     }
     return lowerBound..<(upperBound + 1)
   }
-  
+
   private var monthSymbols: [EnumeratedSequence<[String]>.Element] {
     Array(locale.calendar.shortMonthSymbols.enumerated())
   }
-  
+
   private var dayRange: Range<Int> {
     locale.calendar.range(of: .day, in: .month, for: newSelection)!
   }
-  
+
   public init(
     selection: Binding<Date>,
-    mode: DatePicker.Mode = .time,
     minimumDate: Date? = nil,
-    maximumDate: Date? = nil,
-    onCompletion: ((Date) -> Void)? = nil
+    maximumDate: Date? = nil
   ) {
     _selection = selection
-    self.mode = mode
+
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
-    self.onCompletion = onCompletion
+
     _year = State(initialValue: locale.calendar.component(.year, from: self.selection))
     _month = State(initialValue: locale.calendar.component(.month, from: self.selection))
     _day = State(initialValue: locale.calendar.component(.day, from: self.selection))
   }
-  
+
   /// The content and behavior of the view.
   public var body: some View {
-    if let mode = mode, mode == .time {
-      TimePickerView(
-        selection: $selection,
-        mode: mode,
-        onCompletion: confirm
-      )
-    } else {
-      VStack(spacing: 15) {
-        componentPickers
-        
-        if mode != nil {
-          confirmationAction
-        }
-      }
-      .padding(.horizontal, 10)
-      .padding(.vertical, 5)
-      .toolbar {
-        ToolbarItem(placement: .confirmationAction) {
-          Button("", action: {}).foregroundColor(.clear)
-        }
-      }
-    }
-  }
-  
-  private func confirm(_ date: Date) {
-    if mode == .date { dismiss() }
-    onCompletion?(date)
-    selection = date
-  }
-  
-  private var confirmationAction: some View {
-    Group {
-      if let mode = mode, mode == .dateAndTime {
-        NavigationLink {
-          TimePickerView(
-            selection: .constant(newSelection),
-            mode: mode,
-            onCompletion: confirm
-          )
-          // TODO: make this navigation title white somehow?
-            .navigationTitle(formattedSelection)
-            .navigationBarTitleDisplayMode(.inline)
-        } label: {
-          if let confirmationTitleKey = confirmationTitleKey {
-            Text(confirmationTitleKey)
-          } else {
-            Text("Continue", bundle: .module)
-            // Text("\(newSelection)", bundle: .module)
-          }
-        }
-      } else {
-        Button(action: { confirm(newSelection) }) {
-          if let confirmationTitleKey = confirmationTitleKey {
-            Text(confirmationTitleKey)
-          } else {
-            Text("Done", bundle: .module)
-          }
-        }
-      }
-    }
-    .buttonStyle(.borderedProminent)
-    .foregroundStyle(.background)
-    .tint(confirmationTint ?? .green)
-  }
-  
-  private var componentPickers: some View {
+//    if let mode = mode, mode == .time {
+//      TimeInputView(
+//        selection: $selection,
+//        mode: mode,
+//        onCompletion: confirm
+//      )
+//    } else {
+//      VStack(spacing: 15) {
+//        componentPickers
+//
+////        if mode != nil {
+////          confirmationAction
+////        }
+//      }
+//      .padding(.horizontal, 10)
+//      .padding(.vertical, 5)
+//      .toolbar {
+//        ToolbarItem(placement: .confirmationAction) {
+//          Button("", action: {})
+//            .accessibilityHidden(true)
+//        }
+//      }
+
     HStack {
       if showsMonthBeforeDay ?? locale.monthComesBeforeDay {
         monthPicker
@@ -164,9 +104,54 @@ public struct DatePickerView: View {
     }
     .pickerStyle(.wheel)
     .textCase(.uppercase)
+    // .padding(.horizontal, 10)
+    .scenePadding(.horizontal)
+    .padding(.vertical, 5)
     // .minimumScaleFactor(0.5)
+    .onChange(of: newSelection) { selection = $0 }
   }
-  
+
+//  private func confirm(_ date: Date) {
+////    if mode == .date { dismiss() }
+//    onCompletion?(date)
+//    selection = date
+//  }
+
+//  private var confirmationAction: some View {
+//    Group {
+//      if let mode = mode, mode == .dateAndTime {
+//        NavigationLink {
+//          TimeInputView(
+//            selection: .constant(newSelection),
+//            mode: mode,
+//            onCompletion: confirm
+//          )
+//          // TODO: make this navigation title white somehow?
+//            .navigationTitle(formattedSelection)
+//            .navigationBarTitleDisplayMode(.inline)
+//        } label: {
+//          if let confirmationTitleKey = confirmationTitleKey {
+//            Text(confirmationTitleKey)
+//          } else {
+//            Text("Continue", bundle: .module)
+//            // Text("\(newSelection)", bundle: .module)
+//          }
+//        }
+//      } else {
+//        Button(action: { confirm(newSelection) }) {
+//          if let confirmationTitleKey = confirmationTitleKey {
+//            Text(confirmationTitleKey)
+//          } else {
+//            Text("Done", bundle: .module)
+//          }
+//        }
+//      }
+//    }
+//    .buttonStyle(.borderedProminent)
+//    .foregroundStyle(.background)
+//    .tint(confirmationTint ?? .green)
+//  }
+
   private var yearPicker: some View {
     Picker(selection: $year) {
       ForEach(yearRange, id: \.self) { year in
@@ -185,7 +170,7 @@ public struct DatePickerView: View {
     // }
     //.focusable()
   }
-  
+
   private var monthPicker: some View {
     Picker(selection: $month) {
       ForEach(monthSymbols, id: \.offset) { offset, symbol in
@@ -199,7 +184,7 @@ public struct DatePickerView: View {
     }
     //.focusable()
   }
-  
+
   private var dayPicker: some View {
     Picker(selection: $day) {
       ForEach(dayRange, id: \.self) { day in
@@ -220,5 +205,28 @@ public struct DatePickerView: View {
         day = dayRange.upperBound
       }
     }
+  }
+}
+
+
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+struct DateInputView_Previews: PreviewProvider {
+  static var previews: some View {
+    DateInputView(selection: .constant(Date()))
+      .previewDisplayName("Default")
+    
+    DateInputView(selection: .constant(Date()))
+      .datePickerShowsMonthBeforeDay(false)
+      .previewDisplayName("Day First")
+    
+    DateInputView(selection: .constant(Date()))
+      .environment(\.locale, Locale(identifier: "fr"))
+      .previewDisplayName("French")
+    
+    DateInputView(selection: .constant(Date()))
+      .environment(\.locale, Locale(identifier: "da"))
+      .previewDisplayName("Danish")
   }
 }

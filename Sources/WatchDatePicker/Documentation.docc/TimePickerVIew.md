@@ -1,4 +1,4 @@
-# ``WatchDatePicker/TimePickerView``
+# ``WatchDatePicker/TimeInputView``
 
 ## Topics
 

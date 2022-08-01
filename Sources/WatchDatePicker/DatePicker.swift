@@ -3,6 +3,9 @@ import SwiftUI
 // TODO: move most of the configuration options to environment values
 // TODO: determine `datePickerTwentyFourHour` automatically based on locale
 // TODO: showsMonthBeforeDay: showsMonthBeforeDay ?? locale.monthComesBeforeDay
+// TODO: determine the exact differences (if any) between `.sheet` and `.fullScreenCover` in watchOS
+// TODO: don’t use both `accentColor` and `tint`
+// TODO: somehow use a fallback tint of orange if possible
 
 /// A control for the inputting of date and time values.
 ///
@@ -14,45 +17,6 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct DatePicker: View {
-  public enum Mode {
-    case time
-    case date
-    case dateAndTime
-  }
-
-  var titleKey: LocalizedStringKey?
-  @Binding var selection: Date
-  var mode: Mode = .dateAndTime
-  var minimumDate: Date?
-  var maximumDate: Date?
-  var dateStyle: DateFormatter.Style = .short
-  var timeStyle: DateFormatter.Style = .short
-  let displayedComponents: Components
-  var onCompletion: ((Date) -> Void)?
-
-  private func _onCompletion(_ date: Date) {
-    pickerViewIsPresented = false
-    onCompletion?(date)
-  }
-
-  @State private var pickerViewIsPresented = false
-  
-  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
-  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
-  
-  @Environment(\.locale) private var locale
-  
-  private var formattedSelection: String {
-    let formatter = DateFormatter()
-    formatter.locale = locale
-    formatter.dateStyle = displayedComponents == .hourAndMinute ? .none : dateStyle
-    formatter.timeStyle = displayedComponents == .date ? .none : timeStyle
-    if twentyFourHour == true && displayedComponents.contains(.hourAndMinute) {
-      formatter.dateFormat = "HH:mm"
-    }
-    return formatter.string(from: selection)
-  }
-  
   /// Option set that determines the displayed components of a date picker.
   ///
   /// Specifying ``date`` displays month, day, and year depending on the locale setting:
@@ -67,60 +31,163 @@ public struct DatePicker: View {
     
     /// Displays day, month, and year based on the locale.
     public static let date = Self(rawValue: 1 << 0)
+    
     /// Displays hour and minute components based on the locale.
     public static let hourAndMinute = Self(rawValue: 1 << 1)
   }
+
+  var titleKey: LocalizedStringKey?
+  @Binding var selection: Date
+  var minimumDate: Date?
+  var maximumDate: Date?
+  var dateStyle: DateFormatter.Style = .medium
+  var timeStyle: DateFormatter.Style = .short
+  let displayedComponents: Components
+  var onCompletion: ((Date) -> Void)?
+
+  private func _onCompletion(_ date: Date) {
+    sheetIsPresented = false
+    onCompletion?(date)
+  }
+
+  @State private var sheetIsPresented = false
+  @State private var linkIsActive = false
+
+  @Environment(\.locale) private var locale
+
+  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
+  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
+
+  private var formattedSelection: String {
+    // TODO: don’t recreate the formatter every time? (maybe profile this or ask on Slack)
+    let formatter = DateFormatter()
+    formatter.locale = locale
+    formatter.dateStyle = displayedComponents == .hourAndMinute ? .none : dateStyle
+    formatter.timeStyle = displayedComponents == .date ? .none : timeStyle
+    // if twentyFourHour == true && displayedComponents == .hourAndMinute {
+    //   formatter.dateFormat = "HH:mm"
+    // }
+    return formatter.string(from: selection)
+  }
+
+  private var formattedDateSelection: String {
+    // TODO: don’t recreate the formatter every time? (maybe profile this or ask on Slack)
+    let formatter = DateFormatter()
+    formatter.locale = locale
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .none
+    return formatter.string(from: selection)
+  }
+
+  private var label: some View {
+    VStack(alignment: .leading) {
+      if let label = titleKey {
+        Text(label)
+      }
+      
+      Text(formattedSelection)
+        .font(titleKey != nil ? .footnote : .body)
+        .foregroundStyle(titleKey != nil ? .secondary : .primary)
+    }
+  }
   
-//  /// Creates a date picker instance with the specified properties.
-//  /// - Parameters:
-//  ///   - label: The key for the localized title of `self`, describing its purpose.
-//  ///   - selection: The date value being displayed and selected.
-//  ///   - mode: The style that the date picker is using for its layout.
-//  ///   - minimumDate: The minimum date that a date picker can show.
-//  ///   - maximumDate: The maximum date that a date picker can show.
-//  ///   - showsMonthBeforeDay: Whether to display month before day. (MM DD YYYY vs. DD MM YYYY)
-//  ///   - twentyFourHour: Whether to use a 24-hour clock system where the day runs from midnight to midnight, dividing into 24 hours.
-//  ///   - onCompletion: A callback that will be invoked when the operation has succeeded.
-//  init(
-//    _ label: LocalizedStringKey,
-//    selection: Binding<Date>,
-//    mode: Mode? = nil,
-//    minimumDate: Date? = nil,
-//    maximumDate: Date? = nil,
-//    onCompletion: ((Date) -> Void)? = nil
-//  ) {
-//    self.titleKey = label
-//    _selection = selection
-//    if let value = mode { self.mode = value }
-//    self.minimumDate = minimumDate
-//    self.maximumDate = maximumDate
-//    self.onCompletion = onCompletion
-//    displayedComponents = [.hourAndMinute, .date]
-//  }
+  private var confirmationButton: some View {
+    Button(action: { linkIsActive = true }) {
+      Text("Continue", bundle: .module)
+    }
+    .buttonStyle(.borderedProminent)
+    .foregroundStyle(.background)
+    .tint(.green)
+    .scenePadding(.horizontal)
+  }
+  
+  private var circularButtons: some View {
+    HStack {
+      Button(action: { sheetIsPresented = false }) {
+        Image(systemName: "xmark")
+      }
+      .buttonStyle(.circular(.gray))
+      
+      Spacer()
+      
+      Button(action: { sheetIsPresented = false }) {
+        Image(systemName: "checkmark")
+      }
+      .buttonStyle(.circular(.green))
+    }
+    .padding(.horizontal, 12)
+  }
 
   /// The content and behavior of the view.
   public var body: some View {
-    Button(action: { pickerViewIsPresented = true }) {
-      VStack(alignment: .leading) {
-        if let label = titleKey {
-          Text(label)
-        }
-        
-        Text(formattedSelection)
-          .font(titleKey != nil ? .footnote : .body)
-          .foregroundStyle(titleKey != nil ? .secondary : .primary)
-      }
+    Button(action: { sheetIsPresented = true }) {
+      label
     }
-    // TODO: determine the exact differences (if any) between `.sheet` and this on watchOS:
-    .fullScreenCover(isPresented: $pickerViewIsPresented) {
-      NavigationView {
-        DatePickerView(
-          selection: $selection,
-          mode: mode,
-          minimumDate: minimumDate,
-          maximumDate: maximumDate,
-          onCompletion: _onCompletion
-        )
+    .sheet(isPresented: $sheetIsPresented) {
+      switch displayedComponents {
+      case [.date, .hourAndMinute]:
+        NavigationView {
+          VStack(spacing: 15) {
+            DateInputView(selection: $selection, minimumDate: minimumDate, maximumDate: maximumDate)
+              .overlay {
+                NavigationLink(isActive: $linkIsActive) {
+                  TimeInputView(selection: $selection)
+                    .navigationTitle(formattedDateSelection)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                      ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                          sheetIsPresented = false
+                          
+                          DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            linkIsActive = false
+                          }
+                        }
+                      }
+                    }
+                } label: {
+                  EmptyView()
+                }
+                .hidden()
+              }
+            
+            confirmationButton
+          }
+        }
+
+      case .date:
+        VStack(spacing: 15) {
+          Spacer()
+          
+          DateInputView(selection: $selection, minimumDate: minimumDate, maximumDate: maximumDate)
+            .frame(minHeight: 120)
+          
+          circularButtons
+        }
+
+      case .hourAndMinute:
+        ZStack(alignment: .bottom) {
+          TimeInputView(selection: $selection)
+          
+          circularButtons
+            .padding(.bottom, -26)
+            .padding(.horizontal, 32)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .toolbar {
+          ToolbarItem(placement: .confirmationAction) {
+            Button("", action: {})
+              .accessibilityHidden(true)
+          }
+        }
+        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea(.all)
+        .padding(.bottom, -40)
+        .padding(.horizontal, -32)
+        .offset(y: -45)
+        
+      default:
+        EmptyView()
       }
     }
   }
@@ -202,13 +269,29 @@ extension DatePicker {
   }
 }
 
-//@available(macOS, unavailable)
-//@available(iOS, unavailable)
-//@available(tvOS, unavailable)
-//struct DatePicker_Previews: PreviewProvider {
-//  static var previews: some View {
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+struct DatePicker_Previews: PreviewProvider {
+  struct Example: View {
+    @State var value = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
+    
+    var body: some View {
+      Form {
+        DatePicker("Select Date & Time", selection: $value)
+        DatePicker("Select Date", selection: $value, displayedComponents: .date)
+        DatePicker("Select Time", selection: $value, displayedComponents: .hourAndMinute)
+      }
+      .tint(.orange)
+      .accentColor(.orange)
+    }
+  }
+
+  static var previews: some View {
+    Example()
+    
 //    NavigationView {
-//      TimePickerView(selection: .constant(Date()), mode: .time)
+//      TimeInputView(selection: .constant(Date()), mode: .time)
 //        .datePickerSelectionIndicatorFill(.mint)
 //        .toolbar {
 //          ToolbarItem(placement: .cancellationAction) {
@@ -220,7 +303,7 @@ extension DatePicker {
 //    .previewDisplayName("Mode: Time")
 //
 //    NavigationView {
-//      DatePickerView(selection: .constant(Date()), mode: .date)
+//      DateInputView(selection: .constant(Date()), mode: .date)
 //        .toolbar {
 //          ToolbarItem(placement: .cancellationAction) {
 //            Button("Cancel", role: .cancel, action: {})
@@ -232,7 +315,7 @@ extension DatePicker {
 //    .environment(\.locale, Locale(identifier: "da-DK"))
 //
 //    NavigationView {
-//      DatePickerView(selection: .constant(Date()), mode: .date)
+//      DateInputView(selection: .constant(Date()), mode: .date)
 //        .toolbar {
 //          ToolbarItem(placement: .cancellationAction) {
 //            Button("Cancel", role: .cancel, action: {})
@@ -244,7 +327,7 @@ extension DatePicker {
 //    .environment(\.locale, Locale(identifier: "da-DK"))
 //
 //    NavigationView {
-//      DatePickerView(selection: .constant(Date()), mode: .dateAndTime)
+//      DateInputView(selection: .constant(Date()), mode: .dateAndTime)
 //        .toolbar {
 //          ToolbarItem(placement: .cancellationAction) {
 //            Button("Cancel", role: .cancel, action: {})
@@ -256,7 +339,7 @@ extension DatePicker {
 //
 //    NavigationView {
 //      NavigationLink(isActive: .constant(true)) {
-//        TimePickerView(selection: .constant(Date()), mode: .dateAndTime)
+//        TimeInputView(selection: .constant(Date()), mode: .dateAndTime)
 //          .datePickerTwentyFourHour()
 //          .tint(.pink)
 //      } label: {
@@ -266,5 +349,5 @@ extension DatePicker {
 //    }
 //    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
 //    .previewDisplayName("Mode: Date & Time (Step 2)")
-//  }
-//}
+  }
+}

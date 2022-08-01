@@ -6,12 +6,12 @@ A customizable date picker for watchOS and SwiftUI.
 
 <!-- TODO: wire up some script to duplicate things from here into README.md -->
 
-> Note: The API exposed by this framework is different from that of SwiftUI’s built-in date picker. When sharing code between multiple platforms, consider using `#if os(watchOS)`, target memberships, or namespaces to disambiguate.
+You can use Watch Date Picker’s `DatePicker` view to display UI for selecting date and time in watchOS.
 
 ## Topics
 
 ### User Interface
 
 - ``DatePicker``
-- ``DatePickerView``
-- ``TimePickerView``
+- ``DateEditor``
+- ``TimeInputView``
