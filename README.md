@@ -2,10 +2,13 @@
 
 A customizable date picker for watchOS and SwiftUI.
 
+| 🚧 | The next version of Watch Date Picker is under development. It will align the API to that of the standard SwiftUI date picker, and it will update the visual appearance to more closely match the system’s date picker. | &nbsp;&nbsp;&nbsp;&nbsp;[VIEW&nbsp;BRANCH](https://github.com/freyaalminde/watch-date-picker/tree/feature/improved-api)&nbsp;&nbsp;&nbsp;&nbsp; |
+| - |:-| - |
+
 
 ## Installation
 
-Add the https://github.com/freyaalminde/watch-date-picker package, and add the _WatchDatePicker_ product to your app’s WatchKit extension target.
+Add the https://github.com/freyaalminde/watch-date-picker package, then add the _WatchDatePicker_ product to your app’s WatchKit extension target.
 
 
 ## Documentation
