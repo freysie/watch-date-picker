@@ -25,7 +25,7 @@ public struct TimeInputView: View {
 
   @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
   @Environment(\.datePickerTwentyFourHourIndicator) private var twentyFourHourIndicator
-  @Environment(\.datePickerAMPMHighlightTint) private var amPMHighlightTint
+  // @Environment(\.datePickerAMPMHighlightTint) private var amPMHighlightTint
   @Environment(\.datePickerFocusTint) private var focusTint
   @Environment(\.datePickerMarkSize) private var markSize
   @Environment(\.datePickerMarkFill) private var markFill
@@ -40,7 +40,16 @@ public struct TimeInputView: View {
   @Environment(\.dismiss) private var dismiss
   private enum HourPeriod: Int { case am = 0, pm = 12; var offset: Int { rawValue } }
   private enum Component { case hour, minute }
-  @State private var hourPeriod = HourPeriod.am
+  // @State private var hourPeriod = HourPeriod.am
+  private var hourPeriod: HourPeriod {
+    get { abs(hour) % 24 < 12 ? .am : .pm }
+//    mutating set {
+//      switch newValue {
+//      case .am: hour -= 12
+//      case .pm: hour += 12
+//      }
+//    }
+  }
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
   @State private var minute = 0
@@ -59,13 +68,19 @@ public struct TimeInputView: View {
     String(format: "%02d", normalizedMinute)
   }
 
+  // TODO: rethink this
   private var newSelection: Date {
-    locale.calendar.date(
+    guard let result = locale.calendar.date(
       bySettingHour: normalizedHour + hourPeriod.offset,
       minute: normalizedMinute,
       second: 0,
       of: initialSelection
-    )!
+    ) else {
+      NSLog("[WatchDatePicker] invalid new selection (\(initialSelection), \(normalizedHour), \(normalizedMinute) \(hourPeriod) \(hourPeriod.offset)")
+      return initialSelection
+    }
+
+    return result
   }
 
   /// Creates a time input view instance with the specified properties.
@@ -76,11 +91,11 @@ public struct TimeInputView: View {
     initialSelection = selection.wrappedValue
     _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
     _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
-    
+
     // print((calendar, locale.calendar, calendar == locale.calendar))
     // FIXME: rework this now that we’re using environment:
 //    if !(twentyFourHour == true) {
-      _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
+      // _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
 //      // if hourPeriod == .pm { hour %= 12 }
 //    }
   }
@@ -95,7 +110,6 @@ public struct TimeInputView: View {
     }
     .onChange(of: newSelection) {
       selection = $0
-      print(hour)
     }
     .ignoresSafeArea()
     // TODO: AM/PM wrapping
@@ -212,18 +226,29 @@ public struct TimeInputView: View {
       Spacer()
 
       if twentyFourHour == true {
-        Button("24hr", action: {})
+        Button(action: {}) {
+          // Text("24\(Text("hr").font(.system(size: 15).smallCaps()))!")
+          Text("24hr")
+        }
           .buttonStyle(.timePeriod(isHighlighted: false))
+          .tint(.gray)
           .textCase(.uppercase)
           .disabled(true)
           .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
           .offset(y: 4)
       } else {
-        Button(action: { hourPeriod = .am }) {
+        // Button(action: { hourPeriod = .am }) {
+        Button(action: {
+          if hourPeriod != .am {
+            var t = Transaction()
+            t.disablesAnimations = true
+            withTransaction(t) { hour += 12 }
+          }
+        }) {
           Text(verbatim: locale.calendar.amSymbol)
             .tracking(-1)
         }
-          .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am, highlightColor: amPMHighlightTint))
+          .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
           .offset(y: -1)
       }
 
@@ -266,11 +291,18 @@ public struct TimeInputView: View {
       }
       .font(.system(size: 32))
 
-      Button(action: { hourPeriod = .pm }) {
+      // Button(action: { hourPeriod = .pm }) {
+      Button(action: {
+        if hourPeriod != .pm {
+          var t = Transaction()
+          t.disablesAnimations = true
+          withTransaction(t) { hour -= 12 }
+        }
+      }) {
         Text(verbatim: locale.calendar.pmSymbol)
           .tracking(-0.6)
       }
-        .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm, highlightColor: amPMHighlightTint))
+        .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
@@ -291,15 +323,26 @@ struct TimeInputView_Previews: PreviewProvider {
     
     TimeInputView(selection: .constant(Date()))
       .datePickerTwentyFourHour()
-      .previewDisplayName("24-Hour Mode")
+      .previewDisplayName("24hr")
     
     TimeInputView(selection: .constant(Date()))
       .environment(\.locale, Locale(identifier: "sv"))
       .previewDisplayName("Swedish")
     
     TimeInputView(selection: .constant(Date()))
-      .accentColor(.pink)
-      // .tint(.pink)
-      .previewDisplayName("Pink-Tinted")
+      .tint(.pink)
+      .previewDisplayName("Pink")
+      
+//    TimeInputView(selection: .constant(Date()))
+//      .previewDevice("Apple Watch Series 7 - 45mm")
+//
+//    TimeInputView(selection: .constant(Date()))
+//      .previewDevice("Apple Watch Series 6 - 44mm")
+//
+//    TimeInputView(selection: .constant(Date()))
+//      .previewDevice("Apple Watch Series 7 - 41mm")
+//
+//    TimeInputView(selection: .constant(Date()))
+//      .previewDevice("Apple Watch Series 6 - 40mm")
   }
 }

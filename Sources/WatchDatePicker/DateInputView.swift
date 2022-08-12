@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A control for the inputting of date values.
 ///
-/// The `DateInputView` displays three pickers for month, day, and year, the order of which depends on locale. It optionally shows a button which presents a time picker. The view binds to a `Date` instance.
+/// The `DateInputView` displays three pickers for month, day, and year, the order of which depends on locale. The view binds to a `Date` instance.
 ///
 /// ![](DateInputView.png)
 /// ![](DateInputView~fr.png)
@@ -44,10 +44,12 @@ public struct DateInputView: View {
     return lowerBound..<(upperBound + 1)
   }
 
+  // TODO: add minimumDate/maximumDate constraints
   private var monthSymbols: [EnumeratedSequence<[String]>.Element] {
     Array(locale.calendar.shortMonthSymbols.enumerated())
   }
 
+  // TODO: add minimumDate/maximumDate constraints
   private var dayRange: Range<Int> {
     locale.calendar.range(of: .day, in: .month, for: newSelection)!
   }
@@ -69,29 +71,6 @@ public struct DateInputView: View {
 
   /// The content and behavior of the view.
   public var body: some View {
-//    if let mode = mode, mode == .time {
-//      TimeInputView(
-//        selection: $selection,
-//        mode: mode,
-//        onCompletion: confirm
-//      )
-//    } else {
-//      VStack(spacing: 15) {
-//        componentPickers
-//
-////        if mode != nil {
-////          confirmationAction
-////        }
-//      }
-//      .padding(.horizontal, 10)
-//      .padding(.vertical, 5)
-//      .toolbar {
-//        ToolbarItem(placement: .confirmationAction) {
-//          Button("", action: {})
-//            .accessibilityHidden(true)
-//        }
-//      }
-
     HStack {
       if showsMonthBeforeDay ?? locale.monthComesBeforeDay {
         monthPicker
@@ -110,12 +89,6 @@ public struct DateInputView: View {
     // .minimumScaleFactor(0.5)
     .onChange(of: newSelection) { selection = $0 }
   }
-
-//  private func confirm(_ date: Date) {
-////    if mode == .date { dismiss() }
-//    onCompletion?(date)
-//    selection = date
-//  }
 
 //  private var confirmationAction: some View {
 //    Group {
@@ -163,11 +136,11 @@ public struct DateInputView: View {
       Text("Year", bundle: .module)
         .minimumScaleFactor(0.8)
     }
-    // .overlay {
-    //   RoundedRectangle(cornerRadius: 17, style: .continuous)
-    //     .strokeBorder(.pink, lineWidth: 2)
-    //     .padding(.top, 17)
-    // }
+    .overlay {
+      RoundedRectangle(cornerRadius: 17, style: .continuous)
+        .strokeBorder(.pink, lineWidth: 2)
+        .padding(.top, 17)
+    }
     //.focusable()
   }
 
@@ -182,7 +155,6 @@ public struct DateInputView: View {
       Text("Month", bundle: .module)
         .minimumScaleFactor(0.8)
     }
-    //.focusable()
   }
 
   private var dayPicker: some View {
@@ -196,12 +168,11 @@ public struct DateInputView: View {
       Text("Day", bundle: .module)
         .minimumScaleFactor(0.8)
     }
-    //.focusable()
     .id([month, year].map(String.init).joined(separator: "."))
     // FIXME: select lower day if month’s upper bound day range is less than selection’s day
     .onChange(of: month) { _ in
       if dayRange.upperBound < day {
-//        print("!!! dayRange.upperBound < day")
+        print("!!! dayRange.upperBound < day")
         day = dayRange.upperBound
       }
     }

@@ -1,6 +1,7 @@
 import Foundation
 
 extension Locale {
+  /// Whether the month comes before the day in this locale.
   public var monthComesBeforeDay: Bool {
     let format = DateFormatter.dateFormat(fromTemplate: "Md", options: 0, locale: self)!
     let dayCharacters: Set<Character> = ["d", "D", "f", "g"]

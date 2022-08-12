@@ -1,17 +1,26 @@
 # ``WatchDatePicker``
 
+@Comment {
+  TODO: add this for newer DocC:
+  @Metadata {
+    @DisplayName("Watch Date Picker")
+  }
+}
+
 A customizable date picker for watchOS and SwiftUI.
 
 ## Overview
 
-<!-- TODO: wire up some script to duplicate things from here into README.md -->
+@Comment {
+  TODO: wire up some script to duplicate things from here into README.md
+}
 
-You can use Watch Date Picker’s `DatePicker` view to display UI for selecting date and time in watchOS.
+You use Watch Date Picker’s `DatePicker` view to display UI for selecting date and time in watchOS. Additionally, `DateInputView` and `TimeInputView` can be used to customize the look and feel of date and time selection.
 
 ## Topics
 
 ### User Interface
 
 - ``DatePicker``
-- ``DateEditor``
+- ``DateInputView``
 - ``TimeInputView``

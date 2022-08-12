@@ -15,6 +15,5 @@ let package = Package(
   ],
   targets: [
     .target(name: "WatchDatePicker", dependencies: []),
-    //.executable(name: "WatchDatePickerExamples", dependencies: ["WatchDatePicker"]),
   ]
 )

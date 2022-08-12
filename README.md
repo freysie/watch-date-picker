@@ -22,8 +22,8 @@ The `DatePicker` view displays a button with a title and the selected value. Whe
 
 ```swift
 DatePicker(
-  "Date & Time",
-  selection: $value
+    "Date & Time",
+    selection: $value
 )
 ```
 
@@ -34,9 +34,9 @@ DatePicker(
 
 ```swift
 DatePicker(
-  "Date",
-  selection: $value,
-  displayedComponents: .date
+    "Date",
+    selection: $value,
+    displayedComponents: .date
 )
 ```
 
@@ -47,9 +47,9 @@ DatePicker(
 
 ```swift
 DatePicker(
-  "Time",
-  selection: $value,
-  displayedComponents: .hourAndMinute
+    "Time",
+    selection: $value,
+    displayedComponents: .hourAndMinute
 )
 ```
 
@@ -58,7 +58,7 @@ DatePicker(
 
 ### Customization
 
-The two main views which `DatePicker` is composed of, `DateInputView` and `TimeInputView`, can be used independently.
+The two views which `DatePicker` is primarily composed of, `DateInputView` and `TimeInputView`, can be used independently.
 
 
 #### Date Input View
@@ -71,7 +71,7 @@ DateInputView(selection: $value)
 
 <img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DateInputView.png?raw=true" alt="" width="198" />
 
-The date input view uses the current locale for labeling, ordering, and populating the date component pickers.
+The date input view uses the current locale for labeling, ordering, and populating the day-month-year pickers.
 
 ```swift
 DateInputView(selection: $value)
@@ -83,7 +83,7 @@ DateInputView(selection: $value)
 
 #### Time Input View
 
-The time input view displays a clock dial for selecting hour and minute. In locales with AM/PM-based time, AM/PM buttons will be displayed. 
+The time input view displays a clock dial for selecting hour and minute. In locales with AM/PM-based time, AM/PM buttons will be displayed. 24-hour mode is used otherwise.
 
 ```swift
 TimeInputView(selection: $value)
@@ -109,7 +109,7 @@ TimeInputView(selection: $value)
 
 <img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~24h.png?raw=true" alt="" width="198" />
 
-The 24-hour mode indicator can optionally be hidden.
+The 24-hour mode indicator can be hidden.
 
 ```swift
 TimeInputView(selection: $value)
@@ -119,73 +119,6 @@ TimeInputView(selection: $value)
 
 <img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~24hHidden.png?raw=true" alt="" width="198" />
 
-<!--```swift-->
-<!--TimeInputView(selection: $value)-->
-<!--    .tint(.pink)-->
-<!--    .monthBeforeDay(true)-->
-<!--    .twentyFourHourMode(true)-->
-<!--    .twentyFourHourIndicator(.hidden)-->
-<!--```-->
-<!--    // .confirmationTint(.pink)-->
-<!--  selectionIndicatorRadius: 7,-->
-<!--  selectionIndicatorColor: .mint,-->
-<!--  focusColor: .purple,-->
-<!--  amPMHighlightColor: .yellow,-->
-<!--  markSize: CGSize(width: 5.5, height: 3),-->
-<!--  markFill: AnyShapeStyle(Color.white.opacity(0.75)),-->
-<!--  emphasizedMarkSize: CGSize(width: 2, height: 7),-->
-<!--  emphasizedMarkFill: AnyShapeStyle(Color.pink)-->
+Setting the tint will affect the selection indicator and AM/PM buttons.
 
-<!--<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~custom.png?raw=true" alt="" width="198" />-->
-
-<!--
-
-## Topics
-
-### Setting Date Picker Mode
-
-```swift
-var mode: DatePicker.Mode
-```
-Mode that determines the appearance of a date picker. Default is `.dateAndTime`.
-
-
-### Customizing Appearance
-
-```swift
-var confirmationColor: Color? 
-```
-The color for the date & time confirmation button.
-Default is `.green`.
-When `mode` is not `.dateAndTime`, this value is ignored.
-
-```swift
-var confirmationTitleKey: LocalizedStringKey?
-```
-The title of the date & time confirmation button.
-Default is “Continue” if `mode` is `.dateAndTime`, or “Done” if `mode` is `.date`.
-When `mode` is `.time` or nil, this value is ignored.
-
-```swift
-var selectionIndicatorRadius: CGFloat?
-```
-The radius of the time selection indicators.
-Default is 2.25.
-When `mode` is `.date`, this value is ignored.
-
-```swift
-var selectionIndicatorColor: Color?
-```
-The color for the time selection indicators.
-Default is `.accentColor`.
-When `mode` is `.date`, this value is ignored.
-
-```swift
-var focusColor: Color?
-```
-The color for the focus outline of time fields.
-Default is `.green`.
-
--->
-
-<!-- TODO: add more -->
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~pink.png?raw=true" alt="" width="198" />

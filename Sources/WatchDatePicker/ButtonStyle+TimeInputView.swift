@@ -57,10 +57,10 @@ struct TimePeriodButtonStyle: ButtonStyle {
       .frame(minWidth: 24.5, maxHeight: 16)
       .font(.system(size: 15, weight: isHighlighted ? .semibold : .regular))
       .opacity(configuration.isPressed ? 0.5 : isHighlighted ? 1 : 0.8)
-      .foregroundColor(isHighlighted ? .black : highlightColor ?? Color.accentColor)
+      .foregroundStyle(isHighlighted ? AnyShapeStyle(.black) : AnyShapeStyle(.tint))
       .background {
         RoundedRectangle(cornerRadius: 3)
-          .fill(isHighlighted ? highlightColor ?? Color.accentColor : Color.clear)
+          .fill(isHighlighted ? AnyShapeStyle(.tint) : AnyShapeStyle(.clear))
           .offset(y: 0.5)
       }
   }

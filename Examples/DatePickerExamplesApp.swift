@@ -33,6 +33,13 @@ struct DatePickerExamples: View {
     return formatter.string(from: value)
   }
 
+  var formatted24HourTimeSelection: String {
+    let formatter = DateFormatter()
+    formatter.locale = locale
+    formatter.dateFormat = "HH:mm:ss"
+    return formatter.string(from: value)
+  }
+
   var body: some View {
     TabView {
       Form {
@@ -43,7 +50,7 @@ struct DatePickerExamples: View {
       }
 
       Form {
-        DatePicker("Date", selection: $value, in: ...Date(), displayedComponents: [.date])
+        DatePicker("Date", selection: $value, displayedComponents: [.date])
 
         DatePicker("Date (Min)", selection: $value, in: Date()..., displayedComponents: [.date])
 
@@ -61,8 +68,11 @@ struct DatePickerExamples: View {
         .navigationTitle(formattedDateSelection)
 
       TimeInputView(selection: $value)
-        .border(.mint)
         .navigationTitle(formattedTimeSelection)
+
+      TimeInputView(selection: $value)
+        .navigationTitle(formatted24HourTimeSelection)
+        .datePickerTwentyFourHour()
     }
     .tint(.orange)
     .tabViewStyle(.page(indexDisplayMode: .never))
