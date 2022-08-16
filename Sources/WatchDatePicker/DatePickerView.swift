@@ -26,7 +26,6 @@ public struct DatePickerView: View {
   @State private var day = 0
   
   @Environment(\.locale) private var locale
-  @Environment(\.dismiss) private var dismiss
   
   private var newSelection: Date {
     locale.calendar.date(from: DateComponents(
@@ -121,7 +120,6 @@ public struct DatePickerView: View {
   }
   
   private func confirm(_ date: Date) {
-    if mode == .date { dismiss() }
     onCompletion?(date)
     selection = date
   }

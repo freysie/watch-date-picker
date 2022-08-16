@@ -28,7 +28,6 @@ public struct TimePickerView: View {
   var onCompletion: ((Date) -> Void)?
 
   @Environment(\.locale) private var locale
-  @Environment(\.dismiss) private var dismiss
   private enum HourPeriod: Int { case am = 0, pm = 12; var offset: Int { rawValue } }
   private enum Component { case hour, minute }
   @State private var hourPeriod = HourPeriod.am
@@ -135,7 +134,6 @@ public struct TimePickerView: View {
   }
   
   private func _onCompletion() {
-    if mode == .time { dismiss() }
     onCompletion?(newSelection)
   }
   
