@@ -10,11 +10,11 @@
 //        TimePicker()
 //
 //        TimePicker()
-//          .datePickerTwentyFourHour()
+//          .timeInputViewTwentyFourHour()
 //
 //        TimePicker()
-//          .datePickerTwentyFourHour()
-//          .datePickerTwentyFourHourIndicator(.hidden)
+//          .timeInputViewTwentyFourHour()
+//          .timeInputViewTwentyFourHourIndicator(.hidden)
 //      }
 //      
 //      //      NavigationView {
@@ -52,7 +52,7 @@
 //        DatePicker("Date & Time", selection: $value)
 //
 //        DatePicker("Date & Time (24h)", selection: $value)
-//          .datePickerTwentyFourHour()
+//          .timeInputViewTwentyFourHour()
 //      }
 //      
 //      Form {
@@ -63,7 +63,7 @@
 //        DatePicker("Time", selection: $value, displayedComponents: [.hourAndMinute])
 //
 //        DatePicker("Time (24h)", selection: $value, displayedComponents: [.hourAndMinute])
-//          .datePickerTwentyFourHour()
+//          .timeInputViewTwentyFourHour()
 //      }
 //
 //      Group {
@@ -73,7 +73,7 @@
 //        
 //        NavigationView {
 //          DateInputView(selection: $value)
-//            .datePickerShowsMonthBeforeDay(false)
+//            .dateInputViewShowsMonthBeforeDay(false)
 //        }
 //        
 //        NavigationView {
@@ -100,8 +100,8 @@
 //
 //      NavigationView {
 //        TimeInputView(selection: $value)
-//          .datePickerTwentyFourHour()
-//          .datePickerTwentyFourHourIndicator(.hidden)
+//          .timeInputViewTwentyFourHour()
+//          .timeInputViewTwentyFourHourIndicator(.hidden)
 //          .datePickerFocusTint(.pink)
 //          .datePickerAMPMHighlightTint(.yellow)
 //          .datePickerSelectionIndicatorFill(.yellow)
@@ -113,7 +113,6 @@
 //    }
 //    // .tabViewStyle(.page(indexDisplayMode: .never))
 //    .tabViewStyle(.page)
-//    .accentColor(.orange)
 //    .accessibilityIdentifier("PageView")
 //  }
 //}

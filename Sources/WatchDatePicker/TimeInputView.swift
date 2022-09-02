@@ -1,9 +1,8 @@
 import SwiftUI
 
-// TODO: use locale-specific time separators (like “.” instead of “:”)
+// TODO: maybe use locale-specific (region-specific?) time separators (like “.” instead of “:”)
 // TODO: figure out difference between `calendar` and `locale.calendar` (gregorian (current) and gregorian (fixed))
-// TODO: ~ selection indicator with default size has like 2 px cut off by status bar when in 12 o’clock position
-// TODO: cache the clock face to an image for better performance
+// TODO: cache the clock face to an image for better performance?
 
 /// A control for the inputting of time values.
 ///
@@ -19,37 +18,43 @@ public struct TimeInputView: View {
   @Binding var selection: Date
   let initialSelection: Date
 
-  // @Environment(\.datePickerSelectionIndicator) var selectionIndicator
-  // @Environment(\.datePickerMark) var mark
-  // @Environment(\.datePickerHeavyMark) var heavyMark
-
-  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
-  @Environment(\.datePickerTwentyFourHourIndicator) private var twentyFourHourIndicator
-  // @Environment(\.datePickerAMPMHighlightTint) private var amPMHighlightTint
-  @Environment(\.datePickerFocusTint) private var focusTint
-  @Environment(\.datePickerMarkSize) private var markSize
-  @Environment(\.datePickerMarkFill) private var markFill
-  @Environment(\.datePickerHeavyMarkSize) private var heavyMarkSize
-  @Environment(\.datePickerHeavyMarkFill) private var heavyMarkFill
-  // @Environment(\.datePickerSelectionIndicatorShape) private var selectionIndicatorShape
-  @Environment(\.datePickerSelectionIndicatorRadius) private var selectionIndicatorRadius
-  @Environment(\.datePickerSelectionIndicatorFill) private var selectionIndicatorFill
-
   @Environment(\.locale) private var locale
-  @Environment(\.calendar) private var calendar
-  @Environment(\.dismiss) private var dismiss
-  private enum HourPeriod: Int { case am = 0, pm = 12; var offset: Int { rawValue } }
-  private enum Component { case hour, minute }
-  // @State private var hourPeriod = HourPeriod.am
-  private var hourPeriod: HourPeriod {
-    get { abs(hour) % 24 < 12 ? .am : .pm }
-//    mutating set {
-//      switch newValue {
-//      case .am: hour -= 12
-//      case .pm: hour += 12
-//      }
-//    }
+  @Environment(\.timeInputViewMonospacedDigit) private var monospacedDigit
+  @Environment(\.timeInputViewTwentyFourHour) private var _twentyFourHour
+  @Environment(\.timeInputViewTwentyFourHourIndicator) private var twentyFourHourIndicator
+  @Environment(\.timeInputViewSelectionTint) private var selectionTint
+
+  private var twentyFourHour: Bool { _twentyFourHour ?? locale.uses24HourTime == true }
+
+  private enum HourPeriod: Int {
+    case am = 0, pm = 12
+
+    var offset: Int { rawValue }
+
+    var sign: Int {
+      switch self {
+      case .am: return -12
+      case .pm: return +12
+      }
+    }
   }
+  
+  private enum Component {
+    case hour, minute
+  }
+  
+  private var hourPeriod: HourPeriod {
+    get {
+      abs(hour < 0 ? hour - 12 : hour) % 24 < 12 ? .am : .pm
+    }
+    // mutating set {
+    //   switch newValue {
+    //   case .am: hour -= 12
+    //   case .pm: hour += 12
+    //   }
+    // }
+  }
+  
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
   @State private var minute = 0
@@ -71,12 +76,12 @@ public struct TimeInputView: View {
   // TODO: rethink this
   private var newSelection: Date {
     guard let result = locale.calendar.date(
-      bySettingHour: normalizedHour + hourPeriod.offset,
+      bySettingHour: normalizedHour + (twentyFourHour == true ? 0 : hourPeriod.offset),
       minute: normalizedMinute,
       second: 0,
       of: initialSelection
     ) else {
-      NSLog("[WatchDatePicker] invalid new selection (\(initialSelection), \(normalizedHour), \(normalizedMinute) \(hourPeriod) \(hourPeriod.offset)")
+      NSLog("[WatchDatePicker] invalid new selection (\(initialSelection), \(normalizedHour), \(normalizedMinute), \(hourPeriod))")
       return initialSelection
     }
 
@@ -104,7 +109,7 @@ public struct TimeInputView: View {
   public var body: some View {
     ZStack(alignment: .bottom) {
       clockFace
-        // .drawingGroup(opaque: true)
+        .drawingGroup(opaque: true)
 
       pickerButtons
     }
@@ -112,10 +117,6 @@ public struct TimeInputView: View {
       selection = $0
     }
     .ignoresSafeArea()
-    // TODO: AM/PM wrapping
-    //    .onChange(of: $value) { newValue in
-    //      if newValue.
-    //    }
   }
 
   private var clockFace: some View {
@@ -132,8 +133,66 @@ public struct TimeInputView: View {
         selectionIndicator(for: minute, multiple: 60, with: geometry)
       }
     }
-    .padding(-13)
-    .offset(y: 11.5)
+    // TODO: consider moving this padding and offset to call sites in `DatePicker`
+    .padding(clockFacePadding)
+    .offset(y: clockFaceOffsetY)
+  }
+  
+  private var clockFaceOffsetY: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 162: return 9.5 // 40 mm
+    case 176: return 11 // 41 mm
+    case 198: return 8.5 // 45 mm
+    default: return 11.5
+    }
+  }
+
+  // private var clockFacePadding2: Double {
+  //   [
+  //     162: -15.0,
+  //     198: -25.0
+  //   ][
+  //     WKInterfaceDevice.current().screenBounds.width
+  //   ]!
+  // }
+
+  private var clockFacePadding: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 162: return -15 // 40 mm
+    case 176: return -21 // 41 mm
+    case 198: return -23 // 45 mm
+    default: return -13
+    }
+  }
+
+  private var componentFontSize: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 162: return 28 // 40 mm
+    case 176: return 34.5 // 41 mm
+    case 198: return 39 // 45 mm
+    default: return 32
+    }
+  }
+
+  private var selectionIndicatorRadius: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 198: return 2.75 // 45 mm
+    default: return 2.25
+    }
+  }
+
+  private var heavyMarkSize: CGSize {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 198: return CGSize(width: 2, height: 2.5) // 45 mm
+    default: return CGSize(width: 1.5, height: 2.5)
+    }
+  }
+
+  private var markSize: CGSize {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 198: return CGSize(width: 1.75, height: 7.5) // 45 mm
+    default: return CGSize(width: 1.25, height: 6.5)
+    }
   }
 
   private func labels(with geometry: GeometryProxy) -> some View {
@@ -182,35 +241,30 @@ public struct TimeInputView: View {
   }
 
   private func mark(at index: Int, multiple: Double, heavy: Bool = false, with geometry: GeometryProxy) -> some View {
-    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 2.5)
-    let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 6.5)
-    let size = heavy ? effectiveEmphasizedMarkSize : effectiveMarkSize
+    let size = heavy ? heavyMarkSize : markSize
 
     return Rectangle()
       .size(size)
       .offset(x: -size.width / 2.0, y: 0)
       .offset(y: geometry.size.height / 3)
-      // .offset(y: (heavy ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0) + 0.5)
-      .offset(y: heavy ? effectiveMarkSize.height - effectiveEmphasizedMarkSize.height : 0)
+      // .offset(y: (heavy ? markSize.height - heavyMarkSize.height : 0) + 0.5)
+      .offset(y: heavy ? markSize.height - heavyMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
-      .fill(heavy ? heavyMarkFill ?? AnyShapeStyle(.primary) : markFill ?? AnyShapeStyle(.tertiary))
+      .fill(heavy ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
       .position(x: geometry.size.width, y: geometry.size.height)
   }
 
   private func selectionIndicator(for value: Int, multiple: Int, with geometry: GeometryProxy) -> some View {
-    let effectiveRadius = selectionIndicatorRadius ?? 2.25
-    let effectiveEmphasizedMarkSize = heavyMarkSize ?? CGSize(width: 1.5, height: 3)
-    let effectiveMarkSize = markSize ?? CGSize(width: 1, height: 7)
     let rotationDegrees = Double(value) * 360 / Double(multiple)
     // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
 
     return Circle()
-      .size(width: effectiveRadius * 2, height: effectiveRadius * 2)
-      .offset(x: -effectiveRadius, y: -effectiveRadius)
+      .size(width: selectionIndicatorRadius * 2, height: selectionIndicatorRadius * 2)
+      .offset(x: -selectionIndicatorRadius, y: -selectionIndicatorRadius)
       .offset(y: geometry.size.height / 3)
-      .offset(y: max(effectiveEmphasizedMarkSize.height, effectiveMarkSize.height) - 1)
+      .offset(y: max(heavyMarkSize.height, markSize.height) - 1)
       .rotation(.degrees(180 + rotationDegrees), anchor: .topLeading)
-      .fill(selectionIndicatorFill ?? AnyShapeStyle(.tint))
+      .fill(selectionTint.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint))
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
 
@@ -220,6 +274,13 @@ public struct TimeInputView: View {
 //      .animation(.spring(), value: value)
 //      .position(x: geometry.size.width, y: geometry.size.height)
   }
+  
+  private func setHourPeriod(_ period: HourPeriod) {
+    guard hourPeriod != period else { return }
+    var t = Transaction()
+    t.disablesAnimations = true
+    withTransaction(t) { hour += period.sign }
+  }
 
   private var pickerButtons: some View {
     VStack {
@@ -227,8 +288,8 @@ public struct TimeInputView: View {
 
       if twentyFourHour == true {
         Button(action: {}) {
-          // Text("24\(Text("hr").font(.system(size: 15).smallCaps()))!")
-          Text("24hr")
+          Text("24\(Text("hr").font(.system(size: 15).smallCaps()))!")
+          // Text("24hr")
         }
           .buttonStyle(.timePeriod(isHighlighted: false))
           .tint(.gray)
@@ -237,16 +298,9 @@ public struct TimeInputView: View {
           .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
           .offset(y: 4)
       } else {
-        // Button(action: { hourPeriod = .am }) {
-        Button(action: {
-          if hourPeriod != .am {
-            var t = Transaction()
-            t.disablesAnimations = true
-            withTransaction(t) { hour += 12 }
-          }
-        }) {
+        Button(action: { setHourPeriod(.am) }) {
           Text(verbatim: locale.calendar.amSymbol)
-            .tracking(-1)
+            .tracking(locale.calendar.amSymbol == "AM" ? -0.5 : 0)
         }
           .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
           .offset(y: -1)
@@ -254,7 +308,7 @@ public struct TimeInputView: View {
 
       HStack {
         Button(formattedHour, action: { focusedComponent = .hour })
-          .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour, focusColor: focusTint))
+          .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
           .focusable()
           .digitalCrownRotation(
             hourBinding,
@@ -265,16 +319,13 @@ public struct TimeInputView: View {
             isContinuous: true,
             isHapticFeedbackEnabled: true
           )
-        //          .onChange(of: hourBinding) { _ in
-        //            WKInterfaceDevice.current().play(.notification)
-        //          }
 
         Text(":")
           .padding(.bottom, 7)
           .padding(.horizontal, -1)
 
         Button(formattedMinute, action: { focusedComponent = .minute })
-          .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute, focusColor: focusTint))
+          .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
           .focusable()
           .digitalCrownRotation(
             minuteBinding,
@@ -285,22 +336,16 @@ public struct TimeInputView: View {
             isContinuous: true,
             isHapticFeedbackEnabled: true
           )
-        //          .onChange(of: minuteBinding.projectedValue) { _ in
-        //            WKInterfaceDevice.current().play(.click)
-        //          }
       }
-      .font(.system(size: 32))
+      .font(
+        monospacedDigit == true
+        ? .system(size: componentFontSize).monospacedDigit()
+        : .system(size: componentFontSize)
+      )
 
-      // Button(action: { hourPeriod = .pm }) {
-      Button(action: {
-        if hourPeriod != .pm {
-          var t = Transaction()
-          t.disablesAnimations = true
-          withTransaction(t) { hour -= 12 }
-        }
-      }) {
+      Button(action: { setHourPeriod(.pm) }) {
         Text(verbatim: locale.calendar.pmSymbol)
-          .tracking(-0.6)
+          .tracking(locale.calendar.pmSymbol == "PM" ? -0.6 : 0)
       }
         .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm))
         .disabled(twentyFourHour == true)
@@ -322,7 +367,7 @@ struct TimeInputView_Previews: PreviewProvider {
       .previewDisplayName("Default")
     
     TimeInputView(selection: .constant(Date()))
-      .datePickerTwentyFourHour()
+      .timeInputViewTwentyFourHour()
       .previewDisplayName("24hr")
     
     TimeInputView(selection: .constant(Date()))

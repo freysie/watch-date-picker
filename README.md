@@ -15,7 +15,7 @@ Online documentation is available at [freyaalminde.github.io/documentation/watch
 
 ## Overview
 
-The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interfaces for selecting date and time.
+The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interface for selecting date, time, or both.
 
 
 ### Selecting Date and Time
@@ -27,7 +27,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateAndTimeMode.png?raw=true" alt="" width="594" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker.png?raw=true" alt="" width="594" />
 
 
 ### Selecting a Date
@@ -40,7 +40,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/DateMode.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_date.png?raw=true" alt="" width="396" />
 
 
 ### Selecting a Time
@@ -53,7 +53,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/Screenshots/TimeMode.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_hourAndMinute.png?raw=true" alt="" width="396" />
 
 
 ### Customization
@@ -78,7 +78,7 @@ DateInputView(selection: $value)
     .environment(\.locale, Locale(identifier: "fr"))
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DateInputView~fr.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DateInputView_fr.png?raw=true" alt="" width="198" />
 
 
 #### Time Input View
@@ -98,27 +98,39 @@ TimeInputView(selection: $value)
 <!--    .tint(.pink)-->
 <!--```-->
 <!---->
-<!--<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~pink.png?raw=true" alt="" width="198" />-->
+<!--<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_pink.png?raw=true" alt="" width="198" />-->
 
 24-hour mode can be explicitly enabled or disabled regardless of locale.
 
 ```swift
 TimeInputView(selection: $value)
-    .twentyFourHourMode()
+    .timeInputViewTwentyFourHourMode()
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~24h.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_24h.png?raw=true" alt="" width="198" />
 
 The 24-hour mode indicator can be hidden.
 
 ```swift
 TimeInputView(selection: $value)
-    .twentyFourHourMode()
-    .twentyFourHourIndicator(.hidden)
+    .timeInputViewTwentyFourHourMode()
+    .timeInputViewTwentyFourHourIndicator(.hidden)
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~24hHidden.png?raw=true" alt="" width="198" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_24hHidden.png?raw=true" alt="" width="198" />
 
 Setting the tint will affect the selection indicator and AM/PM buttons.
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView~pink.png?raw=true" alt="" width="198" />
+```swift
+TimeInputView(selection: $value)
+    .tint(.pink)
+```
+
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_pink.png?raw=true" alt="" width="198" />
+
+The font of the value labels can be digit-monospaced.
+
+```swift
+TimeInputView(selection: $value)
+    .timeInputViewMonospacedDigitFont(.pink)
+```

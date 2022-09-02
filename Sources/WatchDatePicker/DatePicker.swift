@@ -1,18 +1,15 @@
 import SwiftUI
 
-// TODO: ~ move most of the configuration options to environment values
-// TODO: determine `datePickerTwentyFourHour` automatically based on locale
-// TODO: showsMonthBeforeDay: showsMonthBeforeDay ?? locale.monthComesBeforeDay
+// TODO: determine `timeInputViewTwentyFourHour` automatically based on locale
 // TODO: determine the exact differences (if any) between `sheet()` and `fullScreenCover()` in watchOS
-// TODO: don’t use both `accentColor()` and `tint()`
 
 /// Option set that determines the displayed components of a date picker.
 ///
 /// Specifying ``date`` displays month, day, and year depending on the locale setting:
-/// ![](TimeMode.png)
-/// Specifying ``hourAndMinute`` displays hour, minute, and optionally AM/PM designation depending on the locale setting:
 /// ![](DateMode.png)
-/// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting:
+/// Specifying ``hourAndMinute`` displays hour, minute, and optionally AM/PM designation depending on the locale setting:
+/// ![](TimeMode.png)
+/// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting, inside of a navigation view:
 /// ![](DateAndTimeMode.png)
 public struct DatePickerComponents: OptionSet {
   public let rawValue: UInt
@@ -34,7 +31,7 @@ public struct DatePickerComponents: OptionSet {
 
 /// A control for the inputting of date and time values.
 ///
-/// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interfaces for selecting date and time. The view binds to a `Date` instance.
+/// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interface for selecting date, time, or both. The view binds to a `Date` instance.
 ///
 /// ![](DateAndTimeMode.png)
 @available(watchOS 8, *)
@@ -44,25 +41,26 @@ public struct DatePickerComponents: OptionSet {
 public struct DatePicker<Label: View>: View {
   public typealias Components = DatePickerComponents
 
-  var titleKey: LocalizedStringKey?
   @ViewBuilder var label: Label
   @Binding var selection: Date
-  var minimumDate: Date?
-  var maximumDate: Date?
-  var dateStyle: DateFormatter.Style = .medium
-  var timeStyle: DateFormatter.Style = .short
   let displayedComponents: Components
 
+  @State private var newSelection: Date
+  private var minimumDate: Date?
+  private var maximumDate: Date?
+  private var dateStyle: DateFormatter.Style = .medium
+  private var timeStyle: DateFormatter.Style = .short
+
   @State private var sheetIsPresented = false
-  @State private var linkIsActive = false
+  @State private var navigationLinkIsActive = false
 
   @Environment(\.locale) private var locale
 
-  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
-  @Environment(\.datePickerTwentyFourHour) private var twentyFourHour
+  @Environment(\.datePickerFlipsLabelAndValue) private var flipsLabelAndValue
+  @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
-  private var formattedSelection: String {
-    // TODO: don’t recreate the formatter every time? (maybe profile this or ask on Discord)
+  private var formattedButtonTitle: String {
+    // TODO: don’t recreate the formatter every time? (profile this or ask on Discord)
     let formatter = DateFormatter()
     formatter.locale = locale
     
@@ -91,23 +89,24 @@ public struct DatePicker<Label: View>: View {
     return formatter.string(from: selection)
   }
 
-  private var formattedDateSelection: String {
-    // TODO: don’t recreate the formatter every time? (maybe profile this or ask on Discord)
+  private var formattedNavigationTitle: String {
+    // TODO: don’t recreate the formatter every time? (profile this or ask on Discord)
     let formatter = DateFormatter()
     formatter.locale = locale
     formatter.dateStyle = .medium
     formatter.timeStyle = .none
-    return formatter.string(from: selection)
+    return formatter.string(from: newSelection)
   }
 
   private var confirmationButton: some View {
-    Button(action: { linkIsActive = true }) {
+    Button(action: { navigationLinkIsActive = true }) {
       Text("Continue", bundle: .module)
     }
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
     .tint(.green)
-    .scenePadding(.horizontal)
+    .padding()
+    // .scenePadding(.horizontal)
   }
   
   private var circularButtons: some View {
@@ -119,7 +118,7 @@ public struct DatePicker<Label: View>: View {
       
       Spacer()
       
-      Button(action: { sheetIsPresented = false }) {
+      Button(action: submit) {
         Image(systemName: "checkmark")
       }
       .buttonStyle(.circular(.green))
@@ -127,89 +126,142 @@ public struct DatePicker<Label: View>: View {
     .padding(.horizontal, 12)
   }
 
+  private func submit() {
+    sheetIsPresented = false
+    selection = newSelection
+
+    if navigationLinkIsActive {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        navigationLinkIsActive = false
+      }
+    }
+  }
+
   /// The content and behavior of the view.
   public var body: some View {
     Button(action: { sheetIsPresented = true }) {
       VStack(alignment: .leading) {
-        label
+        // TODO: consider if this can be achieved in a cleaner and more reusable way
+        if flipsLabelAndValue != true {
+          label
+          
+          Text(formattedButtonTitle)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+        } else {
+          Text(formattedButtonTitle)
 
-        Text(formattedSelection)
-          .font(titleKey != nil ? .footnote : .body)
-          .foregroundStyle(titleKey != nil ? .secondary : .primary)
+          label
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+        }
       }
     }
+    .onChange(of: sheetIsPresented) { isPresented in
+      // print("sheetIsPresented = \(isPresented)")
+      // if !isPresented { newSelection = selection }
+      newSelection = selection
+    }
     .sheet(isPresented: $sheetIsPresented) {
-      switch displayedComponents {
-      case [.date, .hourAndMinute]:
-        NavigationView {
-          VStack(spacing: 15) {
-            DateInputView(selection: $selection, minimumDate: minimumDate, maximumDate: maximumDate)
-              .overlay {
-                NavigationLink(isActive: $linkIsActive) {
-                  TimeInputView(selection: $selection)
-                    .navigationTitle(formattedDateSelection)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                      ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") {
-                          sheetIsPresented = false
-                          
-                          DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            linkIsActive = false
-                          }
+      Group {
+        switch displayedComponents {
+        case [.date, .hourAndMinute]:
+          NavigationView {
+            VStack {
+              DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+                .overlay {
+                  NavigationLink(isActive: $navigationLinkIsActive) {
+                    TimeInputView(selection: $newSelection)
+                      .navigationTitle(formattedNavigationTitle)
+                      .navigationBarTitleDisplayMode(.inline)
+                      .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                          Button("Done", action: submit)
                         }
                       }
-                    }
-                } label: {
-                  EmptyView()
+                  } label: {
+                    EmptyView()
+                  }
+                  .hidden()
                 }
-                .hidden()
-              }
+              
+              confirmationButton
+            }
+            // .watchStatusBar(hidden: true)
+            .edgesIgnoringSafeArea(.bottom)
+            // .padding(.bottom)
+            // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
+            .scenePadding(.bottom)
+          }
+          
+        case .date:
+          VStack(spacing: 15) {
+            Spacer()
             
-            confirmationButton
+            DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+              .frame(minHeight: 120)
+              .padding(.top, 20)
+            
+            circularButtons
           }
-        }
-
-      case .date:
-        VStack(spacing: 15) {
-          Spacer()
+          .frame(maxHeight: .infinity)
+          .navigationBarHidden(true)
+          // .watchStatusBar(hidden: true)
+          // .border(.mint)
+          .edgesIgnoringSafeArea(.all)
+          // .border(.pink)
+          .padding(.bottom, -20)
+          // .border(.brown)
           
-          DateInputView(selection: $selection, minimumDate: minimumDate, maximumDate: maximumDate)
-            .frame(minHeight: 120)
-          
-          circularButtons
-        }
-        .frame(maxHeight: .infinity)
-        .navigationBarHidden(true)
-        .border(.mint)
-        .edgesIgnoringSafeArea(.all)
-        .border(.pink)
-        .padding(.bottom, -5)
-        .border(.brown)
-
-      case .hourAndMinute:
-        ZStack(alignment: .bottom) {
-          TimeInputView(selection: $selection)
-          
-          circularButtons
-            .padding(.bottom, -26)
-            .padding(.horizontal, 32)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .toolbar {
-          ToolbarItem(placement: .confirmationAction) {
-            Button("", action: {})
-              .accessibilityHidden(true)
+        case .hourAndMinute:
+          ZStack(alignment: .bottom) {
+            TimeInputView(selection: $newSelection)
+            
+            circularButtons
+              .padding(.bottom, -26)
+              .padding(.horizontal, 32)
           }
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .navigationBarHidden(true)
+          ._statusBar(hidden: true)
+          // .watchStatusBar(hidden: true)
+          .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+              Button("", action: {})
+                .accessibilityHidden(true)
+            }
+          }
+          .edgesIgnoringSafeArea(.all)
+          .padding(.bottom, -40)
+          .padding(.horizontal, -32)
+          .offset(y: -45)
+          
+        default:
+          EmptyView()
         }
-        .navigationBarHidden(true)
-        .edgesIgnoringSafeArea(.all)
-        .padding(.bottom, -40)
-        .padding(.horizontal, -32)
-        .offset(y: -45)
+      }
+      // .onAppear {
+      //   print("onAppear")
+      //   // newSelection = selection
+      // }
+      // .onDisappear {
+      //   print("onDisappear")
+      //   // newSelection = selection
+      // }
+    }
+  }
+}
 
-      default:
-        EmptyView()
+@available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension View {
+  func watchStatusBar(hidden: Bool) -> some View {
+    toolbar {
+      ToolbarItem(placement: .confirmationAction) {
+        Button("", action: {})
+          .accessibilityHidden(true)
       }
     }
   }
@@ -221,6 +273,7 @@ public struct DatePicker<Label: View>: View {
 @available(tvOS, unavailable)
 extension DatePicker {
   /// Creates an instance that selects a `Date` with an unbounded range.
+  ///
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
@@ -231,11 +284,15 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
     self.label = label()
   }
 
   /// Creates an instance that selects a `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   ///   - range: The inclusive range of selectable dates.
@@ -248,6 +305,7 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -255,6 +313,9 @@ extension DatePicker {
   }
 
   /// Creates an instance that selects a `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   ///   - range: The open range from some selectable start date.
@@ -267,12 +328,16 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
     self.label = label()
   }
 
   /// Creates an instance that selects a `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   ///   - range: The open range before some selectable end date.
@@ -285,6 +350,7 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -297,6 +363,7 @@ extension DatePicker {
 @available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects a `Date` with an unbounded range.
+  ///
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -308,10 +375,14 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -325,12 +396,16 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -344,11 +419,15 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The key for the localized title of `self`, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -362,6 +441,7 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
@@ -373,6 +453,7 @@ extension DatePicker where Label == Text {
 @available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects a `Date` with an unbounded range.
+  ///
   /// - Parameters:
   ///   - label: The title of self, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -384,10 +465,14 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The title of self, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -401,12 +486,16 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The title of self, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -420,11 +509,15 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
   
   /// Creates an instance that selects a `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
   /// - Parameters:
   ///   - label: The title of self, describing its purpose.
   ///   - selection: The date value being displayed and selected.
@@ -438,6 +531,7 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
+    _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
@@ -463,7 +557,6 @@ struct DatePicker_Previews: PreviewProvider {
         DatePicker(String("Select Date & Time"), selection: $value)
       }
       .tint(.orange)
-      .accentColor(.orange)
     }
   }
 
@@ -522,7 +615,7 @@ struct DatePicker_Previews: PreviewProvider {
 //    NavigationView {
 //      NavigationLink(isActive: .constant(true)) {
 //        TimeInputView(selection: .constant(Date()), mode: .dateAndTime)
-//          .datePickerTwentyFourHour()
+//          .timeInputViewTwentyFourHour()
 //          .tint(.pink)
 //      } label: {
 //        EmptyView()

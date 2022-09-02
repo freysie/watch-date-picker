@@ -11,6 +11,8 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct DateInputView: View {
+  enum Field: Hashable { case month, day, year }
+
   @Binding var selection: Date
   var minimumDate: Date?
   var maximumDate: Date?
@@ -18,8 +20,10 @@ public struct DateInputView: View {
   @State private var year = 0
   @State private var month = 0
   @State private var day = 0
+  @FocusState private var focusedField: Field?
 
-  @Environment(\.datePickerShowsMonthBeforeDay) private var showsMonthBeforeDay
+  @Environment(\.dateInputViewShowsMonthBeforeDay) private var showsMonthBeforeDay
+  @Environment(\.dateInputViewTextCase) private var textCase
   @Environment(\.locale) private var locale
 
   private var newSelection: Date {
@@ -44,9 +48,21 @@ public struct DateInputView: View {
     return lowerBound..<(upperBound + 1)
   }
 
-  // TODO: add minimumDate/maximumDate constraints
   private var monthSymbols: [EnumeratedSequence<[String]>.Element] {
-    Array(locale.calendar.shortMonthSymbols.enumerated())
+    let symbols = Array(locale.calendar.shortMonthSymbols.enumerated())
+    var lowerBound = 0
+    var upperBound = symbols.count
+    if let minimumDate = minimumDate {
+      if locale.calendar.component(.year, from: minimumDate) == locale.calendar.component(.year, from: selection) {
+        lowerBound = locale.calendar.component(.month, from: minimumDate) - 1
+      }
+    }
+    if let maximumDate = maximumDate {
+      if locale.calendar.component(.year, from: maximumDate) == locale.calendar.component(.year, from: selection) {
+        upperBound = locale.calendar.component(.month, from: maximumDate)
+      }
+    }
+    return Array(symbols[lowerBound..<upperBound])
   }
 
   // TODO: add minimumDate/maximumDate constraints
@@ -82,7 +98,7 @@ public struct DateInputView: View {
       yearPicker
     }
     .pickerStyle(.wheel)
-    .textCase(.uppercase)
+    .textCase(textCase)
     // .padding(.horizontal, 10)
     .scenePadding(.horizontal)
     .padding(.vertical, 5)
@@ -136,12 +152,8 @@ public struct DateInputView: View {
       Text("Year", bundle: .module)
         .minimumScaleFactor(0.8)
     }
-    .overlay {
-      RoundedRectangle(cornerRadius: 17, style: .continuous)
-        .strokeBorder(.pink, lineWidth: 2)
-        .padding(.top, 17)
-    }
-    //.focusable()
+    .focused($focusedField, equals: .year)
+    .overlay { tintedPickerBorder(focused: focusedField == .year) }
   }
 
   private var monthPicker: some View {
@@ -155,6 +167,8 @@ public struct DateInputView: View {
       Text("Month", bundle: .module)
         .minimumScaleFactor(0.8)
     }
+    .focused($focusedField, equals: .month)
+    .overlay { tintedPickerBorder(focused: focusedField == .month) }
   }
 
   private var dayPicker: some View {
@@ -168,17 +182,33 @@ public struct DateInputView: View {
       Text("Day", bundle: .module)
         .minimumScaleFactor(0.8)
     }
-    .id([month, year].map(String.init).joined(separator: "."))
+    .focused($focusedField, equals: .day)
+    .overlay { tintedPickerBorder(focused: focusedField == .day) }
+    // .id([month, year].map(String.init).joined(separator: "."))
     // FIXME: select lower day if month’s upper bound day range is less than selection’s day
-    .onChange(of: month) { _ in
-      if dayRange.upperBound < day {
-        print("!!! dayRange.upperBound < day")
-        day = dayRange.upperBound
-      }
-    }
+    // .onChange(of: month) { _ in
+    //   NSLog("[WatchDatePicker] \(dayRange.upperBound - 1) <= \(day) = \(dayRange.upperBound - 1 <= day)")
+    //   if dayRange.upperBound - 1 <= day {
+    //     NSLog("[WatchDatePicker] dayRange.upperBound - 1 <= day")
+    //     DispatchQueue.main.async {
+    //       DispatchQueue.main.async {
+    //         day = dayRange.upperBound - 1
+    //       }
+    //     }
+    //   }
+    // }
+  }
+  
+  private func tintedPickerBorder(focused: Bool = true) -> some View {
+    EmptyView()
+    // RoundedRectangle(cornerRadius: 11, style: .continuous)
+    //   .strokeBorder(!focused ? .white : .indigo, lineWidth: !focused ? 1.5 : 2)
+    //   .padding(.top, 16.5)
+    //   // .padding(.bottom, -0.5)
+    //   .animation(.linear, value: focused)
+    //   // .transition(.opacity)
   }
 }
-
 
 @available(macOS, unavailable)
 @available(iOS, unavailable)
@@ -189,7 +219,7 @@ struct DateInputView_Previews: PreviewProvider {
       .previewDisplayName("Default")
     
     DateInputView(selection: .constant(Date()))
-      .datePickerShowsMonthBeforeDay(false)
+      .dateInputViewShowsMonthBeforeDay(false)
       .previewDisplayName("Day First")
     
     DateInputView(selection: .constant(Date()))

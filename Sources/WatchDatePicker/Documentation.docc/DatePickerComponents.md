@@ -1,4 +1,4 @@
-# ``WatchDatePicker/DatePicker/Components``
+# ``WatchDatePicker/DatePickerComponents``
 
 ## Topics
 

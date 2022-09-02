@@ -1,9 +1,11 @@
 #!/bin/sh
 
 targets=(
-  "DateAndTimeMode-1"
-  "DateMode-1"
-  "TimeMode-1"
+  "DatePicker-1"
+  "DatePicker-2"
+  "DatePicker_date-1"
+  "DatePicker_date-2"
+  "DatePicker_hourAndMinute-1"
 )
 
 for target in ${targets[@]}; do

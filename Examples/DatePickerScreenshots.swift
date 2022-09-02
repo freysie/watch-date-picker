@@ -26,7 +26,7 @@ class DatePickerScreenshots: XCTestCase {
     
     
     
-    app.saveScreenshot(as: "DatePicker~hourAndMinute")
+    app.saveScreenshot(as: "__DatePicker~hourAndMinute")
     
 //    print(app.debugDescription)
 //    print(app.otherElements.count)
@@ -38,12 +38,12 @@ class DatePickerScreenshots: XCTestCase {
 //
 //    sleep(1)
 //
-//    app.saveScreenshot(as: "DatePicker~2")
+//    app.saveScreenshot(as: "__DatePicker~2")
 //
 //    app.otherElements.matching(identifier: "PageView").firstMatch.swipeRight(velocity: .fast)
 //
 //        sleep(1)
 //
-//    app.saveScreenshot(as: "DatePicker~3")
+//    app.saveScreenshot(as: "__DatePicker~3")
   }
 }
