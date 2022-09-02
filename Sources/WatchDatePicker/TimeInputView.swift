@@ -107,16 +107,22 @@ public struct TimeInputView: View {
 
   /// The content and behavior of the view.
   public var body: some View {
-    ZStack(alignment: .bottom) {
+    ZStack {
       clockFace
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(clockFacePadding)
         .drawingGroup(opaque: true)
+        //.border(.mint)
+        //.border(.green)
+        // .clipped()
+        // .border(.red)
 
       pickerButtons
+        // .border(.brown)
     }
     .onChange(of: newSelection) {
       selection = $0
     }
-    .ignoresSafeArea()
   }
 
   private var clockFace: some View {
@@ -133,19 +139,25 @@ public struct TimeInputView: View {
         selectionIndicator(for: minute, multiple: 60, with: geometry)
       }
     }
-    // TODO: consider moving this padding and offset to call sites in `DatePicker`
-    .padding(clockFacePadding)
-    .offset(y: clockFaceOffsetY)
   }
   
-  private var clockFaceOffsetY: Double {
+  private var clockFacePadding: Double {
     switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return 9.5 // 40 mm
-    case 176: return 11 // 41 mm
-    case 198: return 8.5 // 45 mm
-    default: return 11.5
+    case 162: return -15 // 40 mm
+    case 176: return -21 // 41 mm
+    case 198: return -23 // 45 mm
+    default: return -13
     }
   }
+  
+  // private var clockFaceOffsetY: Double {
+  //   switch WKInterfaceDevice.current().screenBounds.width {
+  //   case 162: return 9.5 // 40 mm
+  //   case 176: return 11 // 41 mm
+  //   case 198: return 8.5 // 45 mm
+  //   default: return 11.5
+  //   }
+  // }
 
   // private var clockFacePadding2: Double {
   //   [
@@ -155,15 +167,6 @@ public struct TimeInputView: View {
   //     WKInterfaceDevice.current().screenBounds.width
   //   ]!
   // }
-
-  private var clockFacePadding: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return -15 // 40 mm
-    case 176: return -21 // 41 mm
-    case 198: return -23 // 45 mm
-    default: return -13
-    }
-  }
 
   private var componentFontSize: Double {
     switch WKInterfaceDevice.current().screenBounds.width {
@@ -196,6 +199,7 @@ public struct TimeInputView: View {
   }
 
   private func labels(with geometry: GeometryProxy) -> some View {
+    print((geometry.size, geometry.safeAreaInsets))
     switch focusedComponent {
     case .hour:
       if twentyFourHour == true {
@@ -284,11 +288,11 @@ public struct TimeInputView: View {
 
   private var pickerButtons: some View {
     VStack {
-      Spacer()
+      // Spacer()
 
       if twentyFourHour == true {
         Button(action: {}) {
-          Text("24\(Text("hr").font(.system(size: 15).smallCaps()))!")
+          Text("24\(Text("HR").font(.system(size: 15)))")
           // Text("24hr")
         }
           .buttonStyle(.timePeriod(isHighlighted: false))
@@ -352,9 +356,9 @@ public struct TimeInputView: View {
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
 
-      Spacer()
+      // Spacer()
     }
-    .offset(y: 10)
+    // .offset(y: 10)
   }
 }
 

@@ -136,6 +136,33 @@ public struct DatePicker<Label: View>: View {
       }
     }
   }
+  
+  private var timeInputViewOffsetY: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 162: return 9.5 // 40 mm
+    case 176: return 11 // 41 mm
+    case 198: return 8.5 // 45 mm
+    default: return 11.5
+    }
+  }
+  
+  // private var clockFacePadding2: Double {
+  //   [
+  //     162: -15.0,
+  //     198: -25.0
+  //   ][
+  //     WKInterfaceDevice.current().screenBounds.width
+  //   ]!
+  // }
+  
+  private var timeInputViewPadding: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 162: return -15 // 40 mm
+    case 176: return -21 // 41 mm
+    case 198: return -23 // 45 mm
+    default: return -13
+    }
+  }
 
   /// The content and behavior of the view.
   public var body: some View {
@@ -169,9 +196,12 @@ public struct DatePicker<Label: View>: View {
           NavigationView {
             VStack {
               DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+                ._statusBar(hidden: true)
                 .overlay {
                   NavigationLink(isActive: $navigationLinkIsActive) {
                     TimeInputView(selection: $newSelection)
+                      .edgesIgnoringSafeArea(.bottom)
+                      .padding(-10)
                       .navigationTitle(formattedNavigationTitle)
                       .navigationBarTitleDisplayMode(.inline)
                       .toolbar {
@@ -216,7 +246,8 @@ public struct DatePicker<Label: View>: View {
         case .hourAndMinute:
           ZStack(alignment: .bottom) {
             TimeInputView(selection: $newSelection)
-            
+              .offset(y: 10)
+
             circularButtons
               .padding(.bottom, -26)
               .padding(.horizontal, 32)

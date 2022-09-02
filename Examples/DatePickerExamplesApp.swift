@@ -114,6 +114,8 @@ struct SystemTimeInputViewExample: View {
 
       DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
         .tint(.pink)
+        
+      DatePicker("Date & Time", selection: $value)
     }
   }
 }
@@ -164,6 +166,8 @@ struct SimpleTimeInputViewExamples: View {
   
   var body: some View {
     TimeInputView(selection: $value)
+      .edgesIgnoringSafeArea(.bottom)
+      .padding(-10)
   }
 }
 
@@ -272,46 +276,50 @@ struct TimeInputViewExamples: View {
   }
   
   var body: some View {
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-      .timeInputViewMonospacedDigit()
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formatted24HourTimeSelection)
-      .environment(\.locale, Locale(identifier: "da"))
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formatted24HourTimeSelection)
-      .timeInputViewTwentyFourHour()
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formatted24HourTimeSelection)
-      .timeInputViewTwentyFourHour()
-      .timeInputViewTwentyFourHourIndicator(.hidden)
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-      .environment(\.locale, Locale(identifier: "sv"))
-      .timeInputViewTwentyFourHour(false)
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-      .tint(.pink)
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-      .tint(.pink)
-      .timeInputViewFocusTint(.pink)
-    
-    TimeInputView(selection: $value)
-      .navigationTitle(formattedTimeSelection)
-      .tint(.red)
-      .timeInputViewAMPMHighlightTint(.brown)
-      .timeInputViewSelectionTint(.indigo)
-      .timeInputViewFocusTint(.pink)
+    Group {
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+        .timeInputViewMonospacedDigit()
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formatted24HourTimeSelection)
+        .environment(\.locale, Locale(identifier: "da"))
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formatted24HourTimeSelection)
+        .timeInputViewTwentyFourHour()
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formatted24HourTimeSelection)
+        .timeInputViewTwentyFourHour()
+        .timeInputViewTwentyFourHourIndicator(.hidden)
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+        .environment(\.locale, Locale(identifier: "sv"))
+        .timeInputViewTwentyFourHour(false)
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+        .tint(.pink)
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+        .tint(.pink)
+        .timeInputViewFocusTint(.pink)
+      
+      TimeInputView(selection: $value)
+        .navigationTitle(formattedTimeSelection)
+        .tint(.red)
+        .timeInputViewAMPMHighlightTint(.brown)
+        .timeInputViewSelectionTint(.indigo)
+        .timeInputViewFocusTint(.pink)
+    }
+    .edgesIgnoringSafeArea(.bottom)
+    .padding(-10)
   }
 }
 
