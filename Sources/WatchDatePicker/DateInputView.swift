@@ -141,6 +141,13 @@ public struct DateInputView: View {
 //    .tint(confirmationTint ?? .green)
 //  }
 
+  private var labelMinimumScaleFactor: Double {
+    switch WKInterfaceDevice.current().screenBounds.width {
+    case 176, 198: return 0.8 // 41 mm, 45 mm
+    default: return 1
+    }
+  }
+
   private var yearPicker: some View {
     Picker(selection: $year) {
       ForEach(yearRange, id: \.self) { year in
@@ -150,7 +157,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Year", bundle: .module)
-        .minimumScaleFactor(0.8)
+        .minimumScaleFactor(labelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .year)
     .overlay { tintedPickerBorder(focused: focusedField == .year) }
@@ -165,7 +172,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Month", bundle: .module)
-        .minimumScaleFactor(0.8)
+        .minimumScaleFactor(labelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .month)
     .overlay { tintedPickerBorder(focused: focusedField == .month) }
@@ -180,7 +187,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Day", bundle: .module)
-        .minimumScaleFactor(0.8)
+        .minimumScaleFactor(labelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .day)
     .overlay { tintedPickerBorder(focused: focusedField == .day) }
