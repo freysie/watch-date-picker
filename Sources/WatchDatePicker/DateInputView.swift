@@ -106,48 +106,6 @@ public struct DateInputView: View {
     .onChange(of: newSelection) { selection = $0 }
   }
 
-//  private var confirmationAction: some View {
-//    Group {
-//      if let mode = mode, mode == .dateAndTime {
-//        NavigationLink {
-//          TimeInputView(
-//            selection: .constant(newSelection),
-//            mode: mode,
-//            onCompletion: confirm
-//          )
-//          // TODO: make this navigation title white somehow?
-//            .navigationTitle(formattedSelection)
-//            .navigationBarTitleDisplayMode(.inline)
-//        } label: {
-//          if let confirmationTitleKey = confirmationTitleKey {
-//            Text(confirmationTitleKey)
-//          } else {
-//            Text("Continue", bundle: .module)
-//            // Text("\(newSelection)", bundle: .module)
-//          }
-//        }
-//      } else {
-//        Button(action: { confirm(newSelection) }) {
-//          if let confirmationTitleKey = confirmationTitleKey {
-//            Text(confirmationTitleKey)
-//          } else {
-//            Text("Done", bundle: .module)
-//          }
-//        }
-//      }
-//    }
-//    .buttonStyle(.borderedProminent)
-//    .foregroundStyle(.background)
-//    .tint(confirmationTint ?? .green)
-//  }
-
-  private var labelMinimumScaleFactor: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 176, 198: return 0.8 // 41 mm, 45 mm
-    default: return 1
-    }
-  }
-
   private var yearPicker: some View {
     Picker(selection: $year) {
       ForEach(yearRange, id: \.self) { year in
@@ -157,7 +115,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Year", bundle: .module)
-        .minimumScaleFactor(labelMinimumScaleFactor)
+        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .year)
     .overlay { tintedPickerBorder(focused: focusedField == .year) }
@@ -172,7 +130,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Month", bundle: .module)
-        .minimumScaleFactor(labelMinimumScaleFactor)
+        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .month)
     .overlay { tintedPickerBorder(focused: focusedField == .month) }
@@ -187,7 +145,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Day", bundle: .module)
-        .minimumScaleFactor(labelMinimumScaleFactor)
+        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .day)
     .overlay { tintedPickerBorder(focused: focusedField == .day) }

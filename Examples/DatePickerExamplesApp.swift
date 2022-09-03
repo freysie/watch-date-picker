@@ -30,10 +30,6 @@ struct SystemTimeInputView: View {
       .onAppear {
         let PUICTimeInputView = objc_getClass("PUICTimeInputView") as! NSObject.Type
 
-//        let PUICWheelsOfTimeDelegate = objc_getProtocol("PUICWheelsOfTimeDelegate")
-//
-//        print(PUICWheelsOfTimeDelegate)
-
         // do {
         //   var outCount: UInt32 = 0
         //   let methods: UnsafeMutablePointer<objc_property_t>! =  class_copyPropertyList(PUICTimeInputView, &outCount)
@@ -61,8 +57,6 @@ struct SystemTimeInputView: View {
 
         timeInputView.setValue(10, forKey: "hour")
         timeInputView.setValue(09, forKey: "minute")
-
-        // timeInputView.performwithwith
 
         coordinator = Coordinator(parent: self)
         // timeInputView.setValue(false, forKey: "shouldUseCircularBottomButtons")
@@ -115,8 +109,8 @@ struct VariousExample: View {
         
         DatePicker("Date", selection: $value, displayedComponents: [.date])
         
-        DatePicker("Time (Push)", selection: $value, displayedComponents: [.hourAndMinute])
-          .datePickerInteractionStyle(.navigationLink)
+        // DatePicker("Time (Push)", selection: $value, displayedComponents: [.hourAndMinute])
+        //   .datePickerInteractionStyle(.navigationLink)
       }
     }
   }

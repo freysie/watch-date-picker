@@ -1,6 +1,5 @@
 import SwiftUI
 
-// TODO: determine `timeInputViewTwentyFourHour` automatically based on locale
 // TODO: determine the exact differences (if any) between `sheet()` and `fullScreenCover()` in watchOS
 
 /// Option set that determines the displayed components of a date picker.
@@ -148,33 +147,6 @@ public struct DatePicker<Label: View>: View {
       }
     }
   }
-  
-  // private var timeInputViewOffsetY: Double {
-  //   switch WKInterfaceDevice.current().screenBounds.width {
-  //   case 162: return 9.5 // 40 mm
-  //   case 176: return 11 // 41 mm
-  //   case 198: return 8.5 // 45 mm
-  //   default: return 11.5
-  //   }
-  // }
-  
-  // private var clockFacePadding2: Double {
-  //   [
-  //     162: -15.0,
-  //     198: -25.0
-  //   ][
-  //     WKInterfaceDevice.current().screenBounds.width
-  //   ]!
-  // }
-  
-  // private var timeInputViewPadding: Double {
-  //   switch WKInterfaceDevice.current().screenBounds.width {
-  //   case 162: return -15 // 40 mm
-  //   case 176: return -21 // 41 mm
-  //   case 198: return -23 // 45 mm
-  //   default: return -13
-  //   }
-  // }
 
   private var buttonBody: some View {
     VStack(alignment: .leading) {
@@ -195,98 +167,90 @@ public struct DatePicker<Label: View>: View {
     }
   }
   
-  private var mainBody: some View {
-    Group {
-      switch displayedComponents {
-      case [.date, .hourAndMinute]:
-        NavigationView {
-          VStack {
-            DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-              ._statusBar(hidden: true)
-              .overlay {
-                NavigationLink(isActive: $secondViewIsPresented) {
-                  TimeInputView(selection: $newSelection)
-                    .edgesIgnoringSafeArea(.bottom)
-                    .padding(-10)
-                    .navigationTitle(formattedNavigationTitle)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                      ToolbarItem(placement: .confirmationAction) {
-                        Button("Done", action: submit)
+  @ViewBuilder private var mainBody: some View {
+    switch displayedComponents {
+    case [.date, .hourAndMinute]:
+      NavigationView {
+        VStack {
+          DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+            ._statusBar(hidden: true)
+            .overlay {
+              NavigationLink(isActive: $secondViewIsPresented) {
+                TimeInputView(selection: $newSelection)
+                  .edgesIgnoringSafeArea(.bottom)
+                  .padding(-10)
+                  .navigationTitle(formattedNavigationTitle)
+                  .navigationBarTitleDisplayMode(.inline)
+                  .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                      Button(action: submit) {
+                        Text("Done", bundle: .module)
                       }
                     }
-                } label: {
-                  EmptyView()
-                }
-                .hidden()
+                  }
+              } label: {
+                EmptyView()
               }
-            
-            confirmationButton
-          }
-          // .watchStatusBar(hidden: true)
-          .edgesIgnoringSafeArea(.bottom)
-          // .padding(.bottom)
-          // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
-          .scenePadding(.bottom)
-        }
-        
-      case .date:
-        VStack(spacing: 10) {
-          DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-            .frame(height: max(120, WKInterfaceDevice.current().screenBounds.height * 0.55))
-            // .padding(.top, 20)
-            // .onAppear { print(WKInterfaceDevice.current().screenBounds.height * 0.6) }
-
-          circularButtons
-            .padding(.bottom, -21)
-        }
-        .frame(maxHeight: .infinity)
-        .edgesIgnoringSafeArea(.all)
-        .navigationBarHidden(true)
-        ._statusBar(hidden: true)
-        
-        // .watchStatusBar(hidden: true)
-        // .border(.mint)
-        // .border(.pink)
-        //.padding(.bottom, -20)
-        // .border(.brown)
-        
-      case .hourAndMinute:
-        ZStack(alignment: .bottom) {
-          TimeInputView(selection: $newSelection)
-            .offset(y: 10)
+              .hidden()
+            }
           
-          circularButtons
-            .padding(.bottom, -26)
-            .padding(.horizontal, 32)
+          confirmationButton
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationBarHidden(true)
-        ._statusBar(hidden: true)
         // .watchStatusBar(hidden: true)
-        .toolbar {
-          ToolbarItem(placement: .confirmationAction) {
-            Button("", action: {})
-              .accessibilityHidden(true)
-          }
-        }
-        .edgesIgnoringSafeArea(.all)
-        .padding(.bottom, -40)
-        .padding(.horizontal, -32)
-        .offset(y: -45)
-        
-      default:
-        EmptyView()
+        .edgesIgnoringSafeArea(.bottom)
+        // .padding(.bottom)
+        // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
+        .scenePadding(.bottom)
       }
+      
+    case .date:
+      VStack(spacing: 10) {
+        DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+          .frame(height: max(120, WKInterfaceDevice.current().screenBounds.height * 0.55))
+        // .padding(.top, 20)
+        // .onAppear { print(WKInterfaceDevice.current().screenBounds.height * 0.6) }
+        
+        circularButtons
+          .padding(.bottom, -21)
+      }
+      .frame(maxHeight: .infinity)
+      .edgesIgnoringSafeArea(.all)
+      .navigationBarHidden(true)
+      ._statusBar(hidden: true)
+      
+      // .watchStatusBar(hidden: true)
+      // .border(.mint)
+      // .border(.pink)
+      //.padding(.bottom, -20)
+      // .border(.brown)
+      
+    case .hourAndMinute:
+      ZStack(alignment: .bottom) {
+        TimeInputView(selection: $newSelection)
+          .offset(y: 10)
+        
+        circularButtons
+          .padding(.bottom, -26)
+          .padding(.horizontal, 32)
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .navigationBarHidden(true)
+      ._statusBar(hidden: true)
+      // .watchStatusBar(hidden: true)
+      .toolbar {
+        ToolbarItem(placement: .confirmationAction) {
+          Button("", action: {})
+            .accessibilityHidden(true)
+        }
+      }
+      .edgesIgnoringSafeArea(.all)
+      .padding(.bottom, -40)
+      .padding(.horizontal, -32)
+      .offset(y: -45)
+      
+    default:
+      fatalError()
     }
-    // .onAppear {
-    //   print("onAppear")
-    //   // newSelection = selection
-    // }
-    // .onDisappear {
-    //   print("onDisappear")
-    //   // newSelection = selection
-    // }
   }
 
   /// The content and behavior of the view.

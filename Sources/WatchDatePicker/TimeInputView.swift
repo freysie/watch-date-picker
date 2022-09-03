@@ -96,13 +96,6 @@ public struct TimeInputView: View {
     initialSelection = selection.wrappedValue
     _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
     _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
-
-    // print((calendar, locale.calendar, calendar == locale.calendar))
-    // FIXME: rework this now that we’re using environment:
-//    if !(twentyFourHour == true) {
-      // _hourPeriod = State(initialValue: hour <= 12 ? .am : .pm)
-//      // if hourPeriod == .pm { hour %= 12 }
-//    }
   }
 
   /// The content and behavior of the view.
@@ -110,7 +103,7 @@ public struct TimeInputView: View {
     ZStack {
       clockFace
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(clockFacePadding)
+        .padding(.clockFacePadding)
         .drawingGroup(opaque: true)
         //.border(.mint)
         //.border(.green)
@@ -138,63 +131,6 @@ public struct TimeInputView: View {
         marks(for: .minute, with: geometry)
         selectionIndicator(for: minute, multiple: 60, with: geometry)
       }
-    }
-  }
-  
-  private var clockFacePadding: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return -15 // 40 mm
-    case 176: return -21 // 41 mm
-    case 198: return -23 // 45 mm
-    default: return -13
-    }
-  }
-  
-  // private var clockFaceOffsetY: Double {
-  //   switch WKInterfaceDevice.current().screenBounds.width {
-  //   case 162: return 9.5 // 40 mm
-  //   case 176: return 11 // 41 mm
-  //   case 198: return 8.5 // 45 mm
-  //   default: return 11.5
-  //   }
-  // }
-
-  // private var clockFacePadding2: Double {
-  //   [
-  //     162: -15.0,
-  //     198: -25.0
-  //   ][
-  //     WKInterfaceDevice.current().screenBounds.width
-  //   ]!
-  // }
-
-  private var componentFontSize: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return 28 // 40 mm
-    case 176: return 34.5 // 41 mm
-    case 198: return 39 // 45 mm
-    default: return 32
-    }
-  }
-
-  private var selectionIndicatorRadius: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 198: return 2.75 // 45 mm
-    default: return 2.25
-    }
-  }
-
-  private var heavyMarkSize: CGSize {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 198: return CGSize(width: 2, height: 2.5) // 45 mm
-    default: return CGSize(width: 1.5, height: 2.5)
-    }
-  }
-
-  private var markSize: CGSize {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 198: return CGSize(width: 1.75, height: 7.5) // 45 mm
-    default: return CGSize(width: 1.25, height: 6.5)
     }
   }
 
@@ -245,14 +181,14 @@ public struct TimeInputView: View {
   }
 
   private func mark(at index: Int, multiple: Double, heavy: Bool = false, with geometry: GeometryProxy) -> some View {
-    let size = heavy ? heavyMarkSize : markSize
+    let size: CGSize = heavy ? .heavyMarkSize : .markSize
 
     return Rectangle()
       .size(size)
       .offset(x: -size.width / 2.0, y: 0)
       .offset(y: geometry.size.height / 3)
       // .offset(y: (heavy ? markSize.height - heavyMarkSize.height : 0) + 0.5)
-      .offset(y: heavy ? markSize.height - heavyMarkSize.height : 0)
+      .offset(y: heavy ? CGSize.markSize.height - CGSize.heavyMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
       .fill(heavy ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
       .position(x: geometry.size.width, y: geometry.size.height)
@@ -263,10 +199,10 @@ public struct TimeInputView: View {
     // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
 
     return Circle()
-      .size(width: selectionIndicatorRadius * 2, height: selectionIndicatorRadius * 2)
-      .offset(x: -selectionIndicatorRadius, y: -selectionIndicatorRadius)
+      .size(width: .selectionIndicatorRadius * 2, height: .selectionIndicatorRadius * 2)
+      .offset(x: -.selectionIndicatorRadius, y: -.selectionIndicatorRadius)
       .offset(y: geometry.size.height / 3)
-      .offset(y: max(heavyMarkSize.height, markSize.height) - 1)
+      .offset(y: max(CGSize.heavyMarkSize.height, CGSize.markSize.height) - 1)
       .rotation(.degrees(180 + rotationDegrees), anchor: .topLeading)
       .fill(selectionTint.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint))
       .animation(.spring(), value: value)
@@ -343,8 +279,8 @@ public struct TimeInputView: View {
       }
       .font(
         monospacedDigit == true
-        ? .system(size: componentFontSize).monospacedDigit()
-        : .system(size: componentFontSize)
+        ? .system(size: .componentFontSize).monospacedDigit()
+        : .system(size: .componentFontSize)
       )
 
       Button(action: { setHourPeriod(.pm) }) {

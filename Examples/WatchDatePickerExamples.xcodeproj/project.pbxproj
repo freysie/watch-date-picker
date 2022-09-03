@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		097155C92744356200F476F0 /* DatePickerExamplesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097155C62744356200F476F0 /* DatePickerExamplesApp.swift */; };
-		097155CC2744356200F476F0 /* DatePickerExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097155C82744356200F476F0 /* DatePickerExamples.swift */; };
 		09954B7E272DCAC300475F57 /* Examples WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 09954B7D272DCAC300475F57 /* Examples WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3B029E03285FADA0000346CD /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3B029E02285FADA0000346CD /* WatchDatePicker */; };
@@ -78,7 +77,6 @@
 /* Begin PBXFileReference section */
 		097155C62744356200F476F0 /* DatePickerExamplesApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamplesApp.swift; sourceTree = "<group>"; };
 		097155C72744356200F476F0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		097155C82744356200F476F0 /* DatePickerExamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerExamples.swift; sourceTree = "<group>"; };
 		09954B79272DCAC300475F57 /* WatchDatePicker Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchDatePicker Examples.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B7D272DCAC300475F57 /* Examples WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Examples WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				3BA47620285FAD6800431D20 /* Packages */,
-				097155C82744356200F476F0 /* DatePickerExamples.swift */,
 				097155C62744356200F476F0 /* DatePickerExamplesApp.swift */,
 				3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */,
 				3B029E04285FBFF9000346CD /* Assets.xcassets */,
@@ -326,7 +323,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				097155CC2744356200F476F0 /* DatePickerExamples.swift in Sources */,
 				097155C92744356200F476F0 /* DatePickerExamplesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

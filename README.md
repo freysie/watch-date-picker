@@ -15,7 +15,7 @@ Online documentation is available at [freyaalminde.github.io/documentation/watch
 
 ## Overview
 
-The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interface for selecting date, time, or both.
+The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a user interface for selecting date, time, or both.
 
 
 ### Selecting Date and Time
