@@ -5,9 +5,9 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public extension View {
-  /// Sets whether date pickers show month before day within this view.
+  /// Sets whether date input views show month before day within this view.
   /// - Parameters:
-  ///   - enabled: A Boolean value that determines whether date pickers show month before day within this view.
+  ///   - enabled: A Boolean value that determines whether date input views show month before day within this view.
   func dateInputViewShowsMonthBeforeDay(_ enabled: Bool? = true) -> some View {
     environment(\.dateInputViewShowsMonthBeforeDay, enabled)
   }
