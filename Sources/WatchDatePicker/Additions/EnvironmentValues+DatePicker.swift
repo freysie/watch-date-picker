@@ -12,13 +12,20 @@ public extension View {
     environment(\.datePickerFlipsLabelAndValue, enabled)
   }
 
+  /// Sets the interaction style of date pickers within this view. That is, whether the picking interface is presented as a sheet or pushed onto the navigation stack.
+  /// - Parameters:
+  ///   - style: The interaction style.
+  func datePickerInteractionStyle(_ style: DatePickerInteractionStyle) -> some View {
+    environment(\.datePickerInteractionStyle, style)
+  }
+
   // /// Sets whether date pickers use bottom buttons within this view.
   // /// - Parameters:
   // ///   - enabled: A Boolean value that determines whether date pickers use bottom buttons within this view.
   // func datePickerUsesBottomButtons(_ enabled: Bool? = true) -> some View {
   //   environment(\.datePickerUsesBottomButtons, enabled)
   // }
-  
+
   // /// Sets the confirmation button title key for date pickers within this view.
   // /// - Parameters:
   // ///   - key: A localized string key for overriding the confirmation button’s title.
@@ -44,6 +51,11 @@ public extension EnvironmentValues {
     set { self[DatePickerFlipsLabelAndValueKey.self] = newValue }
   }
   
+  var datePickerInteractionStyle: DatePickerInteractionStyle {
+    get { self[DatePickerInteractionStyleKey.self] }
+    set { self[DatePickerInteractionStyleKey.self] = newValue }
+  }
+  
   // var datePickerUsesBottomButtons: Bool? {
   //   get { self[DatePickerUsesBottomButtonsKey.self] }
   //   set { self[DatePickerUsesBottomButtonsKey.self] = newValue }
@@ -61,6 +73,7 @@ public extension EnvironmentValues {
 }
 
 struct DatePickerFlipsLabelAndValueKey: EnvironmentKey { static let defaultValue: Bool? = nil }
+struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue = DatePickerInteractionStyle.sheet }
 
 // struct DatePickerUsesBottomButtonsKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 

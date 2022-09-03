@@ -22,6 +22,16 @@ public struct DatePickerComponents: OptionSet {
   public static let hourAndMinute = Self(rawValue: 1 << 1)
 }
 
+/// Enum that determines the interaction style of a date picker.
+@available(watchOS 8, *)
+public enum DatePickerInteractionStyle {
+  /// Displays the date picking interface in a sheet.
+  case sheet
+
+  /// Pushes the date picking interface onto the navigation stack.
+  case navigationLink
+}
+
 ///// Enum that determines the display mode of a date picker.
 //public enum DatePickerDisplayMode {
 //  case navigationStack
@@ -51,12 +61,13 @@ public struct DatePicker<Label: View>: View {
   private var dateStyle: DateFormatter.Style = .medium
   private var timeStyle: DateFormatter.Style = .short
 
-  @State private var sheetIsPresented = false
-  @State private var navigationLinkIsActive = false
+  @State private var isPresented = false
+  @State private var secondViewIsPresented = false
 
   @Environment(\.locale) private var locale
 
   @Environment(\.datePickerFlipsLabelAndValue) private var flipsLabelAndValue
+  @Environment(\.datePickerInteractionStyle) private var interactionStyle
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
   private var formattedButtonTitle: String {
@@ -99,7 +110,7 @@ public struct DatePicker<Label: View>: View {
   }
 
   private var confirmationButton: some View {
-    Button(action: { navigationLinkIsActive = true }) {
+    Button(action: { secondViewIsPresented = true }) {
       Text("Continue", bundle: .module)
     }
     .buttonStyle(.borderedProminent)
@@ -111,7 +122,7 @@ public struct DatePicker<Label: View>: View {
   
   private var circularButtons: some View {
     HStack {
-      Button(action: { sheetIsPresented = false }) {
+      Button(action: { isPresented = false }) {
         Image(systemName: "xmark")
       }
       .buttonStyle(.circular(.gray))
@@ -127,24 +138,24 @@ public struct DatePicker<Label: View>: View {
   }
 
   private func submit() {
-    sheetIsPresented = false
+    isPresented = false
     selection = newSelection
 
-    if navigationLinkIsActive {
+    if secondViewIsPresented {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-        navigationLinkIsActive = false
+        secondViewIsPresented = false
       }
     }
   }
   
-  private var timeInputViewOffsetY: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return 9.5 // 40 mm
-    case 176: return 11 // 41 mm
-    case 198: return 8.5 // 45 mm
-    default: return 11.5
-    }
-  }
+  // private var timeInputViewOffsetY: Double {
+  //   switch WKInterfaceDevice.current().screenBounds.width {
+  //   case 162: return 9.5 // 40 mm
+  //   case 176: return 11 // 41 mm
+  //   case 198: return 8.5 // 45 mm
+  //   default: return 11.5
+  //   }
+  // }
   
   // private var clockFacePadding2: Double {
   //   [
@@ -155,130 +166,158 @@ public struct DatePicker<Label: View>: View {
   //   ]!
   // }
   
-  private var timeInputViewPadding: Double {
-    switch WKInterfaceDevice.current().screenBounds.width {
-    case 162: return -15 // 40 mm
-    case 176: return -21 // 41 mm
-    case 198: return -23 // 45 mm
-    default: return -13
+  // private var timeInputViewPadding: Double {
+  //   switch WKInterfaceDevice.current().screenBounds.width {
+  //   case 162: return -15 // 40 mm
+  //   case 176: return -21 // 41 mm
+  //   case 198: return -23 // 45 mm
+  //   default: return -13
+  //   }
+  // }
+
+  private var buttonBody: some View {
+    VStack(alignment: .leading) {
+      // TODO: consider if this can be achieved in a cleaner and more reusable way
+      if flipsLabelAndValue != true {
+        label
+        
+        Text(formattedButtonTitle)
+          .font(.footnote)
+          .foregroundStyle(.secondary)
+      } else {
+        Text(formattedButtonTitle)
+        
+        label
+          .font(.footnote)
+          .foregroundStyle(.secondary)
+      }
     }
+  }
+  
+  private var mainBody: some View {
+    Group {
+      switch displayedComponents {
+      case [.date, .hourAndMinute]:
+        NavigationView {
+          VStack {
+            DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+              ._statusBar(hidden: true)
+              .overlay {
+                NavigationLink(isActive: $secondViewIsPresented) {
+                  TimeInputView(selection: $newSelection)
+                    .edgesIgnoringSafeArea(.bottom)
+                    .padding(-10)
+                    .navigationTitle(formattedNavigationTitle)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                      ToolbarItem(placement: .confirmationAction) {
+                        Button("Done", action: submit)
+                      }
+                    }
+                } label: {
+                  EmptyView()
+                }
+                .hidden()
+              }
+            
+            confirmationButton
+          }
+          // .watchStatusBar(hidden: true)
+          .edgesIgnoringSafeArea(.bottom)
+          // .padding(.bottom)
+          // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
+          .scenePadding(.bottom)
+        }
+        
+      case .date:
+        VStack(spacing: 10) {
+          DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+            .frame(height: max(120, WKInterfaceDevice.current().screenBounds.height * 0.55))
+            // .padding(.top, 20)
+            // .onAppear { print(WKInterfaceDevice.current().screenBounds.height * 0.6) }
+
+          circularButtons
+            .padding(.bottom, -21)
+        }
+        .frame(maxHeight: .infinity)
+        .edgesIgnoringSafeArea(.all)
+        .navigationBarHidden(true)
+        ._statusBar(hidden: true)
+        
+        // .watchStatusBar(hidden: true)
+        // .border(.mint)
+        // .border(.pink)
+        //.padding(.bottom, -20)
+        // .border(.brown)
+        
+      case .hourAndMinute:
+        ZStack(alignment: .bottom) {
+          TimeInputView(selection: $newSelection)
+            .offset(y: 10)
+          
+          circularButtons
+            .padding(.bottom, -26)
+            .padding(.horizontal, 32)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarHidden(true)
+        ._statusBar(hidden: true)
+        // .watchStatusBar(hidden: true)
+        .toolbar {
+          ToolbarItem(placement: .confirmationAction) {
+            Button("", action: {})
+              .accessibilityHidden(true)
+          }
+        }
+        .edgesIgnoringSafeArea(.all)
+        .padding(.bottom, -40)
+        .padding(.horizontal, -32)
+        .offset(y: -45)
+        
+      default:
+        EmptyView()
+      }
+    }
+    // .onAppear {
+    //   print("onAppear")
+    //   // newSelection = selection
+    // }
+    // .onDisappear {
+    //   print("onDisappear")
+    //   // newSelection = selection
+    // }
   }
 
   /// The content and behavior of the view.
   public var body: some View {
-    Button(action: { sheetIsPresented = true }) {
-      VStack(alignment: .leading) {
-        // TODO: consider if this can be achieved in a cleaner and more reusable way
-        if flipsLabelAndValue != true {
-          label
-          
-          Text(formattedButtonTitle)
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-        } else {
-          Text(formattedButtonTitle)
-
-          label
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-        }
+    switch interactionStyle {
+    case .sheet:
+      Button(action: { isPresented = true }) {
+        buttonBody
       }
-    }
-    .onChange(of: sheetIsPresented) { isPresented in
-      // print("sheetIsPresented = \(isPresented)")
-      // if !isPresented { newSelection = selection }
-      newSelection = selection
-    }
-    .sheet(isPresented: $sheetIsPresented) {
-      Group {
-        switch displayedComponents {
-        case [.date, .hourAndMinute]:
-          NavigationView {
-            VStack {
-              DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-                ._statusBar(hidden: true)
-                .overlay {
-                  NavigationLink(isActive: $navigationLinkIsActive) {
-                    TimeInputView(selection: $newSelection)
-                      .edgesIgnoringSafeArea(.bottom)
-                      .padding(-10)
-                      .navigationTitle(formattedNavigationTitle)
-                      .navigationBarTitleDisplayMode(.inline)
-                      .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                          Button("Done", action: submit)
-                        }
-                      }
-                  } label: {
-                    EmptyView()
-                  }
-                  .hidden()
-                }
-              
-              confirmationButton
-            }
-            // .watchStatusBar(hidden: true)
-            .edgesIgnoringSafeArea(.bottom)
-            // .padding(.bottom)
-            // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
-            .scenePadding(.bottom)
-          }
-          
-        case .date:
-          VStack(spacing: 15) {
-            Spacer()
-            
-            DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-              .frame(minHeight: 120)
-              .padding(.top, 20)
-            
-            circularButtons
-          }
-          .frame(maxHeight: .infinity)
-          .navigationBarHidden(true)
-          // .watchStatusBar(hidden: true)
-          // .border(.mint)
-          .edgesIgnoringSafeArea(.all)
-          // .border(.pink)
-          .padding(.bottom, -20)
-          // .border(.brown)
-          
-        case .hourAndMinute:
-          ZStack(alignment: .bottom) {
-            TimeInputView(selection: $newSelection)
-              .offset(y: 10)
-
-            circularButtons
-              .padding(.bottom, -26)
-              .padding(.horizontal, 32)
-          }
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .navigationBarHidden(true)
-          ._statusBar(hidden: true)
-          // .watchStatusBar(hidden: true)
-          .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-              Button("", action: {})
-                .accessibilityHidden(true)
-            }
-          }
-          .edgesIgnoringSafeArea(.all)
-          .padding(.bottom, -40)
-          .padding(.horizontal, -32)
-          .offset(y: -45)
-          
-        default:
-          EmptyView()
-        }
+      .sheet(isPresented: $isPresented) {
+        mainBody
+      }
+      .onChange(of: isPresented) { isPresented in
+        // print("sheetIsPresented = \(isPresented)")
+        // if !isPresented { newSelection = selection }
+        newSelection = selection
       }
       // .onAppear {
-      //   print("onAppear")
-      //   // newSelection = selection
+      //   print(WKInterfaceDevice.current().preferredContentSizeCategory)
+      //   print(WKInterfaceDevice.current().model)
+      //   print(WKInterfaceDevice.current().localizedModel)
       // }
-      // .onDisappear {
-      //   print("onDisappear")
-      //   // newSelection = selection
-      // }
+
+    case .navigationLink:
+      NavigationLink(isActive: $isPresented) {
+        mainBody
+      } label: {
+        buttonBody
+      }
+      .onChange(of: isPresented) { _ in
+        newSelection = selection
+      }
     }
   }
 }
