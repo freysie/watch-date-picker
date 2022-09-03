@@ -68,6 +68,8 @@ public struct DatePicker<Label: View>: View {
 
   @Environment(\.datePickerFlipsLabelAndValue) private var flipsLabelAndValue
   @Environment(\.datePickerInteractionStyle) private var interactionStyle
+  @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
+  @Environment(\.datePickerConfirmationTint) private var confirmationTint
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
   private var formattedButtonTitle: String {
@@ -111,11 +113,16 @@ public struct DatePicker<Label: View>: View {
 
   private var confirmationButton: some View {
     Button(action: { secondViewIsPresented = true }) {
-      Text("Continue", bundle: .module)
+      if let confirmationTitleKey = confirmationTitleKey {
+        Text(confirmationTitleKey)
+      } else {
+        Text("Continue", bundle: .module)
+        // Text("\(newSelection)", bundle: .module)
+      }
     }
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
-    .tint(.green)
+    .tint(confirmationTint ?? .green)
     .padding()
     // .scenePadding(.horizontal)
   }

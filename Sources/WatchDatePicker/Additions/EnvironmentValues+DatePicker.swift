@@ -26,19 +26,19 @@ public extension View {
   //   environment(\.datePickerUsesBottomButtons, enabled)
   // }
 
-  // /// Sets the confirmation button title key for date pickers within this view.
-  // /// - Parameters:
-  // ///   - key: A localized string key for overriding the confirmation button’s title.
-  // func datePickerConfirmationTitle(_ key: LocalizedStringKey?) -> some View {
-  //   environment(\.datePickerConfirmationTitleKey, key)
-  // }
+  /// Sets the confirmation button title key for date-and-time date pickers within this view.
+  /// - Parameters:
+  ///   - key: A localized string key for overriding the confirmation button’s title.
+  func datePickerConfirmationTitle(_ key: LocalizedStringKey?) -> some View {
+    environment(\.datePickerConfirmationTitleKey, key)
+  }
 
-  // /// Sets the confirmation button color for date pickers within this view.
-  // /// - Parameters:
-  // ///   - tint: The tint to use for the confirmation button.
-  // func datePickerConfirmationTint(_ tint: Color?) -> some View {
-  //   environment(\.datePickerConfirmationTint, tint)
-  // }
+  /// Sets the confirmation button color for date-and-time date pickers within this view.
+  /// - Parameters:
+  ///   - tint: The tint to use for the confirmation button.
+  func datePickerConfirmationTint(_ tint: Color?) -> some View {
+    environment(\.datePickerConfirmationTint, tint)
+  }
 }
 
 @available(watchOS 8, *)
@@ -61,21 +61,19 @@ public extension EnvironmentValues {
   //   set { self[DatePickerUsesBottomButtonsKey.self] = newValue }
   // }
 
-  // var datePickerConfirmationTitleKey: LocalizedStringKey? {
-  //   get { self[DatePickerConfirmationTitleKeyKey.self] }
-  //   set { self[DatePickerConfirmationTitleKeyKey.self] = newValue }
-  // }
-  //
-  // var datePickerConfirmationTint: Color? {
-  //   get { self[DatePickerConfirmationTintKey.self] }
-  //   set { self[DatePickerConfirmationTintKey.self] = newValue }
-  // }
+   var datePickerConfirmationTitleKey: LocalizedStringKey? {
+     get { self[DatePickerConfirmationTitleKeyKey.self] }
+     set { self[DatePickerConfirmationTitleKeyKey.self] = newValue }
+   }
+  
+   var datePickerConfirmationTint: Color? {
+     get { self[DatePickerConfirmationTintKey.self] }
+     set { self[DatePickerConfirmationTintKey.self] = newValue }
+   }
 }
 
 struct DatePickerFlipsLabelAndValueKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue = DatePickerInteractionStyle.sheet }
-
 // struct DatePickerUsesBottomButtonsKey: EnvironmentKey { static let defaultValue: Bool? = nil }
-
-//struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
-//struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = .green }
+struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
+struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
