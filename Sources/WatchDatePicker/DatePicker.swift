@@ -5,11 +5,11 @@ import SwiftUI
 /// Option set that determines the displayed components of a date picker.
 ///
 /// Specifying ``date`` displays month, day, and year depending on the locale setting:
-/// ![](DateMode.png)
+/// ![](DatePicker_date.png)
 /// Specifying ``hourAndMinute`` displays hour, minute, and optionally AM/PM designation depending on the locale setting:
-/// ![](TimeMode.png)
+/// ![](DatePicker_hourAndMinute.png)
 /// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting, inside of a navigation view:
-/// ![](DateAndTimeMode.png)
+/// ![](DatePicker.png)
 @available(watchOS 8, *)
 public struct DatePickerComponents: OptionSet {
   public let rawValue: UInt
@@ -41,9 +41,9 @@ public enum DatePickerInteractionStyle {
 
 /// A control for the inputting of date and time values.
 ///
-/// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a sheet with user interface for selecting date, time, or both. The view binds to a `Date` instance.
+/// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a user interface for selecting date, time, or both. The view binds to a `Date` instance.
 ///
-/// ![](DateAndTimeMode.png)
+/// ![](DatePicker.png)
 @available(watchOS 8, *)
 @available(macOS, unavailable)
 @available(iOS, unavailable)
@@ -270,16 +270,9 @@ public struct DatePicker<Label: View>: View {
       .sheet(isPresented: $isPresented) {
         mainBody
       }
-      .onChange(of: isPresented) { isPresented in
-        // print("sheetIsPresented = \(isPresented)")
-        // if !isPresented { newSelection = selection }
+      .onChange(of: isPresented) { _ in
         newSelection = selection
       }
-      // .onAppear {
-      //   print(WKInterfaceDevice.current().preferredContentSizeCategory)
-      //   print(WKInterfaceDevice.current().model)
-      //   print(WKInterfaceDevice.current().localizedModel)
-      // }
 
     case .navigationLink:
       NavigationLink(isActive: $isPresented) {

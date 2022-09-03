@@ -4,7 +4,7 @@
 
 ### Creating a Date Picker for Any Date
 
-- ``init(selection:displayedComponents:label:)``
+<!--- ``init(selection:displayedComponents:label:)``-->
 
 ### Creating a Date Picker for a Range
 
@@ -20,13 +20,18 @@
 
 ### Styling Date Pickers
 
+- ``datePickerFlipsLabelAndValue(_:)``
+- ``datePickerInteractionStyle(_:)``
+- ``datePickerConfirmationTitle(_:)``
+- ``datePickerConfirmationTint(_:)``
 - ``dateInputViewShowsMonthBeforeDay(_:)``
+- ``dateInputViewTextCase(_:)``
+- ``timeInputViewMonospacedDigit(_:)``
 - ``timeInputViewTwentyFourHour(_:)``
 - ``timeInputViewTwentyFourHourIndicator(_:)``
-<!--- ``datePickerConfirmationTitleKey(_:)``-->
-<!--- ``datePickerConfirmationColor(_:)``-->
-<!--- ``datePickerAMPMHighlightColor(_:)``-->
-<!--- ``datePickerFocusColor(_:)``-->
+- ``timeInputViewAMPMHighlightTint(_:)``
+- ``timeInputViewFocusTint(_:)``
+- ``timeInputViewSelectionTint(_:)``
 
 ### Supporting Types
 
