@@ -58,22 +58,22 @@ public extension View {
 //  /// Sets the shape used for marks in clock faces of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
-//  func datePickerMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-//    environment(\.datePickerMark, AnyShape(content()))
+//  func timeInputViewMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+//    environment(\.timeInputViewMark, AnyShape(content()))
 //  }
 //
 //  /// Sets the shape used for heavy marks in clock faces of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
-//  func datePickerHeavyMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-//    environment(\.datePickerHeavyMark, AnyShape(content()))
+//  func timeInputViewHeavyMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+//    environment(\.timeInputViewHeavyMark, AnyShape(content()))
 //  }
 //
 //  /// Sets the shape used for the selection indicator in clock faces of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
-//  func datePickerSelectionIndicator<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-//    environment(\.datePickerSelectionIndicator, AnyShape(content()))
+//  func timeInputViewSelectionIndicator<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+//    environment(\.timeInputViewSelectionIndicator, AnyShape(content()))
 //  }
 //}
 
@@ -118,19 +118,19 @@ public extension EnvironmentValues {
 //@available(iOS, unavailable)
 //@available(tvOS, unavailable)
 //public extension EnvironmentValues {
-//  var datePickerMark: AnyShape? {
-//    get { self[DatePickerMarkKey.self] }
-//    set { self[DatePickerMarkKey.self] = newValue }
+//  var timeInputViewMark: AnyShape? {
+//    get { self[TimeInputViewMarkKey.self] }
+//    set { self[TimeInputViewMarkKey.self] = newValue }
 //  }
 //
-//  var datePickerHeavyMark: AnyShape? {
-//    get { self[DatePickerHeavyMarkKey.self] }
-//    set { self[DatePickerHeavyMarkKey.self] = newValue }
+//  var timeInputViewHeavyMark: AnyShape? {
+//    get { self[TimeInputViewHeavyMarkKey.self] }
+//    set { self[TimeInputViewHeavyMarkKey.self] = newValue }
 //  }
 //
-//  var datePickerSelectionIndicator: AnyShape? {
-//    get { self[DatePickerSelectionIndicatorKey.self] }
-//    set { self[DatePickerSelectionIndicatorKey.self] = newValue }
+//  var timeInputViewSelectionIndicator: AnyShape? {
+//    get { self[TimeInputViewSelectionIndicatorKey.self] }
+//    set { self[TimeInputViewSelectionIndicatorKey.self] = newValue }
 //  }
 //}
 
@@ -142,8 +142,8 @@ struct TimeInputViewFocusTintKey: EnvironmentKey { static let defaultValue: Colo
 struct TimeInputViewSelectionTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 
 //@available(watchOS 9, *)
-//struct DatePickerMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
+//struct TimeInputViewMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
 //@available(watchOS 9, *)
-//struct DatePickerHeavyMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
+//struct TimeInputViewHeavyMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
 //@available(watchOS 9, *)
-//struct DatePickerSelectionIndicatorKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
+//struct TimeInputViewSelectionIndicatorKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }

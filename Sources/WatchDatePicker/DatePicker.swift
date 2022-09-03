@@ -11,6 +11,7 @@ import SwiftUI
 /// ![](TimeMode.png)
 /// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting, inside of a navigation view:
 /// ![](DateAndTimeMode.png)
+@available(watchOS 8, *)
 public struct DatePickerComponents: OptionSet {
   public let rawValue: UInt
   public init(rawValue: UInt) { self.rawValue = rawValue }

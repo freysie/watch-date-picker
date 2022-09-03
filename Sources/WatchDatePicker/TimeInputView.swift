@@ -199,7 +199,7 @@ public struct TimeInputView: View {
   }
 
   private func labels(with geometry: GeometryProxy) -> some View {
-    print((geometry.size, geometry.safeAreaInsets))
+    // print((geometry.size, geometry.safeAreaInsets))
     switch focusedComponent {
     case .hour:
       if twentyFourHour == true {
