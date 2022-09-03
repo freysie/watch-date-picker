@@ -2,11 +2,14 @@ import SwiftUI
 import WatchKit
 @testable import WatchDatePicker
 
+// TODO: do something about the `NavigationView`-within-`TabView` situation
+
 @main
 struct DatePickerExamplesApp: App {
   var body: some Scene {
     WindowGroup {
       DatePickerExamples_Previews.previews
+      // VariousExample()
     }
   }
 }
@@ -31,30 +34,30 @@ struct SystemTimeInputView: View {
 //
 //        print(PUICWheelsOfTimeDelegate)
 
-        do {
-          var outCount: UInt32 = 0
-          let methods: UnsafeMutablePointer<objc_property_t>! =  class_copyPropertyList(PUICTimeInputView, &outCount)
-          let count = Int(outCount)
-          for i in 0...(count - 1) {
-            let property: objc_property_t = methods[i]
-            print(String(utf8String: property_getName(property)) as Any)
-          }
-        }
+        // do {
+        //   var outCount: UInt32 = 0
+        //   let methods: UnsafeMutablePointer<objc_property_t>! =  class_copyPropertyList(PUICTimeInputView, &outCount)
+        //   let count = Int(outCount)
+        //   for i in 0...(count - 1) {
+        //     let property: objc_property_t = methods[i]
+        //     print(String(utf8String: property_getName(property)) as Any)
+        //   }
+        // }
         
-        do {
-          var outCount: UInt32 = 0
-          let methods: UnsafeMutablePointer<Method>! = class_copyMethodList(PUICTimeInputView, &outCount)
-          let count = Int(outCount)
-          for i in 0...(count - 1) {
-            let method: Method = methods[i]
-            print(method_getName(method))
-          }
-        }
+        // do {
+        //   var outCount: UInt32 = 0
+        //   let methods: UnsafeMutablePointer<Method>! = class_copyMethodList(PUICTimeInputView, &outCount)
+        //   let count = Int(outCount)
+        //   for i in 0...(count - 1) {
+        //     let method: Method = methods[i]
+        //     print(method_getName(method))
+        //   }
+        // }
 
         timeInputView = PUICTimeInputView.perform(Selector(String(["n", "e", "w"]))).takeUnretainedValue()
 
-        print(timeInputView.value(forKey: "circularPrimaryButton") as Any)
-        print(timeInputView.value(forKey: "circularSecondaryButton") as Any)
+        // print(timeInputView.value(forKey: "circularPrimaryButton") as Any)
+        // print(timeInputView.value(forKey: "circularSecondaryButton") as Any)
 
         timeInputView.setValue(10, forKey: "hour")
         timeInputView.setValue(09, forKey: "minute")
@@ -74,7 +77,7 @@ struct SystemTimeInputView: View {
 
         _ = keyWindow.perform(Selector(("addSubview:")), with: timeInputView)
 
-        print(timeInputView.value(forKey: "debugDescription") as Any)
+        // print(timeInputView.value(forKey: "debugDescription") as Any)
       }
       .onDisappear {
         _ = timeInputView?.perform(Selector(("removeFromSuperview")))
@@ -83,39 +86,38 @@ struct SystemTimeInputView: View {
   
   class Coordinator: NSObject, ObservableObject {
     var parent: SystemTimeInputView
-    
-    init(parent: SystemTimeInputView) {
-      self.parent = parent
-    }
+    init(parent: SystemTimeInputView) { self.parent = parent }
     
     @objc func cancelButtonTapped(_ sender: AnyObject) { parent.dismiss() }
     @objc func setButtonTapped(_ sender: AnyObject) { parent.dismiss() }
-    
-    override func responds(to aSelector: Selector!) -> Bool {
-      print(aSelector as Any)
-      return true
-    }
   }
 }
 
-struct SystemTimeInputViewExample: View {
+struct VariousExample: View {
   @State var sheetIsPresented = false
   @State var value = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
 
   var body: some View {
-    Form {
-      Button("System Time Input View") {
-        sheetIsPresented = true
-      }
-      .sheet(isPresented: $sheetIsPresented) {
-        SystemTimeInputView()
-          .navigationBarHidden(true)
-      }
-
-      DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
-        .tint(.pink)
+    NavigationView {
+      Form {
+        Button("System Time Input View") {
+          sheetIsPresented = true
+        }
+        .sheet(isPresented: $sheetIsPresented) {
+          SystemTimeInputView()
+            .navigationBarHidden(true)
+        }
         
-      DatePicker("Date & Time", selection: $value)
+        DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
+          .tint(.pink)
+        
+        DatePicker("Date & Time", selection: $value)
+        
+        DatePicker("Date", selection: $value, displayedComponents: [.date])
+        
+        DatePicker("Time (Push)", selection: $value, displayedComponents: [.hourAndMinute])
+          .datePickerInteractionStyle(.navigationLink)
+      }
     }
   }
 }
@@ -365,7 +367,7 @@ struct DatePickerExamples_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
       TabView {
-        SystemTimeInputViewExample()
+        VariousExample()
 
         Group {
           SimpleDateAndTimeExample()
