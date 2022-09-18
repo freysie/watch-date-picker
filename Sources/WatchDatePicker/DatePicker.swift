@@ -237,8 +237,8 @@ public struct DatePicker<Label: View>: View {
           .offset(y: 10)
         
         circularButtons
-          .padding(.bottom, -26)
-          .padding(.horizontal, 32)
+          .padding(.bottom, .hourAndMinuteCircularButtonsBottomPadding)
+          .padding(.horizontal, .hourAndMinuteCircularButtonsHorizontalPadding)
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .navigationBarHidden(true)
