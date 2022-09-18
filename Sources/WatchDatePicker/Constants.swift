@@ -75,7 +75,7 @@ extension CGFloat {
     }
   }
   
-  static var dateInputPickerLabelMinimumScaleFactor: Self {
+  static var pickerLabelMinimumScaleFactor: Self {
     switch WatchDeviceSize.current {
     case ._41mm, ._45mm, ._49mm: return 0.8
     default: return 1
@@ -187,12 +187,3 @@ extension CGSize {
 extension Color {
   static let timeComponentButtonBorder = Color(white: 0.298)
 }
-
-// private var clockFacePadding2: Double {
-//   [
-//     162: -15.0,
-//     198: -25.0
-//   ][
-//     WKInterfaceDevice.current().screenBounds.width
-//   ]!
-// }

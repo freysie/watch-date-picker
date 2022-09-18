@@ -63,11 +63,12 @@ struct SystemTimeInputView: View {
         timeInputView.setValue(coordinator, forKey: "delegate")
 
         let UIApp = objc_getClass("UIApplication") as! NSObject.Type
-        let app = UIApp.perform(Selector(("sharedApplication"))).takeUnretainedValue()
+        let app = UIApp.perform(Selector(("shared" + "Application"))).takeUnretainedValue()
         let keyWindow = app.perform(Selector(("keyWindow"))).takeUnretainedValue()
 
         let frame = keyWindow.value(forKey: "frame")
         timeInputView.setValue(frame, forKey: "frame")
+        // timeInputView.setValue(CGRect(x: 20, y: 20, width: 150, height: 150), forKey: "frame")
 
         _ = keyWindow.perform(Selector(("addSubview:")), with: timeInputView)
 

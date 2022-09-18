@@ -1,7 +1,5 @@
 import SwiftUI
 
-// TODO: determine the exact differences (if any) between `sheet()` and `fullScreenCover()` in watchOS
-
 /// Option set that determines the displayed components of a date picker.
 ///
 /// Specifying ``date`` displays month, day, and year depending on the locale setting:

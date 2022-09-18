@@ -1,7 +1,5 @@
 import SwiftUI
 
-// TODO: maybe use locale-specific (region-specific?) time separators (like “.” instead of “:”)
-// TODO: figure out difference between `calendar` and `locale.calendar` (gregorian (current) and gregorian (fixed))
 // TODO: cache the clock face to an image for better performance?
 
 /// A control for the inputting of time values.
@@ -44,15 +42,14 @@ public struct TimeInputView: View {
   }
   
   private var hourPeriod: HourPeriod {
-    get {
-      abs(hour < 0 ? hour - 12 : hour) % 24 < 12 ? .am : .pm
-    }
-    // mutating set {
-    //   switch newValue {
-    //   case .am: hour -= 12
-    //   case .pm: hour += 12
-    //   }
-    // }
+    get { abs(hour < 0 ? hour - 12 : hour) % 24 < 12 ? .am : .pm }
+  }
+  
+  private func setHourPeriod(_ period: HourPeriod) {
+    guard hourPeriod != period else { return }
+    var t = Transaction()
+    t.disablesAnimations = true
+    withTransaction(t) { hour += period.sign }
   }
   
   @State private var focusedComponent = Component.hour
@@ -215,17 +212,8 @@ public struct TimeInputView: View {
 //      .position(x: geometry.size.width, y: geometry.size.height)
   }
   
-  private func setHourPeriod(_ period: HourPeriod) {
-    guard hourPeriod != period else { return }
-    var t = Transaction()
-    t.disablesAnimations = true
-    withTransaction(t) { hour += period.sign }
-  }
-
   private var pickerButtons: some View {
     VStack {
-      // Spacer()
-
       if twentyFourHour == true {
         Button(action: {}) {
           Text("24\(Text("HR").font(.system(size: 15)))")
@@ -291,10 +279,7 @@ public struct TimeInputView: View {
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
-
-      // Spacer()
     }
-    // .offset(y: 10)
   }
 }
 

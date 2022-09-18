@@ -25,43 +25,44 @@ public struct DateInputView: View {
   @Environment(\.dateInputViewShowsMonthBeforeDay) private var showsMonthBeforeDay
   @Environment(\.dateInputViewTextCase) private var textCase
   @Environment(\.locale) private var locale
+  
+  private var calendar: Calendar { locale.calendar }
 
   private var newSelection: Date {
-    locale.calendar.date(from: DateComponents(
+    calendar.date(from: DateComponents(
       year: year,
       month: month,
       day: day,
-      hour: locale.calendar.component(.hour, from: selection),
-      minute: locale.calendar.component(.minute, from: selection)
+      hour: calendar.component(.hour, from: selection),
+      minute: calendar.component(.minute, from: selection)
     ))!
   }
 
   private var yearRange: Range<Int> {
     var lowerBound = 0
     var upperBound = 9999
-    if let minimumDate = minimumDate {
-      lowerBound = locale.calendar.component(.year, from: minimumDate)
-    }
-    if let maximumDate = maximumDate {
-      upperBound = locale.calendar.component(.year, from: maximumDate)
-    }
+    
+    if let minimumDate = minimumDate { lowerBound = calendar.component(.year, from: minimumDate) }
+    if let maximumDate = maximumDate { upperBound = calendar.component(.year, from: maximumDate) }
+    
     return lowerBound..<(upperBound + 1)
   }
 
   private var monthSymbols: [EnumeratedSequence<[String]>.Element] {
-    let symbols = Array(locale.calendar.shortMonthSymbols.enumerated())
+    let symbols = Array(calendar.shortMonthSymbols.enumerated())
     var lowerBound = 0
     var upperBound = symbols.count
+    
     if let minimumDate = minimumDate {
-      if locale.calendar.component(.year, from: minimumDate) == locale.calendar.component(.year, from: selection) {
-        lowerBound = locale.calendar.component(.month, from: minimumDate) - 1
-      }
+      let isSameYear = calendar.component(.year, from: minimumDate) == calendar.component(.year, from: selection)
+      if isSameYear { lowerBound = calendar.component(.month, from: minimumDate) - 1 }
     }
+    
     if let maximumDate = maximumDate {
-      if locale.calendar.component(.year, from: maximumDate) == locale.calendar.component(.year, from: selection) {
-        upperBound = locale.calendar.component(.month, from: maximumDate)
-      }
+      let isSameYear = calendar.component(.year, from: maximumDate) == calendar.component(.year, from: selection)
+      if isSameYear { upperBound = calendar.component(.month, from: maximumDate) }
     }
+    
     return Array(symbols[lowerBound..<upperBound])
   }
 
@@ -80,9 +81,9 @@ public struct DateInputView: View {
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
 
-    _year = State(initialValue: locale.calendar.component(.year, from: self.selection))
-    _month = State(initialValue: locale.calendar.component(.month, from: self.selection))
-    _day = State(initialValue: locale.calendar.component(.day, from: self.selection))
+    _year = State(initialValue: calendar.component(.year, from: self.selection))
+    _month = State(initialValue: calendar.component(.month, from: self.selection))
+    _day = State(initialValue: calendar.component(.day, from: self.selection))
   }
 
   /// The content and behavior of the view.
@@ -99,10 +100,8 @@ public struct DateInputView: View {
     }
     .pickerStyle(.wheel)
     .textCase(textCase)
-    // .padding(.horizontal, 10)
     .scenePadding(.horizontal)
     .padding(.vertical, 5)
-    // .minimumScaleFactor(0.5)
     .onChange(of: newSelection) { selection = $0 }
   }
 
@@ -115,7 +114,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Year", bundle: .module)
-        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
+        .minimumScaleFactor(.pickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .year)
     .overlay { tintedPickerBorder(focused: focusedField == .year) }
@@ -130,7 +129,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Month", bundle: .module)
-        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
+        .minimumScaleFactor(.pickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .month)
     .overlay { tintedPickerBorder(focused: focusedField == .month) }
@@ -145,7 +144,7 @@ public struct DateInputView: View {
       }
     } label: {
       Text("Day", bundle: .module)
-        .minimumScaleFactor(.dateInputPickerLabelMinimumScaleFactor)
+        .minimumScaleFactor(.pickerLabelMinimumScaleFactor)
     }
     .focused($focusedField, equals: .day)
     .overlay { tintedPickerBorder(focused: focusedField == .day) }
