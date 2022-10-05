@@ -58,7 +58,7 @@ DatePicker(
 
 ### Customization
 
-The two views which `DatePicker` is primarily composed of, `DateInputView` and `TimeInputView`, can be used independently.
+The two views which `DatePicker` is primarily composed of, `DateInputView` and `TimeInputView`, can be used on their own.
 
 
 #### Date Input View
@@ -132,5 +132,5 @@ The font of the value labels can be digit-monospaced.
 
 ```swift
 TimeInputView(selection: $value)
-    .timeInputViewMonospacedDigitFont(.pink)
+    .timeInputViewMonospacedDigitFont()
 ```
