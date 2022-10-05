@@ -1,5 +1,7 @@
 import SwiftUI
 
+// TODO: accessibility
+
 /// Option set that determines the displayed components of a date picker.
 ///
 /// Specifying ``date`` displays month, day, and year depending on the locale setting:
@@ -203,8 +205,6 @@ public struct DatePicker<Label: View>: View {
           confirmationButton
         }
         .edgesIgnoringSafeArea(.bottom)
-        // .padding(.bottom)
-        // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
         .scenePadding(.bottom)
       }
       
@@ -221,10 +221,6 @@ public struct DatePicker<Label: View>: View {
       .frame(maxHeight: .infinity)
       .edgesIgnoringSafeArea(.all)
       .navigationBarHidden(true)
-      // .border(.mint)
-      // .border(.pink)
-      //.padding(.bottom, -20)
-      // .border(.brown)
       // ._statusBar(hidden: true)
       .watchStatusBar(hidden: true)
       

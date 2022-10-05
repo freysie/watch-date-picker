@@ -66,9 +66,22 @@ public struct DateInputView: View {
     return Array(symbols[lowerBound..<upperBound])
   }
 
-  // TODO: add minimumDate/maximumDate constraints
   private var dayRange: Range<Int> {
-    locale.calendar.range(of: .day, in: .month, for: newSelection)!
+    var range = calendar.range(of: .day, in: .month, for: newSelection)!
+    
+    if let minimumDate = minimumDate {
+      let selectedYear = calendar.component(.year, from: minimumDate) == calendar.component(.year, from: selection)
+      let selectedMonth = calendar.component(.month, from: minimumDate) == calendar.component(.month, from: selection)
+      if selectedYear && selectedMonth { range = (calendar.component(.day, from: minimumDate) - 1)..<range.upperBound }
+    }
+    
+    if let maximumDate = maximumDate {
+      let selectedYear = calendar.component(.year, from: maximumDate) == calendar.component(.year, from: selection)
+      let selectedMonth = calendar.component(.month, from: maximumDate) == calendar.component(.month, from: selection)
+      if selectedYear && selectedMonth { range = range.lowerBound..<calendar.component(.day, from: maximumDate) }
+    }
+    
+    return range
   }
 
   public init(
@@ -148,8 +161,8 @@ public struct DateInputView: View {
     }
     .focused($focusedField, equals: .day)
     .overlay { tintedPickerBorder(focused: focusedField == .day) }
+    // FIXME: select lower day if month’s upper bound day range is less than selection’s day, but it’s not working, aaaaaaaaaaa
     // .id([month, year].map(String.init).joined(separator: "."))
-    // FIXME: select lower day if month’s upper bound day range is less than selection’s day
     // .onChange(of: month) { _ in
     //   NSLog("[WatchDatePicker] \(dayRange.upperBound - 1) <= \(day) = \(dayRange.upperBound - 1 <= day)")
     //   if dayRange.upperBound - 1 <= day {
