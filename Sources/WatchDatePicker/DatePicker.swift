@@ -178,7 +178,8 @@ public struct DatePicker<Label: View>: View {
       NavigationView {
         VStack {
           DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-            ._statusBar(hidden: true)
+            // ._statusBar(hidden: true)
+            .watchStatusBar(hidden: true)
             .overlay {
               NavigationLink(isActive: $secondViewIsPresented) {
                 TimeInputView(selection: $newSelection)
@@ -201,7 +202,6 @@ public struct DatePicker<Label: View>: View {
           
           confirmationButton
         }
-        // .watchStatusBar(hidden: true)
         .edgesIgnoringSafeArea(.bottom)
         // .padding(.bottom)
         // .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
@@ -221,13 +221,12 @@ public struct DatePicker<Label: View>: View {
       .frame(maxHeight: .infinity)
       .edgesIgnoringSafeArea(.all)
       .navigationBarHidden(true)
-      ._statusBar(hidden: true)
-      
-      // .watchStatusBar(hidden: true)
       // .border(.mint)
       // .border(.pink)
       //.padding(.bottom, -20)
       // .border(.brown)
+      // ._statusBar(hidden: true)
+      .watchStatusBar(hidden: true)
       
     case .hourAndMinute:
       ZStack(alignment: .bottom) {
@@ -240,8 +239,8 @@ public struct DatePicker<Label: View>: View {
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .navigationBarHidden(true)
-      ._statusBar(hidden: true)
-      // .watchStatusBar(hidden: true)
+      // ._statusBar(hidden: true)
+      .watchStatusBar(hidden: true)
       .toolbar {
         ToolbarItem(placement: .confirmationAction) {
           Button("", action: {})
