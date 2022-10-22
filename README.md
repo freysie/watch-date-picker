@@ -85,7 +85,7 @@ DateInputView(selection: $value)
 
 #### Time Input View
 
-The time input view displays a clock dial for selecting hour and minute. In locales with AM/PM-based time, AM/PM buttons will be displayed. 24-hour mode is used otherwise.
+The time input view displays a clock dial for selecting hour and minute. In locales with AM/PM-based time, AM/PM buttons will be displayed, otherwise 24-hour mode is used.
 
 ```swift
 TimeInputView(selection: $value)
