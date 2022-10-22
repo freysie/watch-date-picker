@@ -1,6 +1,6 @@
 import SwiftUI
 
-// TODO: add back mark customization for watchOS 9 using AnyShape
+// TODO: add full mark customization for watchOS 9 using AnyShape
 
 @available(watchOS 8, *)
 @available(macOS, unavailable)
