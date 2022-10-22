@@ -17,7 +17,7 @@ Online documentation is available at [freyaalminde.github.io/documentation/watch
 
 The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a user interface for selecting date, time, or both.
 
-The date picker is designed to look and feel like the system’s date and time pickers, as seen in Safari, Alarms, Calendar, Reminders, and Sleep, with an API matching SwiftUI’s built-in `DatePicker`.
+The date picker is designed to look and feel similar to the system’s date and time pickers, as seen in Safari, Alarms, Calendar, Reminders, and Sleep, with an API matching SwiftUI’s built-in `DatePicker`.
 
 
 ### Selecting Date and Time
@@ -128,7 +128,7 @@ TimeInputView(selection: $value)
     .tint(.pink)
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_pink.png?raw=true" alt="" width="198" />
+<!--<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_pink.png?raw=true" alt="" width="198" />-->
 
 The font of the value labels can be digit-monospaced.
 
