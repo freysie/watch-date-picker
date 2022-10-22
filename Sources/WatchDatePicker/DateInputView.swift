@@ -5,7 +5,7 @@ import SwiftUI
 /// The `DateInputView` displays three pickers for month, day, and year, the order of which depends on locale. The view binds to a `Date` instance.
 ///
 /// ![](DateInputView.png)
-/// ![](DateInputView~fr.png)
+/// ![](DateInputView_fr.png)
 @available(watchOS 8, *)
 @available(macOS, unavailable)
 @available(iOS, unavailable)

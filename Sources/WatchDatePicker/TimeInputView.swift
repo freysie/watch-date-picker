@@ -4,10 +4,9 @@ import SwiftUI
 
 /// A control for the inputting of time values.
 ///
-/// The `TimeInputView` displays a clockface interface that allows the user to select hour and minute. The view binds to a `Date` instance.
+/// The `TimeInputView` displays a clock face interface that allows the user to select hour and minute. The view binds to a `Date` instance.
 ///
 /// ![](TimeInputView.png)
-/// ![](TimeInputView~custom.png)
 @available(watchOS 8, *)
 @available(macOS, unavailable)
 @available(iOS, unavailable)
@@ -212,19 +211,23 @@ public struct TimeInputView: View {
 //      .position(x: geometry.size.width, y: geometry.size.height)
   }
   
+  private var twentyFourHourIndicatorView: some View {
+    Button(action: {}) {
+      Text("24\(Text("HR").font(.system(size: 15)))")
+      // Text("24hr")
+    }
+    .buttonStyle(.timePeriod(isHighlighted: false))
+    .tint(.gray)
+    .textCase(.uppercase)
+    .disabled(true)
+    .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
+    .offset(y: 4)
+  }
+  
   private var pickerButtons: some View {
     VStack {
       if twentyFourHour == true {
-        Button(action: {}) {
-          Text("24\(Text("HR").font(.system(size: 15)))")
-          // Text("24hr")
-        }
-          .buttonStyle(.timePeriod(isHighlighted: false))
-          .tint(.gray)
-          .textCase(.uppercase)
-          .disabled(true)
-          .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
-          .offset(y: 4)
+        twentyFourHourIndicatorView
       } else {
         Button(action: { setHourPeriod(.am) }) {
           Text(verbatim: locale.calendar.amSymbol)
@@ -271,14 +274,19 @@ public struct TimeInputView: View {
         : .system(size: .componentFontSize)
       )
 
-      Button(action: { setHourPeriod(.pm) }) {
-        Text(verbatim: locale.calendar.pmSymbol)
-          .tracking(locale.calendar.pmSymbol == "PM" ? -0.6 : 0)
-      }
+      if twentyFourHour == true {
+        twentyFourHourIndicatorView
+          .opacity(0)
+      } else {
+        Button(action: { setHourPeriod(.pm) }) {
+          Text(verbatim: locale.calendar.pmSymbol)
+            .tracking(locale.calendar.pmSymbol == "PM" ? -0.6 : 0)
+        }
         .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
+      }
     }
   }
 }
