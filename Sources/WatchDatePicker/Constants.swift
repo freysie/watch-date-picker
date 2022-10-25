@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 import WatchKit
 
@@ -193,3 +194,4 @@ extension CGSize {
 extension Color {
   static let timeComponentButtonBorder = Color(white: 0.298)
 }
+#endif

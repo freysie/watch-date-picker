@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 @available(watchOS 8, *)
@@ -38,3 +39,4 @@ public extension EnvironmentValues {
 
 struct DateInputViewShowsMonthBeforeDayKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DateInputViewTextCaseKey: EnvironmentKey { static let defaultValue: Text.Case? = .uppercase }
+#endif

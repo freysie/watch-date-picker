@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 // TODO: cache the clock face to an image for better performance?
@@ -324,3 +325,4 @@ struct TimeInputView_Previews: PreviewProvider {
 //      .previewDevice("Apple Watch Series 6 - 40mm")
   }
 }
+#endif

@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 @available(watchOS 8, *)
@@ -14,3 +15,4 @@ extension View {
     }
   }
 }
+#endif

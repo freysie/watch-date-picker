@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 @available(macOS, unavailable)
@@ -23,3 +24,4 @@ struct CircularButtonStyle: ButtonStyle {
       .opacity(configuration.isPressed ? 0.5 : 1)
   }
 }
+#endif

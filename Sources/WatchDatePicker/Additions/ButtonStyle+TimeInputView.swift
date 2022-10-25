@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 @available(macOS, unavailable)
@@ -59,3 +60,4 @@ struct TimePeriodButtonStyle: ButtonStyle {
       }
   }
 }
+#endif

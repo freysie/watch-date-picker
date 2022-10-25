@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 @available(watchOS 8, *)
@@ -77,3 +78,4 @@ struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue =
 // struct DatePickerUsesBottomButtonsKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
 struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
+#endif

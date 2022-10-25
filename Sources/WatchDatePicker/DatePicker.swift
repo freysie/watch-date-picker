@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 // TODO: accessibility
@@ -639,3 +640,4 @@ struct DatePicker_Previews: PreviewProvider {
 //    .previewDisplayName("Mode: Date & Time (Step 2)")
   }
 }
+#endif

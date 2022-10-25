@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 // TODO: add full mark customization for watchOS 9 using AnyShape
@@ -147,3 +148,4 @@ struct TimeInputViewSelectionTintKey: EnvironmentKey { static let defaultValue: 
 //struct TimeInputViewHeavyMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
 //@available(watchOS 9, *)
 //struct TimeInputViewSelectionIndicatorKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
+#endif

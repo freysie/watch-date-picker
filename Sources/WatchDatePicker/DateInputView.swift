@@ -1,3 +1,4 @@
+#if os(watchOS)
 import SwiftUI
 
 /// A control for the inputting of date values.
@@ -208,3 +209,4 @@ struct DateInputView_Previews: PreviewProvider {
       .previewDisplayName("Danish")
   }
 }
+#endif

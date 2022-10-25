@@ -1,3 +1,4 @@
+#if os(watchOS)
 import Foundation
 
 extension Locale {
@@ -20,3 +21,4 @@ extension Locale {
     "zh-Hant",
   ]
 }
+#endif
