@@ -2,6 +2,13 @@ import SwiftUI
 
 // TODO: cache the clock face to an image for better performance?
 
+// TODO: accessibility:
+// 12 o’clock, PM. Adjustable. Slide up or down with one finger to adjust the value.
+// 28 minutes. Adjustable. Slide up or down with one finger to adjust the value.
+// Selected. PM. Button.
+// Cancel. Button.
+// Done. Button.
+
 /// A control for the inputting of time values.
 ///
 /// The `TimeInputView` displays a clock face interface that allows the user to select hour and minute. The view binds to a `Date` instance.
@@ -51,6 +58,7 @@ public struct TimeInputView: View {
     withTransaction(t) { hour += period.sign }
   }
   
+  @AccessibilityFocusState private var accessibilityFocusedComponent: Component?
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
   @State private var minute = 0
@@ -98,6 +106,7 @@ public struct TimeInputView: View {
   public var body: some View {
     ZStack {
       clockFace
+        .accessibilityHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.clockFacePadding)
         .drawingGroup(opaque: true)
@@ -109,6 +118,7 @@ public struct TimeInputView: View {
       pickerButtons
         // .border(.brown)
     }
+    // TODO: throttle this for acceptable performance
     .onChange(of: newSelection) {
       selection = $0
     }
@@ -224,6 +234,13 @@ public struct TimeInputView: View {
     .offset(y: 4)
   }
   
+  private var localizedHourPeriodSymbol: String {
+    switch hourPeriod {
+    case .am: return locale.calendar.amSymbol
+    case .pm: return locale.calendar.pmSymbol
+    }
+  }
+  
   private var pickerButtons: some View {
     VStack {
       if twentyFourHour == true {
@@ -233,6 +250,7 @@ public struct TimeInputView: View {
           Text(verbatim: locale.calendar.amSymbol)
             .tracking(locale.calendar.amSymbol == "AM" ? -0.5 : 0)
         }
+          .accessibilityAddTraits(hourPeriod == .am ? .isSelected : [])
           .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
           .offset(y: -1)
       }
@@ -241,6 +259,19 @@ public struct TimeInputView: View {
         Button(formattedHour, action: { focusedComponent = .hour })
           .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
           .focusable()
+          .accessibilityLabel("")
+          // .accessibilityValue("\(formattedHour) o’clock \(localizedHourPeriodSymbol)")
+          .accessibilityValue("\(formattedHour) o’clock")
+          .accessibilityAddTraits(.updatesFrequently)
+          .accessibilityRemoveTraits(.isButton)
+          .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
+          .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment: hour += 1
+            case .decrement: hour -= 1
+            @unknown default: break
+            }
+          }
           .digitalCrownRotation(
             hourBinding,
             from: -Double.infinity,
@@ -252,12 +283,25 @@ public struct TimeInputView: View {
           )
 
         Text(":")
+          .accessibilityHidden(true)
           .padding(.bottom, 7)
           .padding(.horizontal, -1)
 
         Button(formattedMinute, action: { focusedComponent = .minute })
           .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
           .focusable()
+          .accessibilityLabel("")
+          .accessibilityValue("\(normalizedMinute) minutes")
+          .accessibilityAddTraits(.updatesFrequently)
+          .accessibilityRemoveTraits(.isButton)
+          .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
+          .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment: minute += 1
+            case .decrement: minute -= 1
+            @unknown default: break
+            }
+          }
           .digitalCrownRotation(
             minuteBinding,
             from: -Double.infinity,
@@ -282,11 +326,15 @@ public struct TimeInputView: View {
           Text(verbatim: locale.calendar.pmSymbol)
             .tracking(locale.calendar.pmSymbol == "PM" ? -0.6 : 0)
         }
+        .accessibilityAddTraits(hourPeriod == .pm ? .isSelected : [])
         .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
       }
+    }
+    .onChange(of: accessibilityFocusedComponent) {
+      if let component = $0 { focusedComponent = component }
     }
   }
 }

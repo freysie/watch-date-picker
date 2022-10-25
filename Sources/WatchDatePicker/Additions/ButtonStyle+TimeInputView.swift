@@ -54,7 +54,7 @@ struct TimePeriodButtonStyle: ButtonStyle {
       .foregroundStyle(isHighlighted ? AnyShapeStyle(.black) : tint)
       .background {
         RoundedRectangle(cornerRadius: .timePeriodButtonCornerRadius)
-          .fill(isHighlighted ? tint : AnyShapeStyle(.clear))
+          .fill(isHighlighted ? tint : AnyShapeStyle(.black))
           .offset(y: 0.5)
       }
   }

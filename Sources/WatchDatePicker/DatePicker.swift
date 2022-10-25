@@ -132,6 +132,7 @@ public struct DatePicker<Label: View>: View {
       Button(action: { isPresented = false }) {
         Image(systemName: "xmark")
       }
+      .accessibilityLabel("Cancel")
       .buttonStyle(.circular(.gray))
       
       Spacer()
@@ -139,6 +140,8 @@ public struct DatePicker<Label: View>: View {
       Button(action: submit) {
         Image(systemName: "checkmark")
       }
+      .accessibilityLabel("Done")
+      .accessibilityRemoveTraits(.isSelected)
       .buttonStyle(.circular(.green))
     }
     .padding(.horizontal, 12)
