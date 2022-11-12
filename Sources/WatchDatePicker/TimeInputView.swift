@@ -55,8 +55,20 @@ public struct TimeInputView: View {
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
   @State private var minute = 0
-  private var hourBinding: Binding<Double> { Binding { Double(hour) } set: { hour = Int($0) } }
-  private var minuteBinding: Binding<Double> { Binding { Double(minute) } set: { minute = Int($0) } }
+  private var hourBinding: Binding<Double> {
+    Binding { Double(hour) }
+    set: {
+      hour = Int($0)
+    }
+  }
+  
+  private var minuteBinding: Binding<Double> {
+    Binding { Double(minute) }
+    set: {
+      minute = Int($0)
+    }
+  }
+  
   private var hourMultiple: Int { twentyFourHour == true ? 24 : 12 }
   private var minuteMultiple: Int { 60 }
   private var normalizedHour: Int { (hour < 0 ? hourMultiple - (abs(hour) % hourMultiple) : hour) % hourMultiple }
@@ -244,10 +256,10 @@ public struct TimeInputView: View {
           .focusable()
           .digitalCrownRotation(
             hourBinding,
-            from: -Double.infinity,
-            through: Double.infinity,
-            by: nil,
-            sensitivity: .low,
+            from: 0,
+            through: 24,
+            by: 1,
+            sensitivity: .medium,
             isContinuous: true,
             isHapticFeedbackEnabled: true
           )
@@ -261,9 +273,9 @@ public struct TimeInputView: View {
           .focusable()
           .digitalCrownRotation(
             minuteBinding,
-            from: -Double.infinity,
-            through: Double.infinity,
-            by: nil,
+            from: 0,
+            through: 60,
+            by: 1,
             sensitivity: .medium,
             isContinuous: true,
             isHapticFeedbackEnabled: true
