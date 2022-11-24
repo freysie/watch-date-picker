@@ -13,6 +13,7 @@
 		3B029E03285FADA0000346CD /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3B029E02285FADA0000346CD /* WatchDatePicker */; };
 		3B029E07285FC070000346CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B029E04285FBFF9000346CD /* Assets.xcassets */; };
 		3BF815CB288E375400693A16 /* DatePickerScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */; };
+		F0534F91292F0F9400D0487A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0534F90292F0F8700D0487A /* SwiftUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		3BA47621285FAD6800431D20 /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "watch-date-picker"; path = ..; sourceTree = "<group>"; };
 		3BF815C6288E375300693A16 /* Examples WatchKit Screenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Examples WatchKit Screenshots.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerScreenshots.swift; sourceTree = "<group>"; };
+		F0534F90292F0F8700D0487A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS9.1.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0534F91292F0F9400D0487A /* SwiftUI.framework in Frameworks */,
 				3B029E03285FADA0000346CD /* WatchDatePicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +135,7 @@
 		3B029E01285FADA0000346CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0534F90292F0F8700D0487A /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

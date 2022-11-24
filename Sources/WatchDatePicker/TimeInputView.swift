@@ -81,6 +81,10 @@ public struct TimeInputView: View {
   private var formattedMinute: String {
     String(format: "%02d", normalizedMinute)
   }
+  
+  // MARK: Size Vars
+  @State private var rootSize: CGSize = .zero
+  @State private var clockFaceSize: CGSize = .zero
 
   // TODO: rethink this
   private var newSelection: Date {
@@ -112,19 +116,29 @@ public struct TimeInputView: View {
     ZStack {
       clockFace
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.clockFacePadding)
+        .padding(clockFacePadding())
         .drawingGroup(opaque: true)
-        //.border(.mint)
-        //.border(.green)
-        // .clipped()
-        // .border(.red)
-
+      //.border(.mint)
+      //.border(.green)
+      // .clipped()
+      // .border(.red)
+      
       pickerButtons
-        // .border(.brown)
+      // .border(.brown)
     }
     .onChange(of: newSelection) {
       selection = $0
     }
+    .background(GeometryReader { proxy in
+      Color.clear
+        .onAppear {
+          self.rootSize = proxy.size
+          self.clockFaceSize = CGSize(
+            width: proxy.size.width - proxy.safeAreaInsets.leading - proxy.safeAreaInsets.trailing,
+            height: proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom
+          )
+        }
+    })
   }
 
   private var clockFace: some View {
@@ -141,6 +155,17 @@ public struct TimeInputView: View {
         selectionIndicator(for: minute, multiple: 60, with: geometry)
       }
     }
+  }
+  
+  /// padding to use for the clock face
+  ///
+  /// always negative, offsets the clock face from the center
+  private func clockFacePadding() -> CGFloat {
+    guard rootSize == .zero, clockFaceSize == .zero else {
+      return clockFaceSize.height - rootSize.height + 8.0
+    }
+    
+    return -23.0
   }
 
   private func labels(with geometry: GeometryProxy) -> some View {
@@ -173,8 +198,8 @@ public struct TimeInputView: View {
         .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(string) ? 0.62 : 0.6))
     }
     .rotationEffect(.degrees(Double(index) * 360 / 12), anchor: .center)
-    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
-    .font(.system(size: 15))
+    .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.5)
+    .font(.callout)
   }
 
   private func marks(for component: Component, with geometry: GeometryProxy) -> some View {
@@ -194,9 +219,8 @@ public struct TimeInputView: View {
 
     return Rectangle()
       .size(size)
-      .offset(x: -size.width / 2.0, y: 0)
+      .offset(x: -size.width * 0.5, y: 0)
       .offset(y: geometry.size.height / 3)
-      // .offset(y: (heavy ? markSize.height - heavyMarkSize.height : 0) + 0.5)
       .offset(y: heavy ? CGSize.markSize.height - CGSize.heavyMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
       .fill(heavy ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
@@ -205,7 +229,6 @@ public struct TimeInputView: View {
 
   private func selectionIndicator(for value: Int, multiple: Int, with geometry: GeometryProxy) -> some View {
     let rotationDegrees = Double(value) * 360 / Double(multiple)
-    // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
 
     return Circle()
       .size(width: .selectionIndicatorRadius * 2, height: .selectionIndicatorRadius * 2)
@@ -216,18 +239,11 @@ public struct TimeInputView: View {
       .fill(selectionTint.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint))
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
-
-//    return self.selectionIndicator!
-//      .offset(y: geometry.size.height / 3)
-//      .rotationEffect(.degrees(180 + rotationDegrees), anchor: .topLeading)
-//      .animation(.spring(), value: value)
-//      .position(x: geometry.size.width, y: geometry.size.height)
   }
   
   private var twentyFourHourIndicatorView: some View {
     Button(action: {}) {
-      Text("24\(Text("HR").font(.system(size: 15)))")
-      // Text("24hr")
+      Text("24\(Text("HR").font(.callout))")
     }
     .buttonStyle(.timePeriod(isHighlighted: false))
     .tint(.gray)
@@ -283,8 +299,8 @@ public struct TimeInputView: View {
       }
       .font(
         monospacedDigit == true
-        ? .system(size: .componentFontSize).monospacedDigit()
-        : .system(size: .componentFontSize)
+        ? .title2.monospacedDigit()
+        : .title2
       )
 
       if twentyFourHour == true {

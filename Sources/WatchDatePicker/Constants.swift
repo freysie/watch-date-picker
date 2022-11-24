@@ -35,36 +35,6 @@ enum WatchDeviceSize: Double {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 extension CGFloat {
-  static var clockFacePadding: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return -13
-    case ._41mm: return -21
-    case ._44mm: return -13
-    case ._45mm: return -23
-    case ._49mm: return -29.5
-    }
-  }
-  
-  static var hourAndMinuteCircularButtonsBottomPadding: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return -22
-    case ._41mm: return -27.5
-    case ._45mm: return -28.5
-    case ._49mm: return -31.5
-    default: return -26
-    }
-  }
-  
-  static var hourAndMinuteCircularButtonsHorizontalPadding: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 30
-    case ._41mm: return 30
-    case ._45mm: return 34
-    case ._49mm: return 34
-    default: return 32
-    }
-  }
-
   static var componentFontSize: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return 28
