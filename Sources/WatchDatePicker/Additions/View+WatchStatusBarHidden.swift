@@ -7,10 +7,15 @@ import SwiftUI
 @available(tvOS, unavailable)
 extension View {
   func watchStatusBar(hidden: Bool) -> some View {
-    toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button("", action: {})
-          .accessibilityHidden(true)
+    if #available(watchOS 9, *) {
+      return self.toolbar(hidden ? .hidden : .visible, for: .automatic)
+    }
+    else {
+      return self.toolbar {
+        ToolbarItem(placement: .confirmationAction) {
+          Button("", action: {})
+            .accessibilityHidden(true)
+        }
       }
     }
   }

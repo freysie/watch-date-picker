@@ -182,13 +182,13 @@ public struct DatePicker<Label: View>: View {
         NavigationView {
           VStack {
             DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-              // ._statusBar(hidden: true)
               .watchStatusBar(hidden: true)
               .overlay {
                 NavigationLink(isActive: $secondViewIsPresented) {
                   TimeInputView(selection: $newSelection)
-                    .edgesIgnoringSafeArea(.bottom)
-                    .padding(-10)
+                    .padding(-5)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all)
                     .navigationTitle(formattedNavigationTitle)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
@@ -233,12 +233,9 @@ public struct DatePicker<Label: View>: View {
           
           circularButtons
             .padding(.bottom, rootProxy.safeAreaInsets.bottom * 0.5)
-//            .padding(.bottom, .hourAndMinuteCircularButtonsBottomPadding)
-//            .padding(.horizontal, .hourAndMinuteCircularButtonsHorizontalPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
-        // ._statusBar(hidden: true)
         .watchStatusBar(hidden: true)
         .toolbar {
           ToolbarItem(placement: .confirmationAction) {
@@ -247,9 +244,6 @@ public struct DatePicker<Label: View>: View {
           }
         }
         .edgesIgnoringSafeArea(.all)
-  //      .padding(.bottom, -40)
-  //      .padding(.horizontal, -32)
-//        .offset(y: -(rootProxy.safeAreaInsets.top + rootProxy.safeAreaInsets.bottom) + 4)
         
       default:
         fatalError()

@@ -1,7 +1,7 @@
 #if os(watchOS)
 import SwiftUI
 
-private let SUGGESTED_HEIGHT: CGFloat = 51.0
+private let SUGGESTED_HEIGHT: CGFloat = 48.0
 
 @available(macOS, unavailable)
 @available(iOS, unavailable)
