@@ -104,6 +104,7 @@ struct VariousExample: View {
         }
         
         DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
+          .environment(\.timeInputViewMonospacedDigit, true)
           .tint(.pink)
         
         DatePicker("Date & Time", selection: $value)

@@ -48,32 +48,6 @@ extension CGFloat {
     default: return 1
     }
   }
-  
-  static var timeComponentButtonWidth: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 39
-    // case ._41mm: return 40
-    case ._45mm, ._49mm: return 51
-    default: return 46
-    }
-  }
-
-  static var timeComponentButtonHeight: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 39
-    case ._41mm: return 52
-    case ._44mm: return 51
-    case ._45mm: return 58
-    case ._49mm: return 56
-    }
-  }
-
-  static var timeComponentButtonCornerRadius: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 7
-    default: return 11
-    }
-  }
 }
 
 @available(macOS, unavailable)

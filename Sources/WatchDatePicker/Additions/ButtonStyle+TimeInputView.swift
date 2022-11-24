@@ -1,6 +1,8 @@
 #if os(watchOS)
 import SwiftUI
 
+private let SUGGESTED_HEIGHT: CGFloat = 51.0
+
 @available(macOS, unavailable)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
@@ -14,18 +16,46 @@ extension ButtonStyle where Self == TimeComponentButtonStyle {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 struct TimeComponentButtonStyle: ButtonStyle {
+  @State private var padding: CGFloat = 0.0
+  
   var isFocused: Bool
 
   @Environment(\.timeInputViewFocusTint) private var focusTint
+  @Environment(\.timeInputViewMonospacedDigit) private var useMonospacedFont
 
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .frame(width: .timeComponentButtonWidth, height: .timeComponentButtonHeight)
+      .frame(width: usableWidth)
+      .padding(.vertical, padding)
       .offset(y: 0.5)
+      .readSize(onChange: { size in
+        guard padding == 0.0 else {
+          return
+        }
+        
+        padding = ceil((SUGGESTED_HEIGHT - size.height) * 0.5)
+      })
       .overlay {
-        RoundedRectangle(cornerRadius: .timeComponentButtonCornerRadius)
+        RoundedRectangle(cornerRadius: 8)
           .strokeBorder(isFocused ? focusTint ?? .green : .timeComponentButtonBorder, lineWidth: 1.5)
       }
+  }
+  
+  private var usableWidth: CGFloat {
+    get {
+      (fontPointSize() * 2.0) - 16.0
+    }
+  }
+  
+  private func fontPointSize() -> CGFloat {
+    let baseFont = UIFont.preferredFont(forTextStyle: .title2)
+    
+    guard useMonospacedFont ?? true else {
+      return baseFont.pointSize
+    }
+    
+    let monospacedDigitFont = UIFont.monospacedDigitSystemFont(ofSize: baseFont.pointSize, weight: isFocused ? .semibold : .regular)
+    return CGFloat(monospacedDigitFont.pointSize)
   }
 }
 
