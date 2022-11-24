@@ -49,12 +49,12 @@ struct TimePeriodButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     let tint = highlightTint.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint)
     return configuration.label
-      .frame(minWidth: .timePeriodButtonMinWidth, maxHeight: .timePeriodButtonMaxHeight)
-      .font(.system(size: .timePeriodButtonFontSize, weight: isHighlighted ? .semibold : .regular))
+      .padding(.horizontal, 4)
+      .font(isHighlighted ? .body.bold() : .body)
       .opacity(configuration.isPressed ? 0.5 : isHighlighted ? 1 : 0.8)
       .foregroundStyle(isHighlighted ? AnyShapeStyle(.black) : tint)
       .background {
-        RoundedRectangle(cornerRadius: .timePeriodButtonCornerRadius)
+        RoundedRectangle(cornerRadius: 4)
           .fill(isHighlighted ? tint : AnyShapeStyle(.clear))
           .offset(y: 0.5)
       }

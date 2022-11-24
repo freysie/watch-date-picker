@@ -35,16 +35,6 @@ enum WatchDeviceSize: Double {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 extension CGFloat {
-  static var componentFontSize: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 28
-    case ._41mm: return 34.5
-    case ._44mm: return 32
-    case ._45mm: return 39
-    case ._49mm: return 38
-    }
-  }
-  
   static var selectionIndicatorRadius: Self {
     switch WatchDeviceSize.current {
     case ._45mm, ._49mm: return 2.75
@@ -56,59 +46,6 @@ extension CGFloat {
     switch WatchDeviceSize.current {
     case ._41mm, ._45mm, ._49mm: return 0.8
     default: return 1
-    }
-  }
-  
-  static var circularButtonDiameter: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 33.5
-    // case ._41mm: return 35
-    case ._45mm: return 41.5
-    case ._49mm: return 40.5
-    default: return 37.5
-    }
-  }
-  
-  static var circularButtonFontSize: Self {
-    switch WatchDeviceSize.current {
-    case ._40mm: return 17.5
-    // case ._41mm: return 35
-    case ._45mm: return 22.5
-    case ._49mm: return 21.5
-    default: return 20.5
-    }
-  }
-  
-  // TODO: consider using padding for this instead
-  static var timePeriodButtonMinWidth: Self {
-    switch WatchDeviceSize.current {
-    case ._41mm: return 29.5
-    case ._45mm, ._49mm: return 32.5
-    default: return 24.5
-    }
-  }
-  
-  static var timePeriodButtonMaxHeight: Self {
-    switch WatchDeviceSize.current {
-    case ._41mm: return 19
-    case ._45mm, ._49mm: return 21
-    default: return 16
-    }
-  }
-  
-  static var timePeriodButtonFontSize: Self {
-    switch WatchDeviceSize.current {
-    case ._41mm: return 17
-    case ._45mm, ._49mm: return 19
-    default: return 15
-    }
-  }
-  
-  static var timePeriodButtonCornerRadius: Self {
-    switch WatchDeviceSize.current {
-    case ._41mm: return 4
-    case ._45mm, ._49mm: return 5
-    default: return 3
     }
   }
   
