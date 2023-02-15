@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 // TODO: cache the clock face to an image for better performance?
 
@@ -62,6 +63,10 @@ public struct TimeInputView: View {
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
   @State private var minute = 0
+  private var hourSubject = PassthroughSubject<Int, Never>()
+  private var minuteSubject = PassthroughSubject<Int, Never>()
+  private var debouncedHour: AnyPublisher<Int, Never>
+  private var debouncedMinute: AnyPublisher<Int, Never>
   private var hourBinding: Binding<Double> { Binding { Double(hour) } set: { hour = Int($0) } }
   private var minuteBinding: Binding<Double> { Binding { Double(minute) } set: { minute = Int($0) } }
   private var hourMultiple: Int { twentyFourHour == true ? 24 : 12 }
@@ -77,7 +82,6 @@ public struct TimeInputView: View {
     String(format: "%02d", normalizedMinute)
   }
 
-  // TODO: rethink this
   private var newSelection: Date {
     guard let result = locale.calendar.date(
       bySettingHour: normalizedHour + (twentyFourHour == true ? 0 : hourPeriod.offset),
@@ -98,6 +102,8 @@ public struct TimeInputView: View {
   public init(selection: Binding<Date>) {
     _selection = selection
     initialSelection = selection.wrappedValue
+    debouncedHour = hourSubject.removeDuplicates().debounce(for: 0.1, scheduler: RunLoop.main).eraseToAnyPublisher()
+    debouncedMinute = minuteSubject.removeDuplicates().debounce(for: 0.1, scheduler: RunLoop.main).eraseToAnyPublisher()
     _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
     _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
   }
@@ -118,10 +124,11 @@ public struct TimeInputView: View {
       pickerButtons
         // .border(.brown)
     }
-    // TODO: throttle this for acceptable performance
-    .onChange(of: newSelection) {
-      selection = $0
-    }
+    .onChange(of: hour) { hourSubject.send($0) }
+    .onChange(of: minute) { minuteSubject.send($0) }
+    .onChange(of: hourPeriod) { _ in selection = newSelection }
+    .onReceive(debouncedHour) { _ in selection = newSelection }
+    .onReceive(debouncedMinute) { _ in selection = newSelection }
   }
 
   private var clockFace: some View {
