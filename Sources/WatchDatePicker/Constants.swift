@@ -16,20 +16,6 @@ enum WatchDeviceSize: Double {
   }
 }
 
-//enum WatchDeviceSize2 {
-//  case _40mm, _41mm, _44mm, _45mm
-//
-//  static var current: Self {
-//    switch WKInterfaceDevice.current().screenBounds.width {
-//    case 162: return ._40mm
-//    case 176: return ._41mm
-//    case 184: return ._44mm
-//    case 198: return ._45mm
-//    default: return ._45mm
-//    }
-//  }
-//}
-
 @available(macOS, unavailable)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

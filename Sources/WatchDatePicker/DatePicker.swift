@@ -32,12 +32,6 @@ public enum DatePickerInteractionStyle {
   case navigationLink
 }
 
-///// Enum that determines the display mode of a date picker.
-//public enum DatePickerDisplayMode {
-//  case navigationStack
-//  case sheets
-//  case sheetAndNavigationStack
-//}
 
 /// A control for the inputting of date and time values.
 ///
@@ -83,7 +77,6 @@ public struct DatePicker<Label: View>: View {
       formatter.timeStyle = .short
       
     case .date:
-      // formatter.dateFormat = "Tue, Aug 2, 2022"
       formatter.dateStyle = .medium
       formatter.timeStyle = .none
       
@@ -94,11 +87,7 @@ public struct DatePicker<Label: View>: View {
     default:
       break
     }
-    
-    // if twentyFourHour == true && displayedComponents == .hourAndMinute {
-    //   formatter.dateFormat = "HH:mm"
-    // }
-    
+
     return formatter.string(from: selection)
   }
 
@@ -117,14 +106,12 @@ public struct DatePicker<Label: View>: View {
         Text(confirmationTitleKey)
       } else {
         Text("Continue", bundle: .module)
-        // Text("\(newSelection)", bundle: .module)
       }
     }
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
     .tint(confirmationTint ?? .green)
     .padding()
-    // .scenePadding(.horizontal)
   }
   
   private var circularButtons: some View {
@@ -183,7 +170,6 @@ public struct DatePicker<Label: View>: View {
       NavigationView {
         VStack {
           DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-            // ._statusBar(hidden: true)
             .watchStatusBar(hidden: true)
             .overlay {
               NavigationLink(isActive: $secondViewIsPresented) {
@@ -215,16 +201,13 @@ public struct DatePicker<Label: View>: View {
       VStack(spacing: 10) {
         DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
           .frame(height: max(120, WKInterfaceDevice.current().screenBounds.height * 0.55))
-        // .padding(.top, 20)
-        // .onAppear { print(WKInterfaceDevice.current().screenBounds.height * 0.6) }
-        
+
         circularButtons
           .padding(.bottom, -21)
       }
       .frame(maxHeight: .infinity)
       .edgesIgnoringSafeArea(.all)
       .navigationBarHidden(true)
-      // ._statusBar(hidden: true)
       .watchStatusBar(hidden: true)
       
     case .hourAndMinute:
@@ -238,7 +221,6 @@ public struct DatePicker<Label: View>: View {
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .navigationBarHidden(true)
-      // ._statusBar(hidden: true)
       .watchStatusBar(hidden: true)
       .toolbar {
         ToolbarItem(placement: .confirmationAction) {

@@ -115,14 +115,9 @@ public struct TimeInputView: View {
         .accessibilityHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.clockFacePadding)
-        .drawingGroup(opaque: true)
-        //.border(.mint)
-        //.border(.green)
-        // .clipped()
-        // .border(.red)
+        //.drawingGroup(opaque: true)
 
       pickerButtons
-        // .border(.brown)
     }
     .onChange(of: hour) { hourSubject.send($0) }
     .onChange(of: minute) { minuteSubject.send($0) }
@@ -148,7 +143,6 @@ public struct TimeInputView: View {
   }
 
   private func labels(with geometry: GeometryProxy) -> some View {
-    // print((geometry.size, geometry.safeAreaInsets))
     switch focusedComponent {
     case .hour:
       if twentyFourHour == true {
@@ -200,7 +194,6 @@ public struct TimeInputView: View {
       .size(size)
       .offset(x: -size.width / 2.0, y: 0)
       .offset(y: geometry.size.height / 3)
-      // .offset(y: (heavy ? markSize.height - heavyMarkSize.height : 0) + 0.5)
       .offset(y: heavy ? CGSize.markSize.height - CGSize.heavyMarkSize.height : 0)
       .rotation(.degrees(Double(index) * 360 / multiple), anchor: .topLeading)
       .fill(heavy ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
@@ -209,7 +202,6 @@ public struct TimeInputView: View {
 
   private func selectionIndicator(for value: Int, multiple: Int, with geometry: GeometryProxy) -> some View {
     let rotationDegrees = Double(value) * 360 / Double(multiple)
-    // print("value = \(value); multiple = \(multiple); degrees = \(rotationDegrees)")
 
     return Circle()
       .size(width: .selectionIndicatorRadius * 2, height: .selectionIndicatorRadius * 2)
