@@ -357,17 +357,5 @@ struct TimeInputView_Previews: PreviewProvider {
     TimeInputView(selection: .constant(Date()))
       .tint(.pink)
       .previewDisplayName("Pink")
-      
-//    TimeInputView(selection: .constant(Date()))
-//      .previewDevice("Apple Watch Series 7 - 45mm")
-//
-//    TimeInputView(selection: .constant(Date()))
-//      .previewDevice("Apple Watch Series 6 - 44mm")
-//
-//    TimeInputView(selection: .constant(Date()))
-//      .previewDevice("Apple Watch Series 7 - 41mm")
-//
-//    TimeInputView(selection: .constant(Date()))
-//      .previewDevice("Apple Watch Series 6 - 40mm")
   }
 }

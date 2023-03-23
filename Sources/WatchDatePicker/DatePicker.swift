@@ -32,7 +32,6 @@ public enum DatePickerInteractionStyle {
   case navigationLink
 }
 
-
 /// A control for the inputting of date and time values.
 ///
 /// The `DatePicker` view displays a button with a title and the selected value. When pressed, it presents a user interface for selecting date, time, or both. The view binds to a `Date` instance.
@@ -545,65 +544,5 @@ struct DatePicker_Previews: PreviewProvider {
     NavigationView {
       Example()
     }
-    
-//    NavigationView {
-//      TimeInputView(selection: .constant(Date()), mode: .time)
-//        .datePickerSelectionIndicatorFill(.mint)
-//        .toolbar {
-//          ToolbarItem(placement: .cancellationAction) {
-//            Button("Cancel", role: .cancel, action: {})
-//          }
-//        }
-//    }
-//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-//    .previewDisplayName("Mode: Time")
-//
-//    NavigationView {
-//      DateInputView(selection: .constant(Date()), mode: .date)
-//        .toolbar {
-//          ToolbarItem(placement: .cancellationAction) {
-//            Button("Cancel", role: .cancel, action: {})
-//          }
-//        }
-//    }
-//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-//    .previewDisplayName("Mode: Date (Series 6 – 44mm)")
-//    .environment(\.locale, Locale(identifier: "da-DK"))
-//
-//    NavigationView {
-//      DateInputView(selection: .constant(Date()), mode: .date)
-//        .toolbar {
-//          ToolbarItem(placement: .cancellationAction) {
-//            Button("Cancel", role: .cancel, action: {})
-//          }
-//        }
-//    }
-//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 7 - 45mm"))
-//    .previewDisplayName("Mode: Date (Series 7 – 45mm)")
-//    .environment(\.locale, Locale(identifier: "da-DK"))
-//
-//    NavigationView {
-//      DateInputView(selection: .constant(Date()), mode: .dateAndTime)
-//        .toolbar {
-//          ToolbarItem(placement: .cancellationAction) {
-//            Button("Cancel", role: .cancel, action: {})
-//          }
-//        }
-//    }
-//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-//    .previewDisplayName("Mode: Date & Time (Step 1)")
-//
-//    NavigationView {
-//      NavigationLink(isActive: .constant(true)) {
-//        TimeInputView(selection: .constant(Date()), mode: .dateAndTime)
-//          .timeInputViewTwentyFourHour()
-//          .tint(.pink)
-//      } label: {
-//        EmptyView()
-//      }
-//      .opacity(0)
-//    }
-//    .previewDevice(PreviewDevice(rawValue: "Apple Watch Series 6 - 44mm"))
-//    .previewDisplayName("Mode: Date & Time (Step 2)")
   }
 }
