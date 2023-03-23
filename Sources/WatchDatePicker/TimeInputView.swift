@@ -104,8 +104,8 @@ public struct TimeInputView: View {
     initialSelection = selection.wrappedValue
     debouncedHour = hourSubject.removeDuplicates().debounce(for: 0.1, scheduler: RunLoop.main).eraseToAnyPublisher()
     debouncedMinute = minuteSubject.removeDuplicates().debounce(for: 0.1, scheduler: RunLoop.main).eraseToAnyPublisher()
-    _hour = State(initialValue: locale.calendar.component(.hour, from: self.selection))
-    _minute = State(initialValue: locale.calendar.component(.minute, from: self.selection))
+    _hour = State(initialValue: Calendar.current.component(.hour, from: self.selection))
+    _minute = State(initialValue: Calendar.current.component(.minute, from: self.selection))
   }
 
   /// The content and behavior of the view.

@@ -94,9 +94,9 @@ public struct DateInputView: View {
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
 
-    _year = State(initialValue: calendar.component(.year, from: self.selection))
-    _month = State(initialValue: calendar.component(.month, from: self.selection))
-    _day = State(initialValue: calendar.component(.day, from: self.selection))
+    _year = State(initialValue: Calendar.current.component(.year, from: self.selection))
+    _month = State(initialValue: Calendar.current.component(.month, from: self.selection))
+    _day = State(initialValue: Calendar.current.component(.day, from: self.selection))
   }
 
   /// The content and behavior of the view.
