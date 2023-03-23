@@ -343,19 +343,25 @@ public struct TimeInputView: View {
 @available(tvOS, unavailable)
 struct TimeInputView_Previews: PreviewProvider {
   static var previews: some View {
-    TimeInputView(selection: .constant(Date()))
-      .previewDisplayName("Default")
-    
-    TimeInputView(selection: .constant(Date()))
-      .timeInputViewTwentyFourHour()
-      .previewDisplayName("24hr")
-    
-    TimeInputView(selection: .constant(Date()))
-      .environment(\.locale, Locale(identifier: "sv"))
-      .previewDisplayName("Swedish")
-    
-    TimeInputView(selection: .constant(Date()))
-      .tint(.pink)
-      .previewDisplayName("Pink")
+    Group {
+      TimeInputView(selection: .constant(Date()))
+        .previewDisplayName("Default")
+
+      TimeInputView(selection: .constant(Date()))
+        .timeInputViewTwentyFourHour()
+        .previewDisplayName("24 hr")
+
+      TimeInputView(selection: .constant(Date()))
+        .environment(\.locale, Locale(identifier: "sv"))
+        .previewDisplayName("Swedish")
+
+      TimeInputView(selection: .constant(Date()))
+        .tint(.pink)
+        .previewDisplayName("Pink")
+    }
+    .ignoresSafeArea(edges: .bottom)
+    .padding(-10)
+    .tint(.orange)
+    //.previewLayout(.sizeThatFits)
   }
 }
