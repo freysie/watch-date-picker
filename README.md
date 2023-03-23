@@ -73,7 +73,7 @@ DateInputView(selection: $value)
 
 <img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DateInputView.png?raw=true" alt="" width="198" />
 
-The date input view uses the current locale for labeling, ordering, and populating the day-month-year pickers.
+The date input view uses the current locale for labeling and ordering the day-month-year pickers.
 
 ```swift
 DateInputView(selection: $value)
@@ -107,6 +107,9 @@ TimeInputView(selection: $value)
 ```swift
 TimeInputView(selection: $value)
     .timeInputViewTwentyFourHourMode()
+
+TimeInputView(selection: $value)
+    .timeInputViewTwentyFourHourMode(false)
 ```
 
 <img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_24h.png?raw=true" alt="" width="198" />
