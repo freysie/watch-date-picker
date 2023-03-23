@@ -275,9 +275,9 @@ public struct TimeInputView: View {
           }
           .digitalCrownRotation(
             hourBinding,
-            from: 0,
-            through: 24,
-            by: 1,
+            from: -.greatestFiniteMagnitude,
+            through: .greatestFiniteMagnitude,
+            by: nil,
             sensitivity: .low,
             isContinuous: true,
             isHapticFeedbackEnabled: true
@@ -305,9 +305,9 @@ public struct TimeInputView: View {
           }
           .digitalCrownRotation(
             minuteBinding,
-            from: 0,
-            through: 60,
-            by: 1,
+            from: -.greatestFiniteMagnitude,
+            through: .greatestFiniteMagnitude,
+            by: nil,
             sensitivity: .medium,
             isContinuous: true,
             isHapticFeedbackEnabled: true
