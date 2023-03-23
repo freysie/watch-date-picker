@@ -66,38 +66,21 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.datePickerConfirmationTint) private var confirmationTint
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
-  private var formattedButtonTitle: String {
-    // TODO: don’t recreate the formatter every time? (profile this or ask on Discord)
-    let formatter = DateFormatter()
-    formatter.locale = locale
-    
+  @ViewBuilder private var formattedButtonTitle: some View {
     switch displayedComponents {
     case [.date, .hourAndMinute]:
-      formatter.dateStyle = .short
-      formatter.timeStyle = .short
-      
+      Text(selection, format: Date.FormatStyle(date: .numeric, time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
     case .date:
-      formatter.dateStyle = .medium
-      formatter.timeStyle = .none
-      
+      Text(selection, format: Date.FormatStyle(date: .abbreviated).weekday(.abbreviated))
     case .hourAndMinute:
-      formatter.dateStyle = .none
-      formatter.timeStyle = .short
-      
+      Text(selection, format: Date.FormatStyle(time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
     default:
-      break
+      fatalError()
     }
-
-    return formatter.string(from: selection)
   }
 
-  private var formattedNavigationTitle: String {
-    // TODO: don’t recreate the formatter every time? (profile this or ask on Discord)
-    let formatter = DateFormatter()
-    formatter.locale = locale
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .none
-    return formatter.string(from: newSelection)
+  private var formattedNavigationTitle: Text {
+    Text(newSelection, format: Date.FormatStyle(date: .abbreviated, time: .omitted, locale: locale))
   }
 
   private var confirmationButton: some View {
@@ -151,11 +134,11 @@ public struct DatePicker<Label: View>: View {
       if flipsLabelAndValue != true {
         label
         
-        Text(formattedButtonTitle)
+        formattedButtonTitle
           .font(.footnote)
           .foregroundStyle(.secondary)
       } else {
-        Text(formattedButtonTitle)
+        formattedButtonTitle
         
         label
           .font(.footnote)
