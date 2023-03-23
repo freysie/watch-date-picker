@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
 
-// TODO: cache the clock face to an image for better performance?
+// TODO: find out what is causing the performance hiccup
 
 // TODO: accessibility:
 // 12 o’clock, PM. Adjustable. Slide up or down with one finger to adjust the value.
@@ -21,7 +21,8 @@ import Combine
 @available(tvOS, unavailable)
 public struct TimeInputView: View {
   @Binding var selection: Date
-  let initialSelection: Date
+
+  private let initialSelection: Date
 
   @Environment(\.locale) private var locale
   @Environment(\.timeInputViewMonospacedDigit) private var monospacedDigit
@@ -213,13 +214,14 @@ public struct TimeInputView: View {
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
 
-//    return self.selectionIndicator!
-//      .offset(y: geometry.size.height / 3)
-//      .rotationEffect(.degrees(180 + rotationDegrees), anchor: .topLeading)
-//      .animation(.spring(), value: value)
-//      .position(x: geometry.size.width, y: geometry.size.height)
+    // TODO: bring back fully customizable selection indocator in watchOS 9 using `AnyShapes`
+    // return self.selectionIndicator!
+    //   .offset(y: geometry.size.height / 3)
+    //   .rotationEffect(.degrees(180 + rotationDegrees), anchor: .topLeading)
+    //   .animation(.spring(), value: value)
+    //   .position(x: geometry.size.width, y: geometry.size.height)
   }
-  
+
   private var twentyFourHourIndicatorView: some View {
     Button(action: {}) {
       Text("24\(Text("HR").font(.system(size: 15)))")

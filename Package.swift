@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.5
 import PackageDescription
 
 let package = Package(
@@ -6,9 +6,6 @@ let package = Package(
   defaultLocalization: "en",
   platforms: [
     .watchOS(.v8),
-    // .macOS(.v12),
-    // .iOS(.v15),
-    // .tvOS(.v15),
   ],
   products: [
     .library(name: "WatchDatePicker", targets: ["WatchDatePicker"]),
