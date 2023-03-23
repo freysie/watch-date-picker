@@ -29,7 +29,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker.png?raw=true" alt="" width="594" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker.png?raw=true" alt="" width="596" />
 
 
 ### Selecting a Date
@@ -42,7 +42,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_date.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_date.png?raw=true" alt="" width="397" />
 
 
 ### Selecting a Time
@@ -55,7 +55,7 @@ DatePicker(
 )
 ```
 
-<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_hourAndMinute.png?raw=true" alt="" width="396" />
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_hourAndMinute.png?raw=true" alt="" width="397" />
 
 
 ### Customization
