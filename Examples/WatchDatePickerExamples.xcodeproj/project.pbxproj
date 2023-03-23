@@ -490,7 +490,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples WatchKit Extension";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -523,7 +523,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples WatchKit Extension";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,7 +600,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2LBZ44QGD;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -621,7 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X2LBZ44QGD;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021 Freya Ariel";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
