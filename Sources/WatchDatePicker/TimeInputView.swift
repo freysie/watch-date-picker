@@ -120,6 +120,7 @@ public struct TimeInputView: View {
 
       pickerButtons
     }
+    .environment(\.layoutDirection, .leftToRight)
     .onChange(of: hour) { hourSubject.send($0) }
     .onChange(of: minute) { minuteSubject.send($0) }
     .onChange(of: hourPeriod) { _ in selection = newSelection }
