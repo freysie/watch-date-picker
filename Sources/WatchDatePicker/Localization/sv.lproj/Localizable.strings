@@ -5,3 +5,4 @@
 "Continue" = "Fortsätta";
 "Done" = "OK";
 "24 hour" = "24 tim";
+"%d o’clock %@" = "Klockan %1$d %2$@";

@@ -5,3 +5,4 @@
 "Continue" = "Continua";
 "Done" = "Bine";
 "24 hour" = "24 de ore";
+"%d o’clock %@" = "%1$d fix %2$@";

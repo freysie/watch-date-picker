@@ -5,3 +5,4 @@
 "Continue" = "Doorgaan met";
 "Done" = "Oke";
 "24 hour" = "24 uur";
+"%d o’clock %@" = "%1$d uur %2$@";

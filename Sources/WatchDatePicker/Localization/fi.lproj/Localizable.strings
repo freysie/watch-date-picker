@@ -5,3 +5,4 @@
 "Continue" = "Jatkaa";
 "Done" = "OK";
 "24 hour" = "24 tuntia";
+"%d o’clock %@" = "klo %1$d %2$@";

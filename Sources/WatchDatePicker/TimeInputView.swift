@@ -244,6 +244,16 @@ public struct TimeInputView: View {
   }
   
   private var pickerButtons: some View {
+  private var hourButtonAccessibilityValue: Text {
+    Text("\(normalizedHour) o’clock \(twentyFourHour ? "" : localizedHourPeriodSymbol)", bundle: .module)
+  }
+
+  private var minuteButtonAccessibilityValue: Text {
+    let now = Date.now
+    let later = now + TimeInterval(normalizedMinute * minuteMultiple)
+    return Text(now..<later, format: .components(style: .spellOut))
+  }
+
     VStack {
       if twentyFourHour == true {
         twentyFourHourIndicatorView
@@ -262,8 +272,6 @@ public struct TimeInputView: View {
           .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
           .focusable()
           .accessibilityLabel("")
-          // .accessibilityValue("\(formattedHour) o’clock \(localizedHourPeriodSymbol)")
-          .accessibilityValue("\(formattedHour) o’clock")
           .accessibilityAddTraits(.updatesFrequently)
           .accessibilityRemoveTraits(.isButton)
           .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
@@ -292,7 +300,6 @@ public struct TimeInputView: View {
           .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
           .focusable()
           .accessibilityLabel("")
-          .accessibilityValue("\(normalizedMinute) minutes")
           .accessibilityAddTraits(.updatesFrequently)
           .accessibilityRemoveTraits(.isButton)
           .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
@@ -333,7 +340,9 @@ public struct TimeInputView: View {
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
       }
+        .accessibilityValue(hourButtonAccessibilityValue)
       Text(locale.timeSeparator)
+        .accessibilityValue(minuteButtonAccessibilityValue)
     }
     .onChange(of: accessibilityFocusedComponent) {
       if let component = $0 { focusedComponent = component }

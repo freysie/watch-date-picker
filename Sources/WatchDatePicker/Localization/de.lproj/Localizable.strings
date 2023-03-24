@@ -5,3 +5,4 @@
 "Continue" = "Weitermachen";
 "Done" = "OK";
 "24 hour" = "24 Stunden";
+"%d o’clock %@" = "%1$d Uhr %2$@";
