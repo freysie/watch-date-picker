@@ -76,9 +76,9 @@ extension CGFloat {
   
   static var circularButtonDiameter: Self {
     switch WatchDeviceSize.current {
-    case ._40mm: return 33.5
+    case ._40mm: return 34
     // case ._41mm: return 35
-    case ._45mm: return 41.5
+    case ._45mm: return 40.5
     case ._49mm: return 40.5
     default: return 37.5
     }
