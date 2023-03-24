@@ -105,7 +105,11 @@ struct VariousExample: View {
         
         DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
           .tint(.pink)
-        
+
+        DatePicker("Time (Finnish)", selection: $value, displayedComponents: [.hourAndMinute])
+          .tint(.pink)
+          .environment(\.locale, Locale(identifier: "fi"))
+
         DatePicker("Date & Time", selection: $value)
         
         DatePicker("Date", selection: $value, displayedComponents: [.date])

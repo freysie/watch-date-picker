@@ -30,7 +30,7 @@ public struct TimeInputView: View {
   @Environment(\.timeInputViewTwentyFourHourIndicator) private var twentyFourHourIndicator
   @Environment(\.timeInputViewSelectionTint) private var selectionTint
 
-  private var twentyFourHour: Bool { _twentyFourHour ?? locale.uses24HourTime == true }
+  private var twentyFourHour: Bool { _twentyFourHour ?? locale.uses24HourTime }
 
   private enum HourPeriod: Int {
     case am = 0, pm = 12
@@ -44,22 +44,22 @@ public struct TimeInputView: View {
       }
     }
   }
-  
+
   private enum Component {
     case hour, minute
   }
-  
+
   private var hourPeriod: HourPeriod {
     get { abs(hour < 0 ? hour - 12 : hour) % 24 < 12 ? .am : .pm }
   }
-  
+
   private func setHourPeriod(_ period: HourPeriod) {
     guard hourPeriod != period else { return }
     var t = Transaction()
     t.disablesAnimations = true
     withTransaction(t) { hour += period.sign }
   }
-  
+
   @AccessibilityFocusState private var accessibilityFocusedComponent: Component?
   @State private var focusedComponent = Component.hour
   @State private var hour = 0
@@ -75,12 +75,15 @@ public struct TimeInputView: View {
   private var normalizedHour: Int { (hour < 0 ? hourMultiple - (abs(hour) % hourMultiple) : hour) % hourMultiple }
   private var normalizedMinute: Int { (minute < 0 ? minuteMultiple - (abs(minute) % minuteMultiple) : minute) % minuteMultiple }
 
-  private var formattedHour: String {
-    String(twentyFourHour == true ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour)
+  private var formattedHour: Text {
+    Text(
+      twentyFourHour == true ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour,
+      format: .number.precision(.integerLength(2...2))
+    )
   }
 
-  private var formattedMinute: String {
-    String(format: "%02d", normalizedMinute)
+  private var formattedMinute: Text {
+    Text(normalizedMinute, format: .number.precision(.integerLength(2...2)))
   }
 
   private var newSelection: Date {
@@ -118,6 +121,8 @@ public struct TimeInputView: View {
         .padding(.clockFacePadding)
         //.drawingGroup(opaque: true)
 
+      amPMButtons
+
       pickerButtons
     }
     .environment(\.layoutDirection, .leftToRight)
@@ -149,28 +154,28 @@ public struct TimeInputView: View {
     case .hour:
       if twentyFourHour == true {
         return ForEach(0..<12) { index in
-          label(String(format: "%02d", Int(index * 2)), at: index, with: geometry)
+          label(Int(index * 2), at: index, with: geometry, zeroPadded: true)
         }
       } else {
         return ForEach(0..<12) { index in
-          label(String(Int(index == 0 ? 12 : index)), at: index, with: geometry)
+          label(Int(index == 0 ? 12 : index), at: index, with: geometry)
         }
       }
 
     case .minute:
       return ForEach(0..<12) { index in
-        label(String(format: "%02d", Int(index * 5)), at: index, with: geometry)
+        label(Int(index * 5), at: index, with: geometry, zeroPadded: true)
       }
     }
   }
 
   private static let offsetLabels = [1, 2, 3, 4, 5, 7, 8, 9].map(String.init)
 
-  private func label(_ string: String, at index: Int, with geometry: GeometryProxy) -> some View {
+  private func label(_ value: Int, at index: Int, with geometry: GeometryProxy, zeroPadded: Bool = false) -> some View {
     ZStack {
-      Text(string)
+      Text(value, format: .number.precision(.integerLength((zeroPadded ? 2 : 1)...2)))
         .rotationEffect(.degrees(-Double(index) * 360 / 12), anchor: .center)
-        .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(string) ? 0.62 : 0.6))
+        .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(value.formatted(.number.precision(.integerLength((zeroPadded ? 2 : 1)...2)))) ? 0.62 : 0.59))
     }
     .rotationEffect(.degrees(Double(index) * 360 / 12), anchor: .center)
     .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -215,7 +220,7 @@ public struct TimeInputView: View {
       .animation(.spring(), value: value)
       .position(x: geometry.size.width, y: geometry.size.height)
 
-    // TODO: bring back fully customizable selection indocator in watchOS 9 using `AnyShapes`
+    // TODO: bring back fully customizable selection indicator in watchOS 9 using `AnyShape`
     // return self.selectionIndicator!
     //   .offset(y: geometry.size.height / 3)
     //   .rotationEffect(.degrees(180 + rotationDegrees), anchor: .topLeading)
@@ -223,27 +228,40 @@ public struct TimeInputView: View {
     //   .position(x: geometry.size.width, y: geometry.size.height)
   }
 
-  private var twentyFourHourIndicatorView: some View {
-    Button(action: {}) {
-      Text("24\(Text("HR").font(.system(size: 15)))")
-      // Text("24hr")
+  private var twentyFourHourIndicatorString: AttributedString {
+    var string = Measurement(value: 24, unit: UnitDuration.hours)
+      .formatted(.measurement(width: .abbreviated).locale(locale).attributed)
+
+    string.runs.forEach { run in
+      if run.numberPart != nil {
+        string[run.range].swiftUI.font = .system(size: 17, weight: .regular)
+      }
     }
-    .buttonStyle(.timePeriod(isHighlighted: false))
-    .tint(.gray)
-    .textCase(.uppercase)
-    .disabled(true)
-    .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
-    .offset(y: 4)
+
+    string.foregroundColor = .primary.opacity(0.5)
+
+    return string
   }
-  
+
+  private var twentyFourHourIndicatorView: some View {
+    //Button(action: {}) {
+      Text(twentyFourHourIndicatorString)
+        .font(.system(size: 13, weight: .regular))
+        //.foregroundColor(.primary.opacity(0.5))
+        .textCase(.uppercase)
+    //}
+    //.buttonStyle(.timePeriod(isHighlighted: false))
+    //.disabled(true)
+    .opacity(twentyFourHourIndicator != .hidden ? 1 : 0)
+  }
+
   private var localizedHourPeriodSymbol: String {
     switch hourPeriod {
     case .am: return locale.calendar.amSymbol
     case .pm: return locale.calendar.pmSymbol
     }
   }
-  
-  private var pickerButtons: some View {
+
   private var hourButtonAccessibilityValue: Text {
     Text("\(normalizedHour) o’clock \(twentyFourHour ? "" : localizedHourPeriodSymbol)", bundle: .module)
   }
@@ -254,7 +272,10 @@ public struct TimeInputView: View {
     return Text(now..<later, format: .components(style: .spellOut))
   }
 
+  private var amPMButtons: some View {
     VStack {
+      Spacer()
+
       if twentyFourHour == true {
         twentyFourHourIndicatorView
       } else {
@@ -262,69 +283,11 @@ public struct TimeInputView: View {
           Text(verbatim: locale.calendar.amSymbol)
             .tracking(locale.calendar.amSymbol == "AM" ? -0.5 : 0)
         }
-          .accessibilityAddTraits(hourPeriod == .am ? .isSelected : [])
-          .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
-          .offset(y: -1)
+        .accessibilityAddTraits(hourPeriod == .am ? .isSelected : [])
+        .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
       }
 
-      HStack {
-        Button(formattedHour, action: { focusedComponent = .hour })
-          .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
-          .focusable()
-          .accessibilityLabel("")
-          .accessibilityAddTraits(.updatesFrequently)
-          .accessibilityRemoveTraits(.isButton)
-          .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
-          .accessibilityAdjustableAction { direction in
-            switch direction {
-            case .increment: hour += 1
-            case .decrement: hour -= 1
-            @unknown default: break
-            }
-          }
-          .digitalCrownRotation(
-            hourBinding,
-            from: -.greatestFiniteMagnitude,
-            through: .greatestFiniteMagnitude,
-            by: nil,
-            sensitivity: .low,
-            isContinuous: true,
-            isHapticFeedbackEnabled: true
-          )
-
-          .accessibilityHidden(true)
-          .padding(.bottom, 7)
-          .padding(.horizontal, -1)
-
-        Button(formattedMinute, action: { focusedComponent = .minute })
-          .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
-          .focusable()
-          .accessibilityLabel("")
-          .accessibilityAddTraits(.updatesFrequently)
-          .accessibilityRemoveTraits(.isButton)
-          .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
-          .accessibilityAdjustableAction { direction in
-            switch direction {
-            case .increment: minute += 1
-            case .decrement: minute -= 1
-            @unknown default: break
-            }
-          }
-          .digitalCrownRotation(
-            minuteBinding,
-            from: -.greatestFiniteMagnitude,
-            through: .greatestFiniteMagnitude,
-            by: nil,
-            sensitivity: .medium,
-            isContinuous: true,
-            isHapticFeedbackEnabled: true
-          )
-      }
-      .font(
-        monospacedDigit == true
-        ? .system(size: .componentFontSize).monospacedDigit()
-        : .system(size: .componentFontSize)
-      )
+      Spacer(minLength: .timeComponentButtonHeight + 8)
 
       if twentyFourHour == true {
         twentyFourHourIndicatorView
@@ -338,12 +301,74 @@ public struct TimeInputView: View {
         .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .pm))
         .disabled(twentyFourHour == true)
         .opacity(twentyFourHour == true ? 0 : 1)
-        .offset(y: 3)
       }
-        .accessibilityValue(hourButtonAccessibilityValue)
-      Text(locale.timeSeparator)
-        .accessibilityValue(minuteButtonAccessibilityValue)
+
+      Spacer()
     }
+  }
+
+  private var pickerButtons: some View {
+    HStack(alignment: .firstTextBaseline) {
+      Button(action: { focusedComponent = .hour }) { formattedHour }
+        .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
+        .focusable()
+        .accessibilityLabel("")
+        .accessibilityValue(hourButtonAccessibilityValue)
+        .accessibilityAddTraits(.updatesFrequently)
+        .accessibilityRemoveTraits(.isButton)
+        .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
+        .accessibilityAdjustableAction { direction in
+          switch direction {
+          case .increment: hour += 1
+          case .decrement: hour -= 1
+          @unknown default: break
+          }
+        }
+        .digitalCrownRotation(
+          hourBinding,
+          from: -.greatestFiniteMagnitude,
+          through: .greatestFiniteMagnitude,
+          by: nil,
+          sensitivity: .low,
+          isContinuous: true,
+          isHapticFeedbackEnabled: true
+        )
+
+      Text(locale.timeSeparator)
+        .accessibilityHidden(true)
+//        .padding(.bottom, 7)
+//        .padding(.horizontal, -1)
+
+      Button(action: { focusedComponent = .minute }) { formattedMinute }
+        .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
+        .focusable()
+        .accessibilityLabel("")
+        .accessibilityValue(minuteButtonAccessibilityValue)
+        .accessibilityAddTraits(.updatesFrequently)
+        .accessibilityRemoveTraits(.isButton)
+        .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
+        .accessibilityAdjustableAction { direction in
+          switch direction {
+          case .increment: minute += 1
+          case .decrement: minute -= 1
+          @unknown default: break
+          }
+        }
+        .digitalCrownRotation(
+          minuteBinding,
+          from: -.greatestFiniteMagnitude,
+          through: .greatestFiniteMagnitude,
+          by: nil,
+          sensitivity: .medium,
+          isContinuous: true,
+          isHapticFeedbackEnabled: true
+        )
+    }
+    .font(
+      monospacedDigit == true
+      ? .system(size: .componentFontSize).monospacedDigit()
+      : .system(size: .componentFontSize)
+    )
     .onChange(of: accessibilityFocusedComponent) {
       if let component = $0 { focusedComponent = component }
     }
@@ -354,20 +379,41 @@ public struct TimeInputView: View {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 struct TimeInputView_Previews: PreviewProvider {
+  struct Example: View {
+    @State var date = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
+    var body: some View { TimeInputView(selection: $date) }
+  }
+
   static var previews: some View {
     Group {
-      TimeInputView(selection: .constant(Date()))
+      Example()
         .previewDisplayName("Default")
 
-      TimeInputView(selection: .constant(Date()))
+      Example()
         .timeInputViewTwentyFourHour()
         .previewDisplayName("24 hr")
 
-      TimeInputView(selection: .constant(Date()))
+      Example()
+        .environment(\.locale, Locale(identifier: "fi"))
+        .previewDisplayName("Finnish")
+
+      Example()
         .environment(\.locale, Locale(identifier: "sv"))
         .previewDisplayName("Swedish")
 
-      TimeInputView(selection: .constant(Date()))
+      Example()
+        .environment(\.locale, Locale(identifier: "ar"))
+        .previewDisplayName("Arabic")
+
+      Example()
+        .environment(\.locale, Locale(identifier: "de"))
+        .previewDisplayName("German")
+
+      Example()
+        .environment(\.locale, Locale(identifier: "he"))
+        .previewDisplayName("Hebrew")
+
+      Example()
         .tint(.pink)
         .previewDisplayName("Pink")
     }
