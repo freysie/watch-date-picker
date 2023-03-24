@@ -4,3 +4,4 @@
 xcuserdata/
 DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_hourAndMinute@*.png
