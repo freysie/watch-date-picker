@@ -283,7 +283,6 @@ public struct TimeInputView: View {
             isHapticFeedbackEnabled: true
           )
 
-        Text(":")
           .accessibilityHidden(true)
           .padding(.bottom, 7)
           .padding(.horizontal, -1)
@@ -333,6 +332,7 @@ public struct TimeInputView: View {
         .opacity(twentyFourHour == true ? 0 : 1)
         .offset(y: 3)
       }
+      Text(locale.timeSeparator)
     }
     .onChange(of: accessibilityFocusedComponent) {
       if let component = $0 { focusedComponent = component }

@@ -15,4 +15,11 @@ extension Locale {
     let monthIndex = format.firstIndex(where: { monthCharacters.contains($0) }) ?? format.endIndex
     return monthIndex < dayIndex
   }
+
+  /// The time separator for this locale. Either “.” or “:”.
+  public var timeSeparator: String {
+    calendar.startOfDay(for: Date())
+      .formatted(Date.FormatStyle(date: .none, time: .shortened, locale: self, calendar: calendar))
+      .contains(".") ? "." : ":"
+  }
 }
