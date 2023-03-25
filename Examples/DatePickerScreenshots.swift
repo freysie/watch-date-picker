@@ -25,47 +25,91 @@ class DatePickerScreenshots: XCTestCase {
   override func setUpWithError() throws {
     continueAfterFailure = false
   }
-  
-  func testSystemTimeInputView() throws {
+
+  private func swipeForward(_ app: XCUIApplication) {
     let config = value(forKey: "testRunConfiguration") as! NSDictionary
-    guard config["XCUIAppearanceMode"] as! Int == 1 else { return }
-
-    let app = XCUIApplication()
-    app.launch()
-    app.buttons["System Time Input View"].tap()
-    sleep(1)
-
-    let size = watchDeviceSizes[app.frame.width]!
-    let locale = config["XCUIApplicationLocalization"] as! String
-    app.saveScreenshot(as: "DatePicker_hourAndMinute@\(size)~\(locale)~system")
+    let locale = config["XCUIApplicationLocalization"] as? String ?? "en"
+    if NSLocale.characterDirection(forLanguage: locale) == .rightToLeft {
+      app.swipeRight()
+    } else {
+      app.swipeLeft()
+    }
   }
   
-  func testDatePicker_hourAndMinute() throws {
+  func testSystemTimeInputViewComparison() throws {
     let config = value(forKey: "testRunConfiguration") as! NSDictionary
-    guard config["XCUIAppearanceMode"] as! Int == 1 else { return }
+    guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
 
     let app = XCUIApplication()
     app.launch()
-    app.buttons.element(boundBy: 1).tap()
-    sleep(2)
 
     let size = watchDeviceSizes[app.frame.width]!
-    let locale = config["XCUIApplicationLocalization"] as! String
+    let locale = config["XCUIApplicationLocalization"] as? String ?? "en"
+
+    app.buttons["System Time Input View"].tap()
+    app.saveScreenshot(as: "DatePicker_hourAndMinute@\(size)~\(locale)~system")
+
+    app.buttons.matching(identifier: "CancelButton").element.tap()
+    app.buttons.element(boundBy: 1).tap()
+
     app.saveScreenshot(as: "DatePicker_hourAndMinute@\(size)~\(locale)")
   }
-  
-//  func testMore() throws {
-//    let app = XCUIApplication()
-//    app.launch()
-//
-//    app.swipeLeft()
-//    app.swipeLeft()
-//    app.swipeLeft()
-//    app.swipeLeft()
-//    app.swipeLeft()
-//
-//    app.buttons["AM"].saveScreenshot(as: "__DatePicker_test")
-//
-//    app.saveScreenshot(as: "__DatePicker_test2")
-//  }
+
+  func testDatePicker() throws {
+    let config = value(forKey: "testRunConfiguration") as! NSDictionary
+    guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
+
+    let app = XCUIApplication()
+    app.launch()
+
+    let size = watchDeviceSizes[app.frame.width]!
+    let locale = config["XCUIApplicationLocalization"] as? String ?? "en"
+
+    swipeForward(app)
+    app.saveScreenshot(as: "DatePicker-1@\(size)~\(locale)")
+
+    app.buttons.element(boundBy: 0).tap()
+    app.saveScreenshot(as: "DatePicker-2@\(size)~\(locale)")
+
+    app.buttons.matching(identifier: "ContinueButton").element.tap()
+    _ = app.buttons.matching(identifier: "DoneButton").element.waitForExistence(timeout: 1)
+    app.saveScreenshot(as: "DatePicker-3@\(size)~\(locale)")
+  }
+
+  func testDatePicker_date() throws {
+    let config = value(forKey: "testRunConfiguration") as! NSDictionary
+    guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
+
+    let app = XCUIApplication()
+    app.launch()
+
+    let size = watchDeviceSizes[app.frame.width]!
+    let locale = config["XCUIApplicationLocalization"] as? String ?? "en"
+
+    swipeForward(app)
+    swipeForward(app)
+    app.saveScreenshot(as: "DatePicker_date-1@\(size)~\(locale)")
+
+    app.buttons.element(boundBy: 0).tap()
+    app.saveScreenshot(as: "DatePicker_date-2@\(size)~\(locale)")
+  }
+
+  func testDatePicker_hourAndMinute() throws {
+    let config = value(forKey: "testRunConfiguration") as! NSDictionary
+    guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
+
+    let app = XCUIApplication()
+    app.launch()
+
+    let size = watchDeviceSizes[app.frame.width]!
+    let locale = config["XCUIApplicationLocalization"] as? String ?? "en"
+
+    swipeForward(app)
+    swipeForward(app)
+    swipeForward(app)
+    app.saveScreenshot(as: "DatePicker_hourAndMinute-1@\(size)~\(locale)")
+
+    app.buttons.element(boundBy: 0).tap()
+    app.saveScreenshot(as: "DatePicker_hourAndMinute-2@\(size)~\(locale)")
+  }
 }
