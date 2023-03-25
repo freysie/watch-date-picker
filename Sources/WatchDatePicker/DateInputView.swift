@@ -42,9 +42,9 @@ public struct DateInputView: View {
   }
 
   private var yearRange: Range<Int> {
-    var lowerBound = 0
-    var upperBound = 9999
-    
+    var lowerBound = calendar.component(.year, from: Date()) - 500
+    var upperBound = calendar.component(.year, from: Date()) + 500
+
     if let minimumDate = minimumDate { lowerBound = calendar.component(.year, from: minimumDate) }
     if let maximumDate = maximumDate { upperBound = calendar.component(.year, from: maximumDate) }
     
