@@ -78,7 +78,7 @@ extension CGFloat {
     switch WatchDeviceSize.current {
     case ._40mm: return 34
     // case ._41mm: return 35
-    case ._45mm: return 40.5
+    case ._45mm: return 39.5
     case ._49mm: return 40.5
     default: return 37.5
     }
@@ -86,10 +86,10 @@ extension CGFloat {
   
   static var circularButtonFontSize: Self {
     switch WatchDeviceSize.current {
-    case ._40mm: return 17.5
+    case ._40mm: return 18.5
     // case ._41mm: return 35
     case ._45mm: return 22.5
-    case ._49mm: return 21.5
+    case ._49mm: return 22
     default: return 20.5
     }
   }
@@ -114,7 +114,7 @@ extension CGFloat {
   static var timePeriodButtonFontSize: Self {
     switch WatchDeviceSize.current {
     case ._41mm: return 17
-    case ._45mm, ._49mm: return 19
+    case ._45mm, ._49mm: return 18
     default: return 15
     }
   }
@@ -142,7 +142,7 @@ extension CGFloat {
     case ._41mm: return 52
     case ._44mm: return 51
     case ._45mm: return 58
-    case ._49mm: return 56
+    case ._49mm: return 58
     }
   }
 

@@ -43,8 +43,9 @@ extension ButtonStyle where Self == TimePeriodButtonStyle {
 struct TimePeriodButtonStyle: ButtonStyle {
   var isHighlighted: Bool
 
+  @Environment(\.locale) private var locale
   @Environment(\.timeInputViewAMPMHighlightTint) private var highlightTint
-  
+
   func makeBody(configuration: Configuration) -> some View {
     let tint = highlightTint.map { AnyShapeStyle($0) } ?? AnyShapeStyle(.tint)
     return configuration.label
@@ -52,6 +53,7 @@ struct TimePeriodButtonStyle: ButtonStyle {
       .font(.system(size: .timePeriodButtonFontSize, weight: isHighlighted ? .semibold : .regular))
       .opacity(configuration.isPressed ? 0.5 : isHighlighted ? 1 : 0.8)
       .foregroundStyle(isHighlighted ? AnyShapeStyle(.black) : tint)
+      .offset(y: locale.identifier == "ar" ? -3 : 0)
       .background {
         RoundedRectangle(cornerRadius: .timePeriodButtonCornerRadius)
           .fill(isHighlighted ? tint : AnyShapeStyle(.black))

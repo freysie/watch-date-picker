@@ -102,7 +102,7 @@ public struct DateInputView: View {
   /// The content and behavior of the view.
   public var body: some View {
     HStack {
-      if showsMonthBeforeDay ?? locale.monthComesBeforeDay {
+      if showsMonthBeforeDay ?? locale.showsMonthBeforeDay {
         monthPicker
         dayPicker
       } else {

@@ -3,13 +3,6 @@ import Combine
 
 // TODO: find out what is causing the performance hiccup
 
-// TODO: accessibility:
-// 12 o’clock, PM. Adjustable. Slide up or down with one finger to adjust the value.
-// 28 minutes. Adjustable. Slide up or down with one finger to adjust the value.
-// Selected. PM. Button.
-// Cancel. Button.
-// Done. Button.
-
 /// A control for the inputting of time values.
 ///
 /// The `TimeInputView` displays a clock face interface that allows the user to select hour and minute. The view binds to a `Date` instance.
@@ -175,7 +168,7 @@ public struct TimeInputView: View {
     ZStack {
       Text(value, format: .number.precision(.integerLength((zeroPadded ? 2 : 1)...2)))
         .rotationEffect(.degrees(-Double(index) * 360 / 12), anchor: .center)
-        .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(value.formatted(.number.precision(.integerLength((zeroPadded ? 2 : 1)...2)))) ? 0.62 : 0.59))
+        .padding(.bottom, geometry.size.height * (Self.offsetLabels.contains(value.formatted(.number.precision(.integerLength((zeroPadded ? 2 : 1)...2)))) ? 0.62 : 0.6))
     }
     .rotationEffect(.degrees(Double(index) * 360 / 12), anchor: .center)
     .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -267,13 +260,13 @@ public struct TimeInputView: View {
   }
 
   private var minuteButtonAccessibilityValue: Text {
-    let now = Date.now
+    let now = Date()
     let later = now + TimeInterval(normalizedMinute * minuteMultiple)
     return Text(now..<later, format: .components(style: .spellOut))
   }
 
   private var amPMButtons: some View {
-    VStack {
+    VStack(spacing: 0) {
       Spacer()
 
       if twentyFourHour == true {
@@ -287,7 +280,7 @@ public struct TimeInputView: View {
         .buttonStyle(.timePeriod(isHighlighted: hourPeriod == .am))
       }
 
-      Spacer(minLength: .timeComponentButtonHeight + 8)
+      Spacer(minLength: .timeComponentButtonHeight + 16)
 
       if twentyFourHour == true {
         twentyFourHourIndicatorView
@@ -308,7 +301,7 @@ public struct TimeInputView: View {
   }
 
   private var pickerButtons: some View {
-    HStack(alignment: .firstTextBaseline) {
+    HStack(alignment: locale.timeSeparator == "." ? .firstTextBaseline : .top) {
       Button(action: { focusedComponent = .hour }) { formattedHour }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
         .focusable()
@@ -334,10 +327,15 @@ public struct TimeInputView: View {
           isHapticFeedbackEnabled: true
         )
 
-      Text(locale.timeSeparator)
-        .accessibilityHidden(true)
-//        .padding(.bottom, 7)
-//        .padding(.horizontal, -1)
+      if #available(watchOS 9.1, *) {
+        Text(locale.timeSeparator)
+          .fontDesign(.default)
+          .accessibilityHidden(true)
+          //.border(.mint)
+      } else {
+        Text(locale.timeSeparator)
+          .accessibilityHidden(true)
+      }
 
       Button(action: { focusedComponent = .minute }) { formattedMinute }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
@@ -416,6 +414,29 @@ struct TimeInputView_Previews: PreviewProvider {
       Example()
         .tint(.pink)
         .previewDisplayName("Pink")
+
+      Group {
+        if #available(watchOS 9.1, *) {
+          Example()
+            .fontDesign(.serif)
+            .tint(.brown)
+            .previewDisplayName("Serif")
+        }
+
+        if #available(watchOS 9.1, *) {
+          Example()
+            .fontDesign(.monospaced)
+            .tint(.green)
+            .previewDisplayName("Monospaced")
+        }
+
+        if #available(watchOS 9.1, *) {
+          Example()
+            .fontDesign(.rounded)
+            .tint(.purple)
+            .previewDisplayName("Rounded")
+        }
+      }
     }
     .ignoresSafeArea(edges: .bottom)
     .padding(-10)

@@ -1,6 +1,6 @@
 import XCTest
 
-fileprivate let watchDeviceSizes = [
+let watchDeviceSizes = [
   162.0: "40mm",
   176.0: "41mm",
   184.0: "44mm",
@@ -8,13 +8,11 @@ fileprivate let watchDeviceSizes = [
   205.0: "49mm",
 ]
 
-fileprivate let outputDirectory = URL(
-  fileURLWithPath: "../Sources/WatchDatePicker/Documentation.docc/Resources",
-  relativeTo: URL(fileURLWithPath: #filePath)
-)
+let outputDirectory = URL(fileURLWithPath: "../QA", relativeTo: URL(fileURLWithPath: #filePath))
 
-fileprivate extension XCUIScreenshotProviding {
+extension XCUIScreenshotProviding {
   func saveScreenshot(as name: String) {
+    Thread.sleep(forTimeInterval: 0.2) // wait for crown indicator to disappear
     try! screenshot().pngRepresentation.write(to: outputDirectory.appendingPathComponent("\(name).png"))
   }
 }

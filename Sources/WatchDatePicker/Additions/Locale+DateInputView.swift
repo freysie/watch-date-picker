@@ -6,8 +6,8 @@ extension Locale {
     !DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: self)!.contains("a")
   }
 
-  /// Whether the month comes before the day in this locale.
-  public var monthComesBeforeDay: Bool {
+  /// Whether the month comes before the day when displayed in this locale.
+  public var showsMonthBeforeDay: Bool {
     let format = DateFormatter.dateFormat(fromTemplate: "Md", options: 0, locale: self)!
     let dayCharacters: Set<Character> = ["d", "D", "f", "g"]
     let monthCharacters: Set<Character> = ["M", "L"]
@@ -22,4 +22,7 @@ extension Locale {
       .formatted(Date.FormatStyle(date: .none, time: .shortened, locale: self, calendar: calendar))
       .contains(".") ? "." : ":"
   }
+
+  /// A list of identifiers supporte by Watch Date Picker.
+  public static let watchDatePickerSupportedIdentifiers = Bundle.module.localizations
 }

@@ -14,6 +14,8 @@ struct DatePickerExamplesApp: App {
   }
 }
 
+// let screenshotDate = Calendar.current.date(from: DateComponents(year: 2021, month: 10, day: 30, hour: 10, minute: 09))!
+
 // let screenshotDate = Calendar.current.date // Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
 
 let monthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: Date())!
@@ -50,7 +52,7 @@ struct SystemTimeInputView: View {
         //   }
         // }
 
-        timeInputView = PUICTimeInputView.perform(Selector(String(["n", "e", "w"]))).takeUnretainedValue()
+        timeInputView = PUICTimeInputView.perform(Selector(String(["n", "e", "w"]))).takeRetainedValue()
 
         // print(timeInputView.value(forKey: "circularPrimaryButton") as Any)
         // print(timeInputView.value(forKey: "circularSecondaryButton") as Any)

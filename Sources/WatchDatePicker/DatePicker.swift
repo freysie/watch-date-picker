@@ -90,6 +90,7 @@ public struct DatePicker<Label: View>: View {
         Text("Continue", bundle: .module)
       }
     }
+    .accessibilityIdentifier("ContinueButton")
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
     .tint(confirmationTint ?? .green)
@@ -102,6 +103,7 @@ public struct DatePicker<Label: View>: View {
         Image(systemName: "xmark")
       }
       .accessibilityLabel("Cancel")
+      .accessibilityIdentifier("CancelButton")
       .buttonStyle(.circular(.gray))
       
       Spacer()
@@ -110,6 +112,7 @@ public struct DatePicker<Label: View>: View {
         Image(systemName: "checkmark")
       }
       .accessibilityLabel("Done")
+      .accessibilityIdentifier("DoneButton")
       .accessibilityRemoveTraits(.isSelected)
       .buttonStyle(.circular(.green))
     }
@@ -165,6 +168,7 @@ public struct DatePicker<Label: View>: View {
                       Button(action: submit) {
                         Text("Done", bundle: .module)
                       }
+                      .accessibilityIdentifier("DoneButton")
                     }
                   }
               } label: {
@@ -204,12 +208,6 @@ public struct DatePicker<Label: View>: View {
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .navigationBarHidden(true)
       .watchStatusBar(hidden: true)
-      .toolbar {
-        ToolbarItem(placement: .confirmationAction) {
-          Button("", action: {})
-            .accessibilityHidden(true)
-        }
-      }
       .edgesIgnoringSafeArea(.all)
       .padding(.bottom, -40)
       .padding(.horizontal, -32)
