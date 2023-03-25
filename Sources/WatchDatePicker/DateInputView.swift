@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 /// A control for the inputting of date values.
 ///
@@ -21,6 +22,8 @@ public struct DateInputView: View {
   @State private var month = 0
   @State private var day = 0
   @FocusState private var focusedField: Field?
+
+  private var selectionPublisher = PassthroughSubject<Void, Never>()
 
   @Environment(\.dateInputViewShowsMonthBeforeDay) private var showsMonthBeforeDay
   @Environment(\.dateInputViewTextCase) private var textCase
@@ -115,7 +118,12 @@ public struct DateInputView: View {
     .textCase(textCase)
     .scenePadding(.horizontal)
     .padding(.vertical, 5)
-    .onChange(of: newSelection) { selection = $0 }
+    .onChange(of: year) { _ in selectionPublisher.send() }
+    .onChange(of: month) { _ in selectionPublisher.send() }
+    .onChange(of: day) { _ in selectionPublisher.send() }
+    .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
+      selection = newSelection
+    }
   }
 
   private var yearPicker: some View {
