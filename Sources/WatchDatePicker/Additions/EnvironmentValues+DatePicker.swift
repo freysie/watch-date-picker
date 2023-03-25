@@ -5,9 +5,9 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public extension View {
-  /// Sets whether date pickers flip the order of their label and value within this view.
+  /// Sets whether date pickers flip the order of their labels and values within this view.
   /// - Parameters:
-  ///   - enabled: A Boolean value that determines whether date pickers flip the order of their label and value within this view.
+  ///   - enabled: A Boolean value that determines whether date pickers flip the order of their labels and values within this view.
   func datePickerFlipsLabelAndValue(_ enabled: Bool? = true) -> some View {
     environment(\.datePickerFlipsLabelAndValue, enabled)
   }

@@ -12,6 +12,10 @@
 		09954B89272DCAC500475F57 /* Examples WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3B029E03285FADA0000346CD /* WatchDatePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3B029E02285FADA0000346CD /* WatchDatePicker */; };
 		3B029E07285FC070000346CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B029E04285FBFF9000346CD /* Assets.xcassets */; };
+		3B29FAE829CD10F800CECC4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B29FAD629CD10F800CECC4C /* Localizable.strings */; };
+		3B29FAE929CD10F800CECC4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B29FAD629CD10F800CECC4C /* Localizable.strings */; };
+		3B29FAEA29CD10F800CECC4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B29FAD629CD10F800CECC4C /* Localizable.strings */; };
+		3B29FAEB29CD10F900CECC4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3B29FAD629CD10F800CECC4C /* Localizable.strings */; };
 		3BF815CB288E375400693A16 /* DatePickerScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +85,22 @@
 		09954B7D272DCAC300475F57 /* Examples WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09954B88272DCAC500475F57 /* Examples WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Examples WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B029E04285FBFF9000346CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3B29FAD729CD10F800CECC4C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAD829CD10F800CECC4C /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAD929CD10F800CECC4C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FADA29CD10F800CECC4C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FADB29CD10F800CECC4C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B29FADC29CD10F800CECC4C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FADD29CD10F800CECC4C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FADE29CD10F800CECC4C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FADF29CD10F800CECC4C /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE029CD10F800CECC4C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE129CD10F800CECC4C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3B29FAE329CD10F800CECC4C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE429CD10F800CECC4C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE529CD10F800CECC4C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE629CD10F800CECC4C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3B29FAE729CD10F800CECC4C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3BA47621285FAD6800431D20 /* watch-date-picker */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "watch-date-picker"; path = ..; sourceTree = "<group>"; };
 		3BF815C6288E375300693A16 /* Examples WatchKit Screenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Examples WatchKit Screenshots.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerScreenshots.swift; sourceTree = "<group>"; };
@@ -108,9 +128,10 @@
 		09954B72272DCAC300475F57 = {
 			isa = PBXGroup;
 			children = (
-				3BA47620285FAD6800431D20 /* Packages */,
 				097155C62744356200F476F0 /* DatePickerExamplesApp.swift */,
 				3BF815CA288E375400693A16 /* DatePickerScreenshots.swift */,
+				3BA47620285FAD6800431D20 /* Packages */,
+				3B29FAD529CD10F800CECC4C /* Localization */,
 				3B029E04285FBFF9000346CD /* Assets.xcassets */,
 				097155C72744356200F476F0 /* Info.plist */,
 				09954B7A272DCAC300475F57 /* Products */,
@@ -134,6 +155,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3B29FAD529CD10F800CECC4C /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				3B29FAD629CD10F800CECC4C /* Localizable.strings */,
+			);
+			name = Localization;
+			path = ../Sources/WatchDatePicker/Localization;
 			sourceTree = "<group>";
 		};
 		3BA47620285FAD6800431D20 /* Packages */ = {
@@ -270,6 +300,29 @@
 				ar,
 				el,
 				he,
+				no,
+				en_AU,
+				es_419,
+				zh_CN,
+				pt_BR,
+				it,
+				bg,
+				kk,
+				pt_PT,
+				ms,
+				cs,
+				ko,
+				hu,
+				zh_HK,
+				tr,
+				zh_TW,
+				en_GB,
+				vi,
+				id,
+				th,
+				pt,
+				hi,
+				ca,
 			);
 			mainGroup = 09954B72272DCAC300475F57;
 			packageReferences = (
@@ -291,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B29FAE829CD10F800CECC4C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B029E07285FC070000346CD /* Assets.xcassets in Resources */,
+				3B29FAE929CD10F800CECC4C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B29FAEA29CD10F800CECC4C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B29FAEB29CD10F900CECC4C /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +415,32 @@
 			targetProxy = 3BF815CC288E375400693A16 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3B29FAD629CD10F800CECC4C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B29FAD729CD10F800CECC4C /* de */,
+				3B29FAD829CD10F800CECC4C /* he */,
+				3B29FAD929CD10F800CECC4C /* ar */,
+				3B29FADA29CD10F800CECC4C /* el */,
+				3B29FADB29CD10F800CECC4C /* zh-Hans */,
+				3B29FADC29CD10F800CECC4C /* ja */,
+				3B29FADD29CD10F800CECC4C /* en */,
+				3B29FADE29CD10F800CECC4C /* es */,
+				3B29FADF29CD10F800CECC4C /* da */,
+				3B29FAE029CD10F800CECC4C /* sv */,
+				3B29FAE129CD10F800CECC4C /* zh-Hant */,
+				3B29FAE329CD10F800CECC4C /* ru */,
+				3B29FAE429CD10F800CECC4C /* fr */,
+				3B29FAE529CD10F800CECC4C /* fi */,
+				3B29FAE629CD10F800CECC4C /* nl */,
+				3B29FAE729CD10F800CECC4C /* ro */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		09954B99272DCAC700475F57 /* Debug */ = {
@@ -485,7 +568,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -518,7 +601,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -551,10 +634,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchDatePickerExamples_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp;
@@ -576,10 +660,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchDatePickerExamples_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchDatePicker Examples";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.WatchDatePickerExamples.watchkitapp;
@@ -599,7 +684,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -620,7 +705,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -639,8 +724,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -663,8 +749,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = X2LBZ44QGD;
+				DEVELOPMENT_TEAM = WP9Q67QBW2;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2021-2023 Freya Alminde";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

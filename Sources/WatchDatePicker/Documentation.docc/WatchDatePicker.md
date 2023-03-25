@@ -1,10 +1,7 @@
 # ``WatchDatePicker``
 
-@Comment {
-  TODO: add this for newer DocC:
-  @Metadata {
-    @DisplayName("Watch Date Picker")
-  }
+@Metadata {
+  @DisplayName("Watch Date Picker")
 }
 
 A customizable date picker for watchOS and SwiftUI.

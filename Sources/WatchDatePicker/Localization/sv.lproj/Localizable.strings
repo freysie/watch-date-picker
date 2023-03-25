@@ -1,8 +1,11 @@
 
-"Year" = "År";
-"Month" = "Månad";
-"Day" = "Dag";
+"Year" = "år";
+"Month" = "månad";
+"Day" = "dag";
+"Set" = "Ställ in";
+"Clear" = "Rensa";
+"None" = "Ingen";
 "Continue" = "Fortsätta";
-"Done" = "OK";
-"24 hour" = "24 tim";
+"Done" = "Klar";
+"Cancel" = "Avbryt";
 "%d o’clock %@" = "Klockan %1$d %2$@";

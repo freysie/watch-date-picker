@@ -37,4 +37,4 @@ public extension EnvironmentValues {
 }
 
 struct DateInputViewShowsMonthBeforeDayKey: EnvironmentKey { static let defaultValue: Bool? = nil }
-struct DateInputViewTextCaseKey: EnvironmentKey { static let defaultValue: Text.Case? = .uppercase }
+struct DateInputViewTextCaseKey: EnvironmentKey { static let defaultValue: Text.Case? = nil }

@@ -2,7 +2,10 @@
 "Year" = "年";
 "Month" = "月";
 "Day" = "天";
+"Set" = "設定";
+"Clear" = "清除";
+"None" = "無";
 "Continue" = "繼續";
 "Done" = "好的";
-"24 hour" = "24小時";
+"Cancel" = "取消";
 "%d o’clock %@" = "%2$@%1$d點整";

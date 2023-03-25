@@ -2,7 +2,10 @@
 "Year" = "Jahr";
 "Month" = "Monat";
 "Day" = "Tag";
-"Continue" = "Weitermachen";
-"Done" = "OK";
-"24 hour" = "24 Stunden";
+"Set" = "Festlegen";
+"Clear" = "Löschen";
+"None" = "Ohne";
+"Continue" = "Weiter";
+"Done" = "Fertig";
+"Cancel" = "Abbrechen";
 "%d o’clock %@" = "%1$d Uhr %2$@";

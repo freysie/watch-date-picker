@@ -2,7 +2,10 @@
 "Year" = "Jaar";
 "Month" = "Maand";
 "Day" = "Dag";
-"Continue" = "Doorgaan met";
-"Done" = "Oke";
-"24 hour" = "24 uur";
+"Set" = "Stel in";
+"Clear" = "Wis";
+"None" = "Geen";
+"Continue" = "Ga door";
+"Done" = "Gereed";
+"Cancel" = "Annuleer";
 "%d o’clock %@" = "%1$d uur %2$@";

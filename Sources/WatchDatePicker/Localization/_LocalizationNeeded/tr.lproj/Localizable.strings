@@ -1,0 +1,8 @@
+
+"Year" = "Yıl";
+"Month" = "Ay";
+"Day" = "Gün";
+"Clear" = "Temizle";
+"Continue" = "Sürdür";
+"Done" = "Bitti";
+"%d o’clock %@" = "Saat %2$@ %1$d";

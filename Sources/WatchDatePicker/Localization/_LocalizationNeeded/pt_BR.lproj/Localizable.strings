@@ -1,0 +1,5 @@
+
+"Year" = "Ano";
+"Month" = "Mês";
+"Day" = "Dia";
+"%d o’clock %@" = "%1$d horas %2$@";

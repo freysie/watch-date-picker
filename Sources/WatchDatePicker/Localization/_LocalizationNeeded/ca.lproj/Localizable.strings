@@ -1,0 +1,7 @@
+
+"Year" = "Any";
+"Month" = "Mes";
+"Day" = "Dia";
+"Set" = "Definir";
+"Clear" = "Esborrar";
+"%d o’clock %@" = "les %1$d %2$@ en punt";

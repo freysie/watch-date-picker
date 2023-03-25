@@ -1,0 +1,9 @@
+
+"Year" = "年";
+"Month" = "月";
+"Day" = "天";
+"Clear" = "清除";
+"Continue" = "继续";
+"Done" = "好的";
+
+"%d o’clock %@" = "%2$@%1$d点";

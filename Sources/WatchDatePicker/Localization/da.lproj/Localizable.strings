@@ -1,8 +1,11 @@
 
-"Year" = "År";
-"Month" = "Måned";
-"Day" = "Dag";
+"Year" = "år";
+"Month" = "måned";
+"Day" = "dag";
+"Set" = "Indstil";
+"Clear" = "Ryd";
+"None" = "Ingen";
 "Continue" = "Fortsæt";
 "Done" = "OK";
-"24 hour" = "24 timer";
+"Cancel" = "Annuller";
 "%d o’clock %@" = "kl. %1$d %2$@";

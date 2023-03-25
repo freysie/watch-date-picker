@@ -23,6 +23,6 @@ extension Locale {
       .contains(".") ? "." : ":"
   }
 
-  /// A list of identifiers supporte by Watch Date Picker.
+  /// A list of identifiers supported by Watch Date Picker.
   public static let watchDatePickerSupportedIdentifiers = Bundle.module.localizations
 }

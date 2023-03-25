@@ -55,21 +55,21 @@ public extension View {
 //@available(iOS, unavailable)
 //@available(tvOS, unavailable)
 //public extension View {
-//  /// Sets the shape used for marks in clock faces of time input views within this view.
+//  /// Sets the shape used for marks in clock dials of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
 //  func timeInputViewMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
 //    environment(\.timeInputViewMark, AnyShape(content()))
 //  }
 //
-//  /// Sets the shape used for heavy marks in clock faces of time input views within this view.
+//  /// Sets the shape used for heavy marks in clock dials of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
 //  func timeInputViewHeavyMark<Content: View>(@ViewBuilder content: () -> Content) -> some View {
 //    environment(\.timeInputViewHeavyMark, AnyShape(content()))
 //  }
 //
-//  /// Sets the shape used for the selection indicator in clock faces of time input views within this view.
+//  /// Sets the shape used for the selection indicator in clock dials of time input views within this view.
 //  /// - Parameters:
 //  ///   - tint: …
 //  func timeInputViewSelectionIndicator<Content: View>(@ViewBuilder content: () -> Content) -> some View {

@@ -1,0 +1,6 @@
+
+"Year" = "Tahun";
+"Month" = "Bulan";
+"Day" = "Hari";
+"Clear" = "Bersihkan";
+"%d o’clock %@" = "pukul %1$d %2$@";

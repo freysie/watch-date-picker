@@ -1,5 +1,5 @@
 screenshots:
-	./10h09m.sh
-	convert +append DatePicker-* -background transparent -splice 8x0+0+0 +append -chop 8x0+0+0 DatePicker.png
-	convert +append DatePicker_date-* -background transparent -splice 8x0+0+0 +append -chop 8x0+0+0 DatePicker_date.png
+	./9h41m.sh
+	convert +append DatePicker-*               -background transparent -splice 8x0+0+0 +append -chop 8x0+0+0 DatePicker.png
+	convert +append DatePicker_date-*          -background transparent -splice 8x0+0+0 +append -chop 8x0+0+0 DatePicker_date.png
 	convert +append DatePicker_hourAndMinute-* -background transparent -splice 8x0+0+0 +append -chop 8x0+0+0 DatePicker_hourAndMinute.png

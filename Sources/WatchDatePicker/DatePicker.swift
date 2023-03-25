@@ -1,15 +1,6 @@
 import SwiftUI
 
-// TODO: accessibility
-
 /// Option set that determines the displayed components of a date picker.
-///
-/// Specifying ``date`` displays month, day, and year depending on the locale setting:
-/// ![](DatePicker_date.png)
-/// Specifying ``hourAndMinute`` displays hour, minute, and optionally AM/PM designation depending on the locale setting:
-/// ![](DatePicker_hourAndMinute.png)
-/// Specifying both ``date`` and ``hourAndMinute`` displays date, hour, minute, and optionally AM/PM designation depending on the locale setting, inside of a navigation view:
-/// ![](DatePicker.png)
 @available(watchOS 8, *)
 public struct DatePickerComponents: OptionSet {
   public let rawValue: UInt
@@ -79,22 +70,23 @@ public struct DatePicker<Label: View>: View {
   }
 
   private var formattedNavigationTitle: Text {
-    Text(newSelection, format: Date.FormatStyle(date: .abbreviated, time: .omitted, locale: locale))
+    Text(newSelection, format: Date.FormatStyle(date: .numeric, time: .omitted, locale: locale))
   }
 
   private var confirmationButton: some View {
     Button(action: { secondViewIsPresented = true }) {
       if let confirmationTitleKey = confirmationTitleKey {
-        Text(confirmationTitleKey)
+        Text(confirmationTitleKey).bold()
       } else {
-        Text("Continue", bundle: .module)
+        Text("Continue", bundle: .module).bold()
       }
     }
     .accessibilityIdentifier("ContinueButton")
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
     .tint(confirmationTint ?? .green)
-    .padding()
+    .padding(.horizontal, 0.5)
+    .padding(.vertical)
   }
   
   private var circularButtons: some View {
@@ -132,7 +124,6 @@ public struct DatePicker<Label: View>: View {
 
   private var buttonBody: some View {
     VStack(alignment: .leading) {
-      // TODO: consider if this can be achieved in a cleaner and more reusable way
       if flipsLabelAndValue != true {
         label
         
@@ -153,40 +144,39 @@ public struct DatePicker<Label: View>: View {
     switch displayedComponents {
     case [.date, .hourAndMinute]:
       NavigationView {
-        VStack {
+        VStack(spacing: 10) {
           DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-            .watchStatusBar(hidden: true)
-            .overlay {
-              NavigationLink(isActive: $secondViewIsPresented) {
-                TimeInputView(selection: $newSelection)
-                  .edgesIgnoringSafeArea(.bottom)
-                  .padding(-10)
-                  .navigationTitle(formattedNavigationTitle)
-                  .navigationBarTitleDisplayMode(.inline)
-                  .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                      Button(action: submit) {
-                        Text("Done", bundle: .module)
-                      }
-                      .accessibilityIdentifier("DoneButton")
-                    }
-                  }
-              } label: {
-                EmptyView()
-              }
-              .hidden()
-            }
-          
+            .padding(.top, 20)
+
           confirmationButton
         }
-        .edgesIgnoringSafeArea(.bottom)
-        .scenePadding(.bottom)
+        .watchStatusBar(hidden: true)
+        .edgesIgnoringSafeArea([.bottom, .horizontal])
+        .overlay {
+          NavigationLink(isActive: $secondViewIsPresented) {
+            TimeInputView(selection: $newSelection)
+              .edgesIgnoringSafeArea(.bottom)
+              .padding(-10)
+              .navigationTitle(formattedNavigationTitle)
+              .navigationBarTitleDisplayMode(.inline)
+              .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                  Button(action: submit) {
+                    Text("Done", bundle: .module)
+                  }
+                  .accessibilityIdentifier("DoneButton")
+                }
+              }
+          } label: {
+            EmptyView()
+          }
+          .hidden()
+        }
       }
-      
+
     case .date:
       VStack(spacing: 10) {
         DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-          .frame(height: max(120, WKInterfaceDevice.current().screenBounds.height * 0.55))
 
         circularButtons
           .padding(.bottom, -21)

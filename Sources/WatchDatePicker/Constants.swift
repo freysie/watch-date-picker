@@ -20,6 +20,13 @@ enum WatchDeviceSize: Double {
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 extension CGFloat {
+  static var dateInputHeight: Self {
+    switch WatchDeviceSize.current {
+    case ._40mm, ._44mm: return 105
+    default: return 110
+    }
+  }
+
   static var clockFacePadding: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return -13
@@ -29,7 +36,7 @@ extension CGFloat {
     case ._49mm: return -29.5
     }
   }
-  
+
   static var hourAndMinuteCircularButtonsBottomPadding: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return -22
@@ -67,17 +74,30 @@ extension CGFloat {
     }
   }
   
+  static var pickerCornerRadiusSize: Self {
+    switch WatchDeviceSize.current {
+    case ._41mm, ._45mm, ._49mm: return 15
+    default: return 11
+    }
+  }
+
+  static var pickerFontSize: Self {
+    switch WatchDeviceSize.current {
+    case ._40mm: return 21
+    default: return 23
+    }
+  }
+
   static var pickerLabelMinimumScaleFactor: Self {
     switch WatchDeviceSize.current {
     case ._41mm, ._45mm, ._49mm: return 0.8
     default: return 1
     }
   }
-  
+
   static var circularButtonDiameter: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return 34
-    // case ._41mm: return 35
     case ._45mm: return 39.5
     case ._49mm: return 40.5
     default: return 37.5
@@ -87,7 +107,6 @@ extension CGFloat {
   static var circularButtonFontSize: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return 18.5
-    // case ._41mm: return 35
     case ._45mm: return 22.5
     case ._49mm: return 22
     default: return 20.5
@@ -130,7 +149,6 @@ extension CGFloat {
   static var timeComponentButtonWidth: Self {
     switch WatchDeviceSize.current {
     case ._40mm: return 39
-    // case ._41mm: return 40
     case ._45mm, ._49mm: return 51
     default: return 46
     }
@@ -150,6 +168,16 @@ extension CGFloat {
     switch WatchDeviceSize.current {
     case ._40mm: return 7
     default: return 11
+    }
+  }
+
+  static var twentyFourHourIndicatorOffset: Self {
+    switch WatchDeviceSize.current {
+    case ._40mm: return -23
+    case ._41mm: return -23
+    case ._44mm: return -23
+    case ._45mm: return -26
+    case ._49mm: return -30
     }
   }
 }

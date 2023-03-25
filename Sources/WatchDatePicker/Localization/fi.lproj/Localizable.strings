@@ -2,7 +2,10 @@
 "Year" = "Vuosi";
 "Month" = "Kuukausi";
 "Day" = "Päivä";
-"Continue" = "Jatkaa";
-"Done" = "OK";
-"24 hour" = "24 tuntia";
+"Set" = "Aseta";
+"Clear" = "Tyhjennä";
+"None" = "Ei mitään";
+"Continue" = "Jatka";
+"Done" = "Valmis";
+"Cancel" = "Kumoa";
 "%d o’clock %@" = "klo %1$d %2$@";

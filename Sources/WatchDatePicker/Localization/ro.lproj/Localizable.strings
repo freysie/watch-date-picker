@@ -1,8 +1,11 @@
 
-"Year" = "An";
-"Month" = "Lună";
-"Day" = "Zi";
-"Continue" = "Continua";
+"Year" = "an";
+"Month" = "lună";
+"Day" = "zi";
+"Set" = "Fixați";
+"Clear" = "Degajați";
+"None" = "Nimic";
+"Continue" = "Continuați";
 "Done" = "Bine";
-"24 hour" = "24 de ore";
+"Cancel" = "Anulați";
 "%d o’clock %@" = "%1$d fix %2$@";

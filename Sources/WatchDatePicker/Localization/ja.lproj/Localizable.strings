@@ -2,7 +2,10 @@
 "Year" = "年";
 "Month" = "月";
 "Day" = "日";
-"Continue" = "継続する";
-"Done" = "わかった";
-"24 hour" = "24時間";
+"Set" = "設定";
+"Clear" = "消去";
+"None" = "なし";
+"Continue" = "続ける";
+"Done" = "完了";
+"Cancel" = "キャンセル";
 "%d o’clock %@" = "%2$@%1$d時";
