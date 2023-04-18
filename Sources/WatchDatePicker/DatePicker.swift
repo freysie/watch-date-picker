@@ -426,7 +426,7 @@ extension DatePicker where Label == Text {
   ///   - label: The title of self, describing its purpose.
   ///   - selection: The date value being displayed and selected.
   ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
-  public init<S: StringProtocol>(
+  @_disfavoredOverload public init<S: StringProtocol>(
     _ title: S,
     selection: Binding<Date>,
     displayedComponents: Components = [.date, .hourAndMinute]
@@ -446,7 +446,7 @@ extension DatePicker where Label == Text {
   ///   - selection: The date value being displayed and selected.
   ///   - range: The inclusive range of selectable dates.
   ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
-  public init<S: StringProtocol>(
+  @_disfavoredOverload public init<S: StringProtocol>(
     _ title: S,
     selection: Binding<Date>,
     in range: ClosedRange<Date>,
@@ -469,7 +469,7 @@ extension DatePicker where Label == Text {
   ///   - selection: The date value being displayed and selected.
   ///   - range: The open range from some selectable start date.
   ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
-  public init<S: StringProtocol>(
+  @_disfavoredOverload public init<S: StringProtocol>(
     _ title: S,
     selection: Binding<Date>,
     in range: PartialRangeFrom<Date>,
@@ -491,7 +491,7 @@ extension DatePicker where Label == Text {
   ///   - selection: The date value being displayed and selected.
   ///   - range: The open range before some selectable end date.
   ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
-  public init<S: StringProtocol>(
+  @_disfavoredOverload public init<S: StringProtocol>(
     _ title: S,
     selection: Binding<Date>,
     in range: PartialRangeThrough<Date>,
