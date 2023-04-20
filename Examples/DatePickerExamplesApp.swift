@@ -1,6 +1,6 @@
 import SwiftUI
 import WatchKit
-@testable import WatchDatePicker
+import WatchDatePicker
 
 // TODO: do something about the `NavigationView`-within-`TabView` situation
 
@@ -334,6 +334,17 @@ struct NavigationExamples: View {
             DatePicker("Time", selection: $value, displayedComponents: [.hourAndMinute])
           }
         }
+      }
+    }
+  }
+}
+
+extension View {
+  func watchStatusBar(hidden: Bool) -> some View {
+    toolbar {
+      ToolbarItem(placement: .confirmationAction) {
+        Button("", action: {})
+          .accessibilityHidden(true)
       }
     }
   }
