@@ -395,7 +395,7 @@ struct TimeInputView_Previews: PreviewProvider {
         Button(action: {}) {
           Image(systemName: "xmark")
         }
-        .accessibilityLabel("Cancel")
+        .accessibilityLabel(Text("Cancel", bundle: .module))
         .accessibilityIdentifier("CancelButton")
         .buttonStyle(.circular(.gray))
 
@@ -404,7 +404,7 @@ struct TimeInputView_Previews: PreviewProvider {
         Button(action: {}) {
           Image(systemName: "checkmark")
         }
-        .accessibilityLabel("Done")
+        .accessibilityLabel(Text("Done", bundle: .module))
         .accessibilityIdentifier("DoneButton")
         .accessibilityRemoveTraits(.isSelected)
         .buttonStyle(.circular(.green))

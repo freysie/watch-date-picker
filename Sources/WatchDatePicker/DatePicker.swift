@@ -94,7 +94,7 @@ public struct DatePicker<Label: View>: View {
       Button(action: { isPresented = false }) {
         Image(systemName: "xmark")
       }
-      .accessibilityLabel("Cancel")
+      .accessibilityLabel(Text("Cancel", bundle: .module))
       .accessibilityIdentifier("CancelButton")
       .buttonStyle(.circular(.gray))
       
@@ -103,7 +103,7 @@ public struct DatePicker<Label: View>: View {
       Button(action: submit) {
         Image(systemName: "checkmark")
       }
-      .accessibilityLabel("Done")
+      .accessibilityLabel(Text("Done", bundle: .module))
       .accessibilityIdentifier("DoneButton")
       .accessibilityRemoveTraits(.isSelected)
       .buttonStyle(.circular(.green))
