@@ -58,7 +58,7 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
   @ViewBuilder private var formattedButtonTitle: some View {
-    if let selection {
+    if let selection = selection {
       switch displayedComponents {
       case [.date, .hourAndMinute]:
         Text(selection, format: Date.FormatStyle(date: .numeric, time: .shortened).hour(.twoDigits(amPM: .abbreviated)))

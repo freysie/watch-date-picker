@@ -345,6 +345,7 @@ struct DateInputView_Previews: PreviewProvider {
         .tint(.pink)
         .previewDisplayName("Pink")
 
+#if swift(>=5.7)
       Group {
         if #available(watchOS 9.1, *) {
           Example()
@@ -367,6 +368,7 @@ struct DateInputView_Previews: PreviewProvider {
             .previewDisplayName("Rounded")
         }
       }
+#endif
     }
     .tint(.orange)
   }

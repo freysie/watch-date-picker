@@ -325,14 +325,18 @@ public struct TimeInputView: View {
           isHapticFeedbackEnabled: true
         )
 
+#if swift(>=5.7)
       if #available(watchOS 9.1, *) {
         Text(locale.timeSeparator)
           .fontDesign(.default)
           .accessibilityHidden(true)
       } else {
+#endif
         Text(locale.timeSeparator)
           .accessibilityHidden(true)
+#if swift(>=5.7)
       }
+#endif
 
       Button(action: { focusedComponent = .minute }) { formattedMinute }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
@@ -456,6 +460,7 @@ struct TimeInputView_Previews: PreviewProvider {
         .tint(.pink)
         .previewDisplayName("Pink")
 
+#if swift(>=5.7)
       Group {
         if #available(watchOS 9.1, *) {
           Example()
@@ -478,6 +483,7 @@ struct TimeInputView_Previews: PreviewProvider {
             .previewDisplayName("Rounded")
         }
       }
+#endif
     }
     .tint(.orange)
   }
