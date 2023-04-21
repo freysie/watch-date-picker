@@ -218,13 +218,21 @@ public struct DateInputView: View {
   }
   
   private func tintedPickerBorder(isFocused: Bool = true) -> some View {
-    EmptyView()
-    // RoundedRectangle(cornerRadius: 11, style: .continuous)
-    //   .strokeBorder(!isFocused ? .white : .indigo, lineWidth: !isFocused ? 1.5 : 2)
-    //   .padding(.top, 16.5)
-    //   // .padding(.bottom, -0.5)
-    //   .animation(.linear, value: isFocused)
-    //   // .transition(.opacity)
+    return EmptyView()
+
+    ZStack {
+      RoundedRectangle(cornerRadius: .pickerCornerRadius * 2, style: .continuous)
+        .strokeBorder(.black, lineWidth: 5)
+        .padding(.top, 14.5)
+        .padding(.horizontal, -0.5)
+        .padding(-3)
+
+      RoundedRectangle(cornerRadius: .pickerCornerRadius, style: .continuous)
+        .strokeBorder(!isFocused ? Color(white: 0.2) : .mint, lineWidth: !isFocused ? 1 : 1.5)
+        .padding(.top, 14.5)
+        .padding(.horizontal, -0.5)
+        .animation(.linear, value: isFocused)
+    }
   }
 }
 

@@ -74,10 +74,10 @@ extension CGFloat {
     }
   }
   
-  static var pickerCornerRadiusSize: Self {
+  static var pickerCornerRadius: Self {
     switch WatchDeviceSize.current {
     case ._41mm, ._45mm, ._49mm: return 15
-    default: return 11
+    default: return 8.5
     }
   }
 
