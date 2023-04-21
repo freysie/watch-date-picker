@@ -42,8 +42,6 @@ public struct DatePicker<Label: View>: View {
   private var selectionIsOptional = false
   private var minimumDate: Date?
   private var maximumDate: Date?
-  private var dateStyle: DateFormatter.Style = .medium
-  private var timeStyle: DateFormatter.Style = .short
 
   @State private var isPresented = false
   @State private var secondViewIsPresented = false
