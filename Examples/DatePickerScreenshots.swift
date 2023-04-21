@@ -69,44 +69,48 @@ class DatePickerScreenshots: XCTestCase {
     app.saveScreenshot(as: "TimeInputView@\(size)~\(locale)")
     app.buttons.matching(identifier: "DoneButton").element.tap()
 
-    swipeForward(app)
-    app.saveScreenshot(as: "DatePicker-1@\(size)~\(locale)")
+    for mode in ["", "_optional"] {
+      swipeForward(app)
+      app.saveScreenshot(as: "DatePicker\(mode)-1@\(size)~\(locale)")
 
-    app.buttons.element(boundBy: 0).tap()
-    Thread.sleep(forTimeInterval: delay) // wait for picker focus
-    app.saveScreenshot(as: "DatePicker-2@\(size)~\(locale)")
+      app.buttons.element(boundBy: 0).tap()
+      Thread.sleep(forTimeInterval: delay) // wait for picker focus
+      app.saveScreenshot(as: "DatePicker\(mode)-2@\(size)~\(locale)")
 
-    app.buttons.matching(identifier: "DoneButton").element.tap()
-    _ = app.buttons.matching(identifier: "TimeInputView").element.waitForExistence(timeout: 1)
-    app.saveScreenshot(as: "DatePicker-3@\(size)~\(locale)")
-    app.buttons.element(boundBy: 1).tap()
+      app.buttons.matching(identifier: "DoneButton").element.tap()
+      _ = app.buttons.matching(identifier: "TimeInputView").element.waitForExistence(timeout: 1)
+      app.saveScreenshot(as: "DatePicker\(mode)-3@\(size)~\(locale)")
+      app.buttons.element(boundBy: 1).tap()
 
-    swipeForward(app)
-    app.saveScreenshot(as: "DatePicker_date-1@\(size)~\(locale)")
+      swipeForward(app)
+      app.saveScreenshot(as: "DatePicker_date\(mode)-1@\(size)~\(locale)")
 
-    app.buttons.element(boundBy: 0).tap()
-    Thread.sleep(forTimeInterval: delay) // wait for picker focus
-    app.saveScreenshot(as: "DatePicker_date-2@\(size)~\(locale)")
+      app.buttons.element(boundBy: 0).tap()
+      Thread.sleep(forTimeInterval: delay) // wait for picker focus
+      app.saveScreenshot(as: "DatePicker_date\(mode)-2@\(size)~\(locale)")
 
-    app.otherElements["DayPicker"].tap()
-    Thread.sleep(forTimeInterval: delay) // wait for picker focus
-    app.saveScreenshot(as: "DatePicker_date-2-D@\(size)~\(locale)")
+      if mode != "_optional" {
+        app.otherElements["DayPicker"].tap()
+        Thread.sleep(forTimeInterval: delay) // wait for picker focus
+        app.saveScreenshot(as: "DatePicker_date\(mode)-2-D@\(size)~\(locale)")
 
-    app.otherElements["MonthPicker"].tap()
-    Thread.sleep(forTimeInterval: delay) // wait for picker focus
-    app.saveScreenshot(as: "DatePicker_date-2-M@\(size)~\(locale)")
+        app.otherElements["MonthPicker"].tap()
+        Thread.sleep(forTimeInterval: delay) // wait for picker focus
+        app.saveScreenshot(as: "DatePicker_date\(mode)-2-M@\(size)~\(locale)")
 
-    app.otherElements["YearPicker"].tap()
-    Thread.sleep(forTimeInterval: delay) // wait for picker focus
-    app.saveScreenshot(as: "DatePicker_date-2-Y@\(size)~\(locale)")
-    app.buttons.matching(identifier: "DoneButton").element.tap()
+        app.otherElements["YearPicker"].tap()
+        Thread.sleep(forTimeInterval: delay) // wait for picker focus
+        app.saveScreenshot(as: "DatePicker_date\(mode)-2-Y@\(size)~\(locale)")
+      }
 
-    swipeForward(app)
-    app.saveScreenshot(as: "DatePicker_hourAndMinute-1@\(size)~\(locale)")
+      app.buttons.matching(identifier: "DoneButton").element.tap()
+      swipeForward(app)
+      app.saveScreenshot(as: "DatePicker_hourAndMinute-1@\(size)~\(locale)")
 
-    app.buttons.element(boundBy: 0).tap()
-    app.saveScreenshot(as: "DatePicker_hourAndMinute-2@\(size)~\(locale)")
-    app.buttons.matching(identifier: "DoneButton").element.tap()
+      app.buttons.element(boundBy: 0).tap()
+      app.saveScreenshot(as: "DatePicker_hourAndMinute-2@\(size)~\(locale)")
+      app.buttons.matching(identifier: "DoneButton").element.tap()
+    }
 
     // guard locale == "en" else { return }
 
