@@ -168,6 +168,15 @@ public struct DatePicker<Label: View>: View {
       confirmationButton
     }
     .edgesIgnoringSafeArea([.bottom, .horizontal])
+    .toolbar {
+      ToolbarItem(placement: .confirmationAction) {
+        if selectionIsOptional {
+          Button(action: clear) { Text("Clear", bundle: .module) }
+            .accessibilityIdentifier("ClearButton")
+            .foregroundColor(.red)
+        }
+      }
+    }
   }
 
   private var timeInput: some View {
@@ -186,8 +195,18 @@ public struct DatePicker<Label: View>: View {
     .padding(.bottom, -40)
     .padding(.horizontal, -32)
     .offset(y: -45)
+    .overlay(alignment: .topTrailing) {
+      if selectionIsOptional, displayedComponents == .hourAndMinute {
+        Button(action: clear) { Image(systemName: "trash.fill") }
+          .accessibilityIdentifier("ClearButton")
+          .accessibilityLabel(Text("Clear", bundle: .module))
+          .buttonStyle(.smallCircular(.red))
+          .offset(y: -30)
+          .padding(8)
+      }
+    }
   }
-  
+
   @ViewBuilder private var mainBody: some View {
     switch displayedComponents {
     case [.date, .hourAndMinute]:
