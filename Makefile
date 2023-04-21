@@ -1,5 +1,5 @@
-qa:
-#	xcodebuild test-without-building \
+screenshots:
+#	xcodebuild test \
 #		-disable-concurrent-destination-testing \
 #		-project 'Examples/WatchDatePickerExamples.xcodeproj' \
 #		-scheme 'Examples WatchKit App' \
@@ -7,8 +7,8 @@ qa:
 #		-destination 'platform=watchOS Simulator,OS=8.0,name=Apple Watch Series 6 (44mm)' \
 #		-destination 'platform=watchOS Simulator,OS=8.0,name=Apple Watch Series 7 (41mm)' \
 #		-destination 'platform=watchOS Simulator,OS=8.0,name=Apple Watch Series 7 (45mm)'
-#
-#	xcodebuild test-without-building \
+
+#	xcodebuild test \
 #		-disable-concurrent-destination-testing \
 #		-project 'Examples/WatchDatePickerExamples.xcodeproj' \
 #		-scheme 'Examples WatchKit App' \
@@ -28,6 +28,9 @@ qa:
 		-destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Series 8 (45mm)' \
 		-destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Ultra (49mm)'
 
+crush:
+	for f in '../watch-date-picker-qa/9.4/*.png'; do pngcrush -ow $f; done
+
 install:
 	export WDP_QA_PATH='../watch-date-picker-qa/9.4'
 	export WDP_DOC_PATH='Sources/WatchDatePicker/Documentation.docc/Resources'
@@ -45,31 +48,3 @@ install:
 	cp "$WDP_QA_PATH/StandaloneTimeInputView@45mm~en.png" "$WDP_DOC_PATH/TimeInputView.png"
 	cp "$WDP_QA_PATH/StandaloneTimeInputView_24hr@45mm~en.png" "$WDP_DOC_PATH/TimeInputView_24hr.png"
 	cp "$WDP_QA_PATH/StandaloneTimeInputView_24hrHidden@45mm~en.png" "$WDP_DOC_PATH/TimeInputView_24hrHidden.png"
-
-#qa:
-#	xcodebuild test-without-building \
-#		-sdk watchsimulator9.4 \
-#		-enableCodeCoverage NO \
-#		-parallel-testing-enabled NO \
-#		-disable-concurrent-destination-testing \
-#		-maximum-concurrent-test-simulator-destinations 5 \
-#		-project 'Examples/WatchDatePickerExamples.xcodeproj' \
-#		-scheme 'Examples WatchKit App' \
-#		-destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Series 8 (41mm)' \
-#		-destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Series 8 (45mm)'
-
-#		-destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Series 6 (40mm)' \
-#	  -destination 'platform=watchOS Simulator,OS=9.4,name=Apple Watch Series 6 (44mm)' \
-
-#	  -maximum-concurrent-test-simulator-destinations 1
-
-#	set -o pipefail &&
-
-#		 \
-#		| xcbeautify
-
-#	xcodebuild test -scheme 'Examples WatchKit App' -destination 'platform=watchOS Simulator,OS=9.1,name=Apple Watch Series 6 (40mm)'
-#	xcodebuild test -scheme 'Examples WatchKit App' -destination 'platform=watchOS Simulator,OS=9.1,name=Apple Watch Series 6 (44mm)'
-#	xcodebuild test -scheme 'Examples WatchKit App' -destination 'platform=watchOS Simulator,OS=9.1,name=Apple Watch Series 8 (41mm)'
-#	xcodebuild test -scheme 'Examples WatchKit App' -destination 'platform=watchOS Simulator,OS=9.1,name=Apple Watch Series 8 (45mm)'
-#	xcodebuild test -scheme 'Examples WatchKit App' -destination 'platform=watchOS Simulator,OS=9.1,name=Apple Watch Ultra (49mm)'
