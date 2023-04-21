@@ -106,7 +106,7 @@ public struct DatePicker<Label: View>: View {
       .accessibilityLabel(Text("Done", bundle: .module))
       .accessibilityIdentifier("DoneButton")
       .accessibilityRemoveTraits(.isSelected)
-      .buttonStyle(.circular(.green))
+      .buttonStyle(.circular(confirmationTint ?? .green))
     }
     .padding(.horizontal, 12)
   }

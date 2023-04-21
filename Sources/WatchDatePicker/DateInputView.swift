@@ -235,6 +235,7 @@ struct DateInputView_Previews: PreviewProvider {
   // TODO: move to a new view type that can be used both here and in `DatePicker`
   struct Example: View {
     @State var date = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
+    @Environment(\.datePickerConfirmationTint) var confirmationTint
 
     var body: some View {
       VStack(spacing: 10) {
@@ -266,7 +267,7 @@ struct DateInputView_Previews: PreviewProvider {
         .accessibilityLabel(Text("Done", bundle: .module))
         .accessibilityIdentifier("DoneButton")
         .accessibilityRemoveTraits(.isSelected)
-        .buttonStyle(.circular(.green))
+        .buttonStyle(.circular(confirmationTint ?? .green))
       }
       .padding(.horizontal, 12)
     }
