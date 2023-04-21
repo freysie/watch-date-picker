@@ -1,4 +1,4 @@
-name: Build and Analyze
+name: build
 
 on:
   push:
@@ -15,10 +15,7 @@ jobs:
       matrix:
         os: ['macos-12']
         platform: ['watchOS', 'iOS']
-        swift:
-          - ~5.5
-          - ~5.6
-          - ~5.7
+        swift: [~5.5, ~5.6, ~5.7]
     steps:
     - uses: actions/checkout@v3
     - uses: mxcl/xcodebuild@v.1.12.0
