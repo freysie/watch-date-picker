@@ -18,13 +18,6 @@ public extension View {
     environment(\.datePickerInteractionStyle, style)
   }
 
-  // /// Sets whether date pickers use bottom buttons within this view.
-  // /// - Parameters:
-  // ///   - enabled: A Boolean value that determines whether date pickers use bottom buttons within this view.
-  // func datePickerUsesBottomButtons(_ enabled: Bool? = true) -> some View {
-  //   environment(\.datePickerUsesBottomButtons, enabled)
-  // }
-
   /// Sets the confirmation button title key for date-and-time date pickers within this view.
   /// - Parameters:
   ///   - key: A localized string key for overriding the confirmation button’s title.
@@ -51,11 +44,6 @@ public extension EnvironmentValues {
     get { self[DatePickerInteractionStyleKey.self] }
     set { self[DatePickerInteractionStyleKey.self] = newValue }
   }
-  
-  // var datePickerUsesBottomButtons: Bool? {
-  //   get { self[DatePickerUsesBottomButtonsKey.self] }
-  //   set { self[DatePickerUsesBottomButtonsKey.self] = newValue }
-  // }
 
    var datePickerConfirmationTitleKey: LocalizedStringKey? {
      get { self[DatePickerConfirmationTitleKeyKey.self] }
@@ -70,7 +58,6 @@ public extension EnvironmentValues {
 
 struct DatePickerFlipsLabelAndValueKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue = DatePickerInteractionStyle.sheet }
-// struct DatePickerUsesBottomButtonsKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
 struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 

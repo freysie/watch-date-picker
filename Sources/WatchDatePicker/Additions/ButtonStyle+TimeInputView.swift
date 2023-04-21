@@ -20,7 +20,10 @@ struct TimeComponentButtonStyle: ButtonStyle {
       .offset(y: 0.5)
       .overlay {
         RoundedRectangle(cornerRadius: .timeComponentButtonCornerRadius)
-          .strokeBorder(isFocused ? focusTint ?? .green : .timeComponentButtonBorder, lineWidth: 1.5)
+          .strokeBorder(
+            isFocused ? focusTint ?? .green : borderColor ?? .timeComponentButtonBorder,
+            lineWidth: 1.5
+          )
       }
   }
 }

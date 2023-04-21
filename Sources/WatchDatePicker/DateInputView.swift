@@ -28,6 +28,8 @@ public struct DateInputView: View {
 
   @Environment(\.dateInputViewShowsMonthBeforeDay) private var showsMonthBeforeDay
   @Environment(\.dateInputViewTextCase) private var textCase
+  @Environment(\.dateInputViewPickerBorderColor) private var pickerBorderColor
+  @Environment(\.dateInputViewFocusTint) private var focusTint
   @Environment(\.locale) private var locale
 
   private var calendar: Calendar { locale.calendar }
@@ -179,7 +181,7 @@ public struct DateInputView: View {
     }
     .accessibilityIdentifier("YearPicker")
     .focused($focusedField, equals: .year)
-    .overlay { tintedPickerBorder(isFocused: focusedField == .year) }
+    .overlay { pickerBorder(isFocused: focusedField == .year) }
     .frame(width: usesMonthSymbols ? .infinity : WKInterfaceDevice.current().screenBounds.width * 0.39)
   }
 
@@ -203,7 +205,7 @@ public struct DateInputView: View {
     }
     .accessibilityIdentifier("MonthPicker")
     .focused($focusedField, equals: .month)
-    .overlay { tintedPickerBorder(isFocused: focusedField == .month) }
+    .overlay { pickerBorder(isFocused: focusedField == .month) }
   }
 
   private var dayPicker: some View {
@@ -218,7 +220,7 @@ public struct DateInputView: View {
     }
     .accessibilityIdentifier("DayPicker")
     .focused($focusedField, equals: .day)
-    .overlay { tintedPickerBorder(isFocused: focusedField == .day) }
+    .overlay { pickerBorder(isFocused: focusedField == .day) }
     // FIXME: select lower day if month’s upper bound day range is less than selection’s day, but it’s not working, aaaaaaaaaaa
     .id([month, year].map(String.init).joined(separator: "."))
     //.onChange(of: month) { _ in
@@ -235,22 +237,27 @@ public struct DateInputView: View {
     }
   }
   
-  private func tintedPickerBorder(isFocused: Bool = true) -> some View {
-    EmptyView()
+  @ViewBuilder private func pickerBorder(isFocused: Bool = true) -> some View {
+    if focusTint != nil || pickerBorderColor != nil {
+      ZStack {
+        RoundedRectangle(cornerRadius: .pickerCornerRadius * 2, style: .continuous)
+          .strokeBorder(.black, lineWidth: 5)
+          .padding(.top, 14.5)
+          .padding(.horizontal, -0.5)
+          .padding(-3)
 
-//    ZStack {
-//      RoundedRectangle(cornerRadius: .pickerCornerRadius * 2, style: .continuous)
-//        .strokeBorder(.black, lineWidth: 5)
-//        .padding(.top, 14.5)
-//        .padding(.horizontal, -0.5)
-//        .padding(-3)
-//
-//      RoundedRectangle(cornerRadius: .pickerCornerRadius, style: .continuous)
-//        .strokeBorder(!isFocused ? Color(white: 0.2) : .mint, lineWidth: !isFocused ? 1 : 1.5)
-//        .padding(.top, 14.5)
-//        .padding(.horizontal, -0.5)
-//        .animation(.linear, value: isFocused)
-//    }
+        RoundedRectangle(cornerRadius: .pickerCornerRadius, style: .continuous)
+          .strokeBorder(
+            isFocused ? focusTint ?? .white : pickerBorderColor ?? .gray,
+            lineWidth: isFocused ? 1.5 : 1
+          )
+          .animation(.linear, value: isFocused)
+          .padding(.top, 14.5)
+          .padding(.horizontal, -0.5)
+      }
+    } else {
+      EmptyView()
+    }
   }
 }
 

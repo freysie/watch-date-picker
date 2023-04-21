@@ -33,14 +33,21 @@ public extension View {
   func timeInputViewAMPMHighlightTint(_ tint: Color?) -> some View {
     environment(\.timeInputViewAMPMHighlightTint, tint)
   }
-  
+
+  /// Sets the color for the component borders of time input views within this view.
+  /// - Parameters:
+  ///   - tint: The color for the component borders.
+  func timeInputViewComponentBorderColor(_ color: Color?) -> some View {
+    environment(\.timeInputViewComponentBorderColor, color)
+  }
+
   /// Sets the color for the focus outline of time input views within this view.
   /// - Parameters:
   ///   - tint: The color for the focus outline.
   func timeInputViewFocusTint(_ tint: Color?) -> some View {
     environment(\.timeInputViewFocusTint, tint)
   }
-  
+
   /// Sets the color for the selection indicator of time input views within this view.
   /// - Parameters:
   ///   - tint: The color for the selection indicator.
@@ -97,12 +104,17 @@ public extension EnvironmentValues {
     get { self[TimeInputViewAMPMHighlightTintKey.self] }
     set { self[TimeInputViewAMPMHighlightTintKey.self] = newValue }
   }
-  
+
+  var timeInputViewComponentBorderColor: Color? {
+    get { self[TimeInputViewComponentBorderColorKey.self] }
+    set { self[TimeInputViewComponentBorderColorKey.self] = newValue }
+  }
+
   var timeInputViewFocusTint: Color? {
     get { self[TimeInputViewFocusTintKey.self] }
     set { self[TimeInputViewFocusTintKey.self] = newValue }
   }
-  
+
   var timeInputViewSelectionTint: Color? {
     get { self[TimeInputViewSelectionTintKey.self] }
     set { self[TimeInputViewSelectionTintKey.self] = newValue }
@@ -134,6 +146,7 @@ struct TimeInputViewMonospacedDigitKey: EnvironmentKey { static let defaultValue
 struct TimeInputViewTwentyFourHourKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct TimeInputViewTwentyFourHourIndicatorKey: EnvironmentKey { static let defaultValue: Visibility = .automatic }
 struct TimeInputViewAMPMHighlightTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
+struct TimeInputViewComponentBorderColorKey: EnvironmentKey { static let defaultValue: Color? = nil }
 struct TimeInputViewFocusTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 struct TimeInputViewSelectionTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 
