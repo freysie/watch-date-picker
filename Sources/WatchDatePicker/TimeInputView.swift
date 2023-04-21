@@ -11,7 +11,7 @@ import Combine
 @available(watchOS 8, *)
 public struct TimeInputView: View {
   @Binding var underlyingSelection: Date?
-  var selection: Date { underlyingSelection ?? .now }
+  var selection: Date { underlyingSelection ?? .nextHour }
 
   private let initialSelection: Date
 

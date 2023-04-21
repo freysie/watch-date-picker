@@ -15,7 +15,7 @@ public struct DateInputView: View {
   enum Field: Hashable { case month, day, year }
 
   @Binding var underlyingSelection: Date?
-  var selection: Date { underlyingSelection ?? .now }
+  var selection: Date { underlyingSelection ?? .nextHour }
   var minimumDate: Date?
   var maximumDate: Date?
 

@@ -39,7 +39,7 @@ public struct DatePicker<Label: View>: View {
   let displayedComponents: Components
 
   @State private var newSelection: Date?
-  private var selectionIsOptional = false
+  private let selectionIsOptional: Bool
   private var minimumDate: Date?
   private var maximumDate: Date?
 
@@ -53,6 +53,10 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
   @Environment(\.datePickerConfirmationTint) private var confirmationTint
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
+
+  private var defaultSelection: Date {
+    displayedComponents == .date ? Calendar.current.startOfDay(for: .now) : .nextHour
+  }
 
   @ViewBuilder private var formattedButtonTitle: some View {
     if let selection = selection {
@@ -255,7 +259,7 @@ public struct DatePicker<Label: View>: View {
     }
     .onChange(of: isPresented) {
       if !$0 { secondViewIsPresented = false }
-      newSelection = selection
+      newSelection = selection ?? defaultSelection
     }
   }
 }
@@ -277,6 +281,7 @@ extension DatePicker {
   ) {
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     self.displayedComponents = displayedComponents
     self.label = label()
   }
@@ -298,6 +303,7 @@ extension DatePicker {
   ) {
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -321,6 +327,7 @@ extension DatePicker {
   ) {
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -343,6 +350,7 @@ extension DatePicker {
   ) {
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -365,6 +373,7 @@ extension DatePicker where Label == Text {
     label = Text(titleKey)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     self.displayedComponents = displayedComponents
   }
 
@@ -386,6 +395,7 @@ extension DatePicker where Label == Text {
     label = Text(titleKey)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -409,6 +419,7 @@ extension DatePicker where Label == Text {
     label = Text(titleKey)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
@@ -431,6 +442,7 @@ extension DatePicker where Label == Text {
     label = Text(titleKey)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
@@ -452,6 +464,7 @@ extension DatePicker where Label == Text {
     label = Text(title)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     self.displayedComponents = displayedComponents
   }
 
@@ -473,6 +486,7 @@ extension DatePicker where Label == Text {
     label = Text(title)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -496,6 +510,7 @@ extension DatePicker where Label == Text {
     label = Text(title)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
@@ -518,6 +533,7 @@ extension DatePicker where Label == Text {
     label = Text(title)
     _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = false
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
@@ -537,8 +553,8 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     self.displayedComponents = displayedComponents
     self.label = label()
   }
@@ -559,8 +575,8 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -583,8 +599,8 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -606,8 +622,8 @@ extension DatePicker {
     label: () -> Label
   ) {
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -629,9 +645,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
-    selectionIsOptional = true
-    //_newSelection = State(initialValue: )
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     self.displayedComponents = displayedComponents
   }
 
@@ -652,8 +667,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -676,8 +691,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
@@ -699,8 +714,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(titleKey)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
@@ -721,8 +736,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     self.displayedComponents = displayedComponents
   }
 
@@ -743,8 +758,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -767,8 +782,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
@@ -790,8 +805,8 @@ extension DatePicker where Label == Text {
   ) {
     label = Text(title)
     _selection = selection
-    selectionIsOptional = true
     //_newSelection = State(initialValue: selection.wrappedValue)
+    selectionIsOptional = true
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
