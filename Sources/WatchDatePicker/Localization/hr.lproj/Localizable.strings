@@ -1,0 +1,12 @@
+
+"Year" = "Godina";
+"Month" = "Mjesec";
+"Day" = "Dan";
+"Set" = "Podesi";
+"Clear" = "Očisti";
+"None" = "Bez";
+"Continue" = "Nastavi";
+"Back" = "Natrag";
+"Done" = "OK";
+"Cancel" = "Poništi";
+"%d o’clock %@" = "%1$d h %2$@";

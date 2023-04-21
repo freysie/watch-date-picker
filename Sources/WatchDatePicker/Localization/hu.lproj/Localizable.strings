@@ -1,0 +1,12 @@
+
+"Year" = "Év";
+"Month" = "Hónap";
+"Day" = "Nap";
+"Set" = "Beállítás";
+"Clear" = "Törlés";
+"None" = "Nincs";
+"Continue" = "Folytatás";
+"Back" = "Vissza";
+"Done" = "Kész";
+"Cancel" = "Mégsem";
+"%d o’clock %@" = "%1$d óra %2$@";

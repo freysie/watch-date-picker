@@ -1,0 +1,12 @@
+
+"Year" = "年";
+"Month" = "月";
+"Day" = "天";
+"Set" = "设定";
+"Clear" = "清除";
+"None" = "无";
+"Continue" = "继续";
+"Back" = "返回";
+"Done" = "好的";
+"Cancel" = "取消";
+"%d o’clock %@" = "%2$@%1$d点";

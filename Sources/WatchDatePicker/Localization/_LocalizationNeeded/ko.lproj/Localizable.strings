@@ -1,8 +1,0 @@
-
-"Year" = "년";
-"Month" = "개월";
-"Day" = "일";
-"Clear" = "지우기";
-"Continue" = "계속";
-"Done" = "완료";
-"%d o’clock %@" = "%2$@ %1$d시";

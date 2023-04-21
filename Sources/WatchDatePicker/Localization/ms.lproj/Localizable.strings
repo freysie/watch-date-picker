@@ -1,0 +1,12 @@
+
+"Year" = "Tahun";
+"Month" = "Bulan";
+"Day" = "Hari";
+"Set" = "Setkan";
+"Clear" = "Kosongkan";
+"None" = "Tiada";
+"Continue" = "Teruskan";
+"Back" = "Balik";
+"Done" = "Selesai";
+"Cancel" = "Batal";
+"%d o’clock %@" = "%1$d jam %2$@";

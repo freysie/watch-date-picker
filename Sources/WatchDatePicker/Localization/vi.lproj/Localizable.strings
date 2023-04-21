@@ -1,0 +1,12 @@
+
+"Year" = "Năm";
+"Month" = "Tháng";
+"Day" = "Ngày";
+"Set" = "Đặt";
+"Clear" = "Xóa";
+"None" = "Không có";
+"Continue" = "Tiếp tục";
+"Back" = "Quay lại";
+"Done" = "Xong";
+"Cancel" = "Hủy";
+"%d o’clock %@" = "%1$d giờ %2$@";

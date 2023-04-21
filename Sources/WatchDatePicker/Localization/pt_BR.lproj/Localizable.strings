@@ -1,0 +1,12 @@
+
+"Year" = "Ano";
+"Month" = "Mês";
+"Day" = "Dia";
+"Set" = "Definir";
+"Clear" = "Limpar";
+"None" = "Nenhuma";
+"Continue" = "Continuar";
+"Back" = "Voltar";
+"Done" = "OK";
+"Cancel" = "Cancelar";
+"%d o’clock %@" = "%1$d horas %2$@";

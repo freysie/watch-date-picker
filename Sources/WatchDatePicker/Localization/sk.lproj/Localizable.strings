@@ -1,0 +1,12 @@
+
+"Year" = "Rok";
+"Month" = "Mesiac";
+"Day" = "Deň";
+"Set" = "Nastaviť";
+"Clear" = "Odstrániť";
+"None" = "Žiadne";
+"Continue" = "Pokračovať";
+"Back" = "Späť";
+"Done" = "Hotovo";
+"Cancel" = "Zrušiť";
+"%d o’clock %@" = "%1$d %2$@";

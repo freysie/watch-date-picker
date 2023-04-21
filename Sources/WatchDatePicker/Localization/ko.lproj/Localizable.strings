@@ -1,0 +1,12 @@
+
+"Year" = "년";
+"Month" = "개월";
+"Day" = "일";
+"Set" = "설정";
+"Clear" = "지우기";
+"None" = "없음";
+"Continue" = "계속";
+"Back" = "뒤로";
+"Done" = "완료";
+"Cancel" = "취소";
+"%d o’clock %@" = "%2$@ %1$d시";

@@ -1,0 +1,12 @@
+
+"Year" = "Anno";
+"Month" = "Mese";
+"Day" = "Giorno";
+"Set" = "Imposta";
+"Clear" = "Elimina";
+"None" = "Nessuna";
+"Continue" = "Continua";
+"Back" = "Indietro";
+"Done" = "Fine";
+"Cancel" = "Annulla";
+"%d o’clock %@" = "%1$d in punto %2$@";

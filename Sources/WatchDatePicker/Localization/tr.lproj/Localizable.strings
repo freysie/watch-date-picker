@@ -1,0 +1,12 @@
+
+"Year" = "Yıl";
+"Month" = "Ay";
+"Day" = "Gün";
+"Set" = "Ayarla";
+"Clear" = "Temizle";
+"None" = "Yok";
+"Continue" = "Sürdür";
+"Back" = "Geri";
+"Done" = "Bitti";
+"Cancel" = "Vazgeç";
+"%d o’clock %@" = "Saat %2$@ %1$d";

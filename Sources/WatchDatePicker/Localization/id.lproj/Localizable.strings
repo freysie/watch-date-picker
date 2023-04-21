@@ -1,0 +1,12 @@
+
+"Year" = "Tahun";
+"Month" = "Bulan";
+"Day" = "Hari";
+"Set" = "Atur";
+"Clear" = "Bersihkan";
+"None" = "Tidak Ada";
+"Continue" = "Lanjutkan";
+"Back" = "Mundur";
+"Done" = "Selesai";
+"Cancel" = "Batalkan";
+"%d o’clock %@" = "pukul %1$d %2$@";

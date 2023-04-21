@@ -1,0 +1,12 @@
+
+"Year" = "år";
+"Month" = "måned";
+"Day" = "dag";
+"Set" = "Angi";
+"Clear" = "Fjern";
+"None" = "Ingen";
+"Continue" = "Fortsett";
+"Back" = "Tilbake";
+"Done" = "Ferdig";
+"Cancel" = "Avbryt";
+"%d o’clock %@" = "kl. %1$d %2$@";

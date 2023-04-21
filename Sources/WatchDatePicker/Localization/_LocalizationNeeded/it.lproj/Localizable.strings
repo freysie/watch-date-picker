@@ -1,8 +1,0 @@
-
-"Year" = "Anno";
-"Month" = "Mese";
-"Day" = "Giorno";
-"Clear" = "Elimina";
-"Continue" = "Continua";
-"Done" = "Fine";
-"%d o’clock %@" = "%1$d in punto %2$@";

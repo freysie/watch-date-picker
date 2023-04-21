@@ -1,0 +1,12 @@
+
+"Year" = "Any";
+"Month" = "Mes";
+"Day" = "Dia";
+"Set" = "Definir";
+"Clear" = "Esborrar";
+"None" = "Cap";
+"Continue" = "Continuar";
+"Back" = "Enrere";
+"Done" = "Fet";
+"Cancel" = "Cancel·lar";
+"%d o’clock %@" = "les %1$d %2$@ en punt";
