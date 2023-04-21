@@ -1,0 +1,22 @@
+name: Build and Analyze
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Analyze
+    runs-on: macos-12
+
+    steps:
+      - name: Check out main repository
+        uses: actions/checkout@v3
+      - name: Build and analyze
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          xcodebuild build analyze -project 'Examples/WatchDatePickerExamples.xcodeproj' -scheme 'WatchDatePicker' -sdk watchos
+
