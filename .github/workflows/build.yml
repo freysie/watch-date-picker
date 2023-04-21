@@ -11,20 +11,19 @@ jobs:
     name: ${{ matrix.platform }} — Xcode ${{ matrix.xcode }} (${{ matrix.macos }})
     runs-on: ${{ matrix.macos }}
     strategy:
+      fail-fast: false
       matrix:
         xcode: ['14.2', '14.0.1', '13.4.1', '13.1']
         macos: ['macos-12', 'macos-11']
         platform: ['macOS', 'iOS', 'tvOS', 'watchOS', 'mac-catalyst']
     steps:
-    - uses: maxim-lobanov/setup-xcode@v1.2.3
+    - uses: actions/checkout@v3
+    - uses: maxim-lobanov/setup-xcode@v1.5.1
       with:
         xcode-version: ${{ matrix.xcode }}
-    - uses: mxcl/xcodebuild@v1.9.2
+    - uses: mxcl/xcodebuild@v.1.12.0
       with:
-        workspace: 'Examples/WatchDatePickerExamples.xcodeproj'
+        working-directory: ./Examples
         platform: ${{ matrix.platform }}
         scheme: WatchDatePicker
         action: build analyze
-        code-coverage: true
-        verbosity: xcpretty
-        upload-logs: always
