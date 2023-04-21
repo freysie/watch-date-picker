@@ -6,6 +6,7 @@
 "Clear" = "Tyhjennä";
 "None" = "Ei mitään";
 "Continue" = "Jatka";
+"Back" = "Takaisin";
 "Done" = "Valmis";
 "Cancel" = "Kumoa";
 "%d o’clock %@" = "klo %1$d %2$@";

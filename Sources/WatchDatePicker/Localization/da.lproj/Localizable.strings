@@ -6,6 +6,7 @@
 "Clear" = "Ryd";
 "None" = "Ingen";
 "Continue" = "Fortsæt";
+"Back" = "Tilbage";
 "Done" = "OK";
 "Cancel" = "Annuller";
 "%d o’clock %@" = "kl. %1$d %2$@";

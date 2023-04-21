@@ -6,6 +6,7 @@
 "Clear" = "消去";
 "None" = "なし";
 "Continue" = "続ける";
+"Back" = "戻る";
 "Done" = "完了";
 "Cancel" = "キャンセル";
 "%d o’clock %@" = "%2$@%1$d時";

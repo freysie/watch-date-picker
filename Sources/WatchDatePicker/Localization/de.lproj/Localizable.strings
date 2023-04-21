@@ -6,6 +6,7 @@
 "Clear" = "Löschen";
 "None" = "Ohne";
 "Continue" = "Weiter";
+"Back" = "Zurück";
 "Done" = "Fertig";
 "Cancel" = "Abbrechen";
 "%d o’clock %@" = "%1$d Uhr %2$@";

@@ -6,6 +6,7 @@
 "Clear" = "Rensa";
 "None" = "Ingen";
 "Continue" = "Fortsätta";
+"Back" = "Tillbaka";
 "Done" = "Klar";
 "Cancel" = "Avbryt";
 "%d o’clock %@" = "Klockan %1$d %2$@";

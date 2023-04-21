@@ -69,19 +69,23 @@ public struct DatePicker<Label: View>: View {
     }
   }
 
-  private var formattedNavigationTitle: Text {
-    Text(newSelection, format: Date.FormatStyle(date: .numeric, time: .omitted, locale: locale))
-  }
-
   private var confirmationButton: some View {
-    Button(action: { secondViewIsPresented = true }) {
+    Button(action: {
+      if displayedComponents == [.date, .hourAndMinute] {
+        secondViewIsPresented = true
+      } else {
+        submit()
+      }
+    }) {
       if let confirmationTitleKey = confirmationTitleKey {
         Text(confirmationTitleKey).bold()
-      } else {
+      } else if displayedComponents == [.date, .hourAndMinute] {
         Text("Continue", bundle: .module).bold()
+      } else {
+        Text("Set", bundle: .module).bold()
       }
     }
-    .accessibilityIdentifier("ContinueButton")
+    .accessibilityIdentifier("DoneButton")
     .buttonStyle(.borderedProminent)
     .foregroundStyle(.background)
     .tint(confirmationTint ?? .green)
@@ -91,12 +95,21 @@ public struct DatePicker<Label: View>: View {
   
   private var circularButtons: some View {
     HStack {
-      Button(action: { isPresented = false }) {
-        Image(systemName: "xmark")
+      if displayedComponents == [.date, .hourAndMinute] {
+        Button(action: { secondViewIsPresented = false }) {
+          Image(systemName: "chevron.backward")
+        }
+        .accessibilityLabel(Text("Back", bundle: .module))
+        .accessibilityIdentifier("BackButton")
+        .buttonStyle(.circular())
+      } else {
+        Button(action: { isPresented = false }) {
+          Image(systemName: "xmark")
+        }
+        .accessibilityLabel(Text("Cancel", bundle: .module))
+        .accessibilityIdentifier("CancelButton")
+        .buttonStyle(.circular())
       }
-      .accessibilityLabel(Text("Cancel", bundle: .module))
-      .accessibilityIdentifier("CancelButton")
-      .buttonStyle(.circular(.gray))
       
       Spacer()
       
@@ -139,70 +152,56 @@ public struct DatePicker<Label: View>: View {
       }
     }
   }
+
+  private var dateInput: some View {
+    VStack(spacing: 10) {
+      DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+        .padding(.top, 20)
+
+      confirmationButton
+    }
+    .edgesIgnoringSafeArea([.bottom, .horizontal])
+  }
+
+  private var timeInput: some View {
+    ZStack(alignment: .bottom) {
+      TimeInputView(selection: $newSelection)
+        .offset(y: 10)
+
+      circularButtons
+        .padding(.bottom, .hourAndMinuteCircularButtonsBottomPadding)
+        .padding(.horizontal, .hourAndMinuteCircularButtonsHorizontalPadding)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .navigationBarHidden(true)
+    .watchStatusBar(hidden: true)
+    .edgesIgnoringSafeArea(.all)
+    .padding(.bottom, -40)
+    .padding(.horizontal, -32)
+    .offset(y: -45)
+  }
   
   @ViewBuilder private var mainBody: some View {
     switch displayedComponents {
     case [.date, .hourAndMinute]:
       NavigationView {
-        VStack(spacing: 10) {
-          DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
-            .padding(.top, 20)
-
-          confirmationButton
-        }
-        .watchStatusBar(hidden: true)
-        .edgesIgnoringSafeArea([.bottom, .horizontal])
-        .overlay {
-          NavigationLink(isActive: $secondViewIsPresented) {
-            TimeInputView(selection: $newSelection)
-              .edgesIgnoringSafeArea(.bottom)
-              .padding(-10)
-              .navigationTitle(formattedNavigationTitle)
-              .navigationBarTitleDisplayMode(.inline)
-              .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                  Button(action: submit) {
-                    Text("Done", bundle: .module)
-                  }
-                  .accessibilityIdentifier("DoneButton")
-                }
-              }
-          } label: {
-            EmptyView()
+        dateInput
+          .overlay {
+            NavigationLink(isActive: $secondViewIsPresented) {
+              timeInput
+            } label: {
+              EmptyView()
+            }
+            .hidden()
           }
-          .hidden()
-        }
       }
 
     case .date:
-      VStack(spacing: 10) {
-        DateInputView(selection: $newSelection, minimumDate: minimumDate, maximumDate: maximumDate)
+      dateInput
 
-        circularButtons
-          .padding(.bottom, -21)
-      }
-      .frame(maxHeight: .infinity)
-      .edgesIgnoringSafeArea(.all)
-      .navigationBarHidden(true)
-      .watchStatusBar(hidden: true)
-      
     case .hourAndMinute:
-      ZStack(alignment: .bottom) {
-        TimeInputView(selection: $newSelection)
-          .offset(y: 10)
-        
-        circularButtons
-          .padding(.bottom, .hourAndMinuteCircularButtonsBottomPadding)
-          .padding(.horizontal, .hourAndMinuteCircularButtonsHorizontalPadding)
-      }
-      .frame(maxWidth: .infinity, maxHeight: .infinity)
-      .navigationBarHidden(true)
-      .watchStatusBar(hidden: true)
-      .edgesIgnoringSafeArea(.all)
-      .padding(.bottom, -40)
-      .padding(.horizontal, -32)
-      .offset(y: -45)
-      
+      timeInput
+
     default:
       fatalError()
     }
@@ -210,27 +209,27 @@ public struct DatePicker<Label: View>: View {
 
   /// The content and behavior of the view.
   public var body: some View {
-    switch interactionStyle {
-    case .sheet:
-      Button(action: { isPresented = true }) {
-        buttonBody
-      }
-      .sheet(isPresented: $isPresented) {
-        mainBody
-      }
-      .onChange(of: isPresented) { _ in
-        newSelection = selection
-      }
+    Group {
+      switch interactionStyle {
+      case .sheet:
+        Button(action: { isPresented = true }) {
+          buttonBody
+        }
+        .sheet(isPresented: $isPresented) {
+          mainBody
+        }
 
-    case .navigationLink:
-      NavigationLink(isActive: $isPresented) {
-        mainBody
-      } label: {
-        buttonBody
+      case .navigationLink:
+        NavigationLink(isActive: $isPresented) {
+          mainBody
+        } label: {
+          buttonBody
+        }
       }
-      .onChange(of: isPresented) { _ in
-        newSelection = selection
-      }
+    }
+    .onChange(of: isPresented) {
+      if !$0 { secondViewIsPresented = false }
+      newSelection = selection
     }
   }
 }

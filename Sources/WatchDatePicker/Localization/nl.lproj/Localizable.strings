@@ -6,6 +6,7 @@
 "Clear" = "Wis";
 "None" = "Geen";
 "Continue" = "Ga door";
+"Back" = "Vorige";
 "Done" = "Gereed";
 "Cancel" = "Annuleer";
 "%d o’clock %@" = "%1$d uur %2$@";
