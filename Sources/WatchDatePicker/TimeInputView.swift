@@ -298,6 +298,22 @@ public struct TimeInputView: View {
     }
   }
 
+  @ViewBuilder private var timeSeparator: some View {
+#if swift(>=5.7)
+    if #available(watchOS 9.1, *) {
+      Text(locale.timeSeparator)
+        .fontDesign(.default)
+        .accessibilityHidden(true)
+    } else {
+      Text(locale.timeSeparator)
+        .accessibilityHidden(true)
+    }
+#else
+    Text(locale.timeSeparator)
+      .accessibilityHidden(true)
+#endif
+  }
+
   private var pickerButtons: some View {
     HStack(alignment: locale.timeSeparator == "." ? .firstTextBaseline : .top) {
       Button(action: { focusedComponent = .hour }) { formattedHour }
@@ -325,18 +341,7 @@ public struct TimeInputView: View {
           isHapticFeedbackEnabled: true
         )
 
-#if swift(>=5.7)
-      if #available(watchOS 9.1, *) {
-        Text(locale.timeSeparator)
-          .fontDesign(.default)
-          .accessibilityHidden(true)
-      } else {
-#endif
-        Text(locale.timeSeparator)
-          .accessibilityHidden(true)
-#if swift(>=5.7)
-      }
-#endif
+      timeSeparator
 
       Button(action: { focusedComponent = .minute }) { formattedMinute }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
