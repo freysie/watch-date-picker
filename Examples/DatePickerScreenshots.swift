@@ -48,6 +48,8 @@ class DatePickerScreenshots: XCTestCase {
 //    try! screenshot().pngRepresentation.write(to: outputDirectory.appendingPathComponent(filename))
 //  }
 
+  let delay = 0.25
+
   func test() throws {
     let config = value(forKey: "testRunConfiguration") as! NSDictionary
     guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
@@ -71,37 +73,31 @@ class DatePickerScreenshots: XCTestCase {
     app.saveScreenshot(as: "DatePicker-1@\(size)~\(locale)")
 
     app.buttons.element(boundBy: 0).tap()
-    Thread.sleep(forTimeInterval: 0.5) // wait for picker focus
+    Thread.sleep(forTimeInterval: delay) // wait for picker focus
     app.saveScreenshot(as: "DatePicker-2@\(size)~\(locale)")
 
-    app.buttons.matching(identifier: "ContinueButton").element.tap()
-    _ = app.buttons.matching(identifier: "DoneButton").element.waitForExistence(timeout: 1)
+    app.buttons.matching(identifier: "DoneButton").element.tap()
+    _ = app.buttons.matching(identifier: "TimeInputView").element.waitForExistence(timeout: 1)
     app.saveScreenshot(as: "DatePicker-3@\(size)~\(locale)")
-    // app.buttons.matching(identifier: "BackButton").element.tap()
-    // app.buttons.element(boundBy: 0).tap()
     app.buttons.element(boundBy: 1).tap()
 
     swipeForward(app)
     app.saveScreenshot(as: "DatePicker_date-1@\(size)~\(locale)")
 
     app.buttons.element(boundBy: 0).tap()
-    Thread.sleep(forTimeInterval: 0.5) // wait for picker focus
+    Thread.sleep(forTimeInterval: delay) // wait for picker focus
     app.saveScreenshot(as: "DatePicker_date-2@\(size)~\(locale)")
 
-    // for e in app.otherElements.allElementsBoundByIndex {
-    //   print((e.identifier, e.hasFocus, e.isSelected))
-    // }
-
     app.otherElements["DayPicker"].tap()
-    Thread.sleep(forTimeInterval: 0.5) // wait for picker focus
+    Thread.sleep(forTimeInterval: delay) // wait for picker focus
     app.saveScreenshot(as: "DatePicker_date-2-D@\(size)~\(locale)")
 
     app.otherElements["MonthPicker"].tap()
-    Thread.sleep(forTimeInterval: 0.5) // wait for picker focus
+    Thread.sleep(forTimeInterval: delay) // wait for picker focus
     app.saveScreenshot(as: "DatePicker_date-2-M@\(size)~\(locale)")
 
     app.otherElements["YearPicker"].tap()
-    Thread.sleep(forTimeInterval: 0.5) // wait for picker focus
+    Thread.sleep(forTimeInterval: delay) // wait for picker focus
     app.saveScreenshot(as: "DatePicker_date-2-Y@\(size)~\(locale)")
     app.buttons.matching(identifier: "DoneButton").element.tap()
 
@@ -112,20 +108,22 @@ class DatePickerScreenshots: XCTestCase {
     app.saveScreenshot(as: "DatePicker_hourAndMinute-2@\(size)~\(locale)")
     app.buttons.matching(identifier: "DoneButton").element.tap()
 
+    // guard locale == "en" else { return }
+
     swipeForward(app)
-    Thread.sleep(forTimeInterval: 0.5)
+    Thread.sleep(forTimeInterval: delay)
     app.buttons["DateInputView"].saveScreenshot(as: "StandaloneDateInputView@\(size)~\(locale)")
 
     swipeForward(app)
-    Thread.sleep(forTimeInterval: 0.5)
+    Thread.sleep(forTimeInterval: delay)
     app.buttons["TimeInputView"].saveScreenshot(as: "StandaloneTimeInputView@\(size)~\(locale)")
 
     swipeForward(app)
-    Thread.sleep(forTimeInterval: 0.5)
+    Thread.sleep(forTimeInterval: delay)
     app.buttons["TimeInputView"].saveScreenshot(as: "StandaloneTimeInputView_24hr@\(size)~\(locale)")
 
     swipeForward(app)
-    Thread.sleep(forTimeInterval: 0.5)
+    Thread.sleep(forTimeInterval: delay)
     app.buttons["TimeInputView"].saveScreenshot(as: "StandaloneTimeInputView_24hrHidden@\(size)~\(locale)")
   }
 }

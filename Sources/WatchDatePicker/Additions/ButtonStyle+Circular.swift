@@ -4,7 +4,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 extension ButtonStyle where Self == CircularButtonStyle {
-  static func circular(_ color: Color) -> Self { .init(color: color) }
+  static func circular(_ color: Color = .gray) -> Self { .init(color: color) }
 }
 
 @available(macOS, unavailable)

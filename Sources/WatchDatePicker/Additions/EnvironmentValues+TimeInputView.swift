@@ -138,7 +138,7 @@ struct TimeInputViewMonospacedDigitKey: EnvironmentKey { static let defaultValue
 struct TimeInputViewTwentyFourHourKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct TimeInputViewTwentyFourHourIndicatorKey: EnvironmentKey { static let defaultValue: Visibility = .automatic }
 struct TimeInputViewAMPMHighlightTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
-struct TimeInputViewFocusTintKey: EnvironmentKey { static let defaultValue: Color? = .green }
+struct TimeInputViewFocusTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 struct TimeInputViewSelectionTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 
 //@available(watchOS 9, *)

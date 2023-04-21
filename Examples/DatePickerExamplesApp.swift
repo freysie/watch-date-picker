@@ -47,7 +47,9 @@ struct DatePickerExamples_Previews: PreviewProvider {
 }
 
 //let screenshotDate = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: .now)!
-let screenshotDate = Calendar.current.date(from: DateComponents(year: 2021, month: 11, day: 30, hour: 10, minute: 09))!
+
+let year = Calendar.current.component(.year, from: .now)
+let screenshotDate = Calendar.current.date(from: DateComponents(year: year, month: 11, day: 30, hour: 10, minute: 09))!
 
 let monthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: .now)!
 let monthsFromNow = Calendar.current.date(byAdding: .month, value: 3, to: .now)!
