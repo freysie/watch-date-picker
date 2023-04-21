@@ -57,6 +57,7 @@ let monthsFromNow = Calendar.current.date(byAdding: .month, value: 3, to: .now)!
 struct VariousExample: View {
   @State var systemTimeInputSheetIsPresented = false
   @State var value = screenshotDate
+  @State var optionalValue: Date?
 
   var body: some View {
     NavigationView {
@@ -66,6 +67,12 @@ struct VariousExample: View {
         
         DatePicker("Time (Pink)", selection: $value, displayedComponents: [.hourAndMinute])
           .tint(.pink)
+
+        Group {
+          DatePicker("Optional Date & Time", selection: $optionalValue)
+          DatePicker("Optional Date", selection: $optionalValue, displayedComponents: [.date])
+          DatePicker("Optional Time", selection: $optionalValue, displayedComponents: [.hourAndMinute])
+        }
 
         DatePicker("Time (Finnish)", selection: $value, displayedComponents: [.hourAndMinute])
           .tint(.pink)

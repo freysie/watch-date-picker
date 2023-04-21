@@ -36,10 +36,11 @@ public struct DatePicker<Label: View>: View {
   public typealias Components = DatePickerComponents
 
   @ViewBuilder var label: Label
-  @Binding var selection: Date
+  @Binding var selection: Date?
   let displayedComponents: Components
 
-  @State private var newSelection: Date
+  @State private var newSelection: Date?
+  private var selectionIsOptional = false
   private var minimumDate: Date?
   private var maximumDate: Date?
   private var dateStyle: DateFormatter.Style = .medium
@@ -57,15 +58,19 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
 
   @ViewBuilder private var formattedButtonTitle: some View {
-    switch displayedComponents {
-    case [.date, .hourAndMinute]:
-      Text(selection, format: Date.FormatStyle(date: .numeric, time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
-    case .date:
-      Text(selection, format: Date.FormatStyle(date: .abbreviated).weekday(.abbreviated))
-    case .hourAndMinute:
-      Text(selection, format: Date.FormatStyle(time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
-    default:
-      fatalError()
+    if let selection {
+      switch displayedComponents {
+      case [.date, .hourAndMinute]:
+        Text(selection, format: Date.FormatStyle(date: .numeric, time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
+      case .date:
+        Text(selection, format: Date.FormatStyle(date: .abbreviated).weekday(.abbreviated))
+      case .hourAndMinute:
+        Text(selection, format: Date.FormatStyle(time: .shortened).hour(.twoDigits(amPM: .abbreviated)))
+      default:
+        fatalError()
+      }
+    } else {
+      Text("None", bundle: .module)
     }
   }
 
@@ -133,6 +138,11 @@ public struct DatePicker<Label: View>: View {
         secondViewIsPresented = false
       }
     }
+  }
+
+  private func clear() {
+    newSelection = nil
+    submit()
   }
 
   private var buttonBody: some View {
@@ -234,6 +244,8 @@ public struct DatePicker<Label: View>: View {
   }
 }
 
+// MARK: - Initializers
+
 @available(watchOS 8, *)
 @available(macOS, unavailable)
 @available(iOS, unavailable)
@@ -250,7 +262,7 @@ extension DatePicker {
     displayedComponents: Components = [.date, .hourAndMinute],
     label: () -> Label
   ) {
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
     self.label = label()
@@ -271,7 +283,7 @@ extension DatePicker {
     displayedComponents: Components = [.date, .hourAndMinute],
     label: () -> Label
   ) {
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
@@ -294,7 +306,7 @@ extension DatePicker {
     displayedComponents: Components = [.date, .hourAndMinute],
     label: () -> Label
   ) {
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
@@ -316,7 +328,7 @@ extension DatePicker {
     displayedComponents: Components = [.date, .hourAndMinute],
     label: () -> Label
   ) {
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -341,11 +353,11 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(titleKey)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` in a closed range.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -362,13 +374,13 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(titleKey)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` on or after some start date.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -385,12 +397,12 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(titleKey)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` on or before some end date.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -407,7 +419,7 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(titleKey)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
@@ -431,11 +443,11 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(title)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` in a closed range.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -452,13 +464,13 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(title)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` on or after some start date.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -475,12 +487,12 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(title)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     minimumDate = range.lowerBound
     self.displayedComponents = displayedComponents
   }
-  
+
   /// Creates an instance that selects a `Date` on or before some end date.
   ///
   /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
@@ -497,12 +509,297 @@ extension DatePicker where Label == Text {
     displayedComponents: Components = [.date, .hourAndMinute]
   ) {
     label = Text(title)
-    _selection = selection
+    _selection = Binding(selection)
     _newSelection = State(initialValue: selection.wrappedValue)
     maximumDate = range.upperBound
     self.displayedComponents = displayedComponents
   }
 }
+
+@available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension DatePicker {
+  /// Creates an instance that selects an optional `Date` with an unbounded range.
+  ///
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  ///   - label: A view that describes the use of the date.
+  public init(
+    selection: Binding<Date?>,
+    displayedComponents: Components = [.date, .hourAndMinute],
+    label: () -> Label
+  ) {
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    self.displayedComponents = displayedComponents
+    self.label = label()
+  }
+
+  /// Creates an instance that selects an optional `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The inclusive range of selectable dates.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  ///   - label: A view that describes the use of the date.
+  public init(
+    selection: Binding<Date?>,
+    in range: ClosedRange<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute],
+    label: () -> Label
+  ) {
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+    self.label = label()
+  }
+
+  /// Creates an instance that selects an optional `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range from some selectable start date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  ///   - label: A view that describes the use of the date.
+  public init(
+    selection: Binding<Date?>,
+    in range: PartialRangeFrom<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute],
+    label: () -> Label
+  ) {
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    self.displayedComponents = displayedComponents
+    self.label = label()
+  }
+
+  /// Creates an instance that selects an optional `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range before some selectable end date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  ///   - label: A view that describes the use of the date.
+  public init(
+    selection: Binding<Date?>,
+    in range: PartialRangeThrough<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute],
+    label: () -> Label
+  ) {
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+    self.label = label()
+  }
+}
+
+@available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension DatePicker where Label == Text {
+  /// Creates an instance that selects an optional `Date` with an unbounded range.
+  ///
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date?>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(titleKey)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: )
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The inclusive range of selectable dates.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date?>,
+    in range: ClosedRange<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(titleKey)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range from some selectable start date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date?>,
+    in range: PartialRangeFrom<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(titleKey)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The key for the localized title of `self`, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range before some selectable end date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  public init(
+    _ titleKey: LocalizedStringKey,
+    selection: Binding<Date?>,
+    in range: PartialRangeThrough<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(titleKey)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+  }
+}
+
+@available(watchOS 8, *)
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension DatePicker where Label == Text {
+  /// Creates an instance that selects an optional `Date` with an unbounded range.
+  ///
+  /// - Parameters:
+  ///   - label: The title of self, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  @_disfavoredOverload public init<S: StringProtocol>(
+    _ title: S,
+    selection: Binding<Date?>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(title)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` in a closed range.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The title of self, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The inclusive range of selectable dates.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  @_disfavoredOverload public init<S: StringProtocol>(
+    _ title: S,
+    selection: Binding<Date?>,
+    in range: ClosedRange<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(title)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` on or after some start date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The title of self, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range from some selectable start date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  @_disfavoredOverload public init<S: StringProtocol>(
+    _ title: S,
+    selection: Binding<Date?>,
+    in range: PartialRangeFrom<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(title)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    minimumDate = range.lowerBound
+    self.displayedComponents = displayedComponents
+  }
+
+  /// Creates an instance that selects an optional `Date` on or before some end date.
+  ///
+  /// Only selection of day, month, and year, not hour and minute, will adhere to the range.
+  ///
+  /// - Parameters:
+  ///   - label: The title of self, describing its purpose.
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - range: The open range before some selectable end date.
+  ///   - displayedComponents: The date components that user is able to view and edit. Defaults to `[.date, .hourAndMinute]`.
+  @_disfavoredOverload public init<S: StringProtocol>(
+    _ title: S,
+    selection: Binding<Date?>,
+    in range: PartialRangeThrough<Date>,
+    displayedComponents: Components = [.date, .hourAndMinute]
+  ) {
+    label = Text(title)
+    _selection = selection
+    selectionIsOptional = true
+    //_newSelection = State(initialValue: selection.wrappedValue)
+    maximumDate = range.upperBound
+    self.displayedComponents = displayedComponents
+  }
+}
+
+// MARK: -
 
 @available(macOS, unavailable)
 @available(iOS, unavailable)

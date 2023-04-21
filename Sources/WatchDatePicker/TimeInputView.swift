@@ -11,7 +11,8 @@ import Combine
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 public struct TimeInputView: View {
-  @Binding var selection: Date
+  @Binding var underlyingSelection: Date?
+  var selection: Date { underlyingSelection ?? .now }
 
   private let initialSelection: Date
 
@@ -92,8 +93,19 @@ public struct TimeInputView: View {
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   public init(selection: Binding<Date>) {
-    _selection = selection
+    _underlyingSelection = Binding(selection)
     initialSelection = selection.wrappedValue
+
+    _hour = State(initialValue: Calendar.current.component(.hour, from: self.selection))
+    _minute = State(initialValue: Calendar.current.component(.minute, from: self.selection))
+  }
+
+  /// Creates a time input view instance with the specified properties.
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  public init(selection: Binding<Date?>) {
+    _underlyingSelection = selection
+    initialSelection = selection.wrappedValue ?? .now
 
     _hour = State(initialValue: Calendar.current.component(.hour, from: self.selection))
     _minute = State(initialValue: Calendar.current.component(.minute, from: self.selection))
@@ -123,13 +135,8 @@ public struct TimeInputView: View {
     .onChange(of: minute) { _ in selectionPublisher.send() }
     .onChange(of: hourPeriod) { _ in selectionPublisher.send() }
     .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
-      selection = newSelection
+      underlyingSelection = newSelection
     }
-
-    // .onAppear {
-    //   let _PUICCrownIndicator = objc_getClass("PUICCrownIndicator") as! NSObject.Type
-    //   print(_PUICCrownIndicator.perform(Selector(("_sharedIndicator"))))
-    // }
   }
 
   private var clockFace: some View {

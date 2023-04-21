@@ -23,3 +23,27 @@ struct CircularButtonStyle: ButtonStyle {
       .opacity(configuration.isPressed ? 0.5 : 1)
   }
 }
+
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+extension ButtonStyle where Self == SmallCircularButtonStyle {
+  static func smallCircular(_ color: Color) -> Self { .init(color: color) }
+}
+
+@available(macOS, unavailable)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+struct SmallCircularButtonStyle: ButtonStyle {
+  var color: Color
+
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .font(.system(size: .circularButtonFontSize * 0.66, weight: .medium))
+      .frame(width: .circularButtonDiameter * 0.6, height: .circularButtonDiameter * 0.6)
+      .foregroundColor(.white)
+      .background { Circle().fill(color) }
+      .scaleEffect(configuration.isPressed ? 0.9 : 1)
+      .opacity(configuration.isPressed ? 0.5 : 1)
+  }
+}

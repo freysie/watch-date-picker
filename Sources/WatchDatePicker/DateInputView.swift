@@ -15,7 +15,8 @@ import Combine
 public struct DateInputView: View {
   enum Field: Hashable { case month, day, year }
 
-  @Binding var selection: Date
+  @Binding var underlyingSelection: Date?
+  var selection: Date { underlyingSelection ?? .now }
   var minimumDate: Date?
   var maximumDate: Date?
 
@@ -39,8 +40,6 @@ public struct DateInputView: View {
 //  }
 
   private var newSelection: Date {
-//    NSLog("creating date")
-//    return
     calendar.date(from: DateComponents(
       year: year,
       month: month,
@@ -112,7 +111,27 @@ public struct DateInputView: View {
     minimumDate: Date? = nil,
     maximumDate: Date? = nil
   ) {
-    _selection = selection
+    _underlyingSelection = Binding(selection)
+
+    self.minimumDate = minimumDate
+    self.maximumDate = maximumDate
+
+    _year = State(initialValue: Calendar.current.component(.year, from: self.selection))
+    _month = State(initialValue: Calendar.current.component(.month, from: self.selection))
+    _day = State(initialValue: Calendar.current.component(.day, from: self.selection))
+  }
+
+  /// Creates a date input view instance with the specified properties.
+  /// - Parameters:
+  ///   - selection: The optional date value being displayed and selected.
+  ///   - minimumDate: The oldest selectable date.
+  ///   - maximumDate: The most recent selectable date.
+  public init(
+    selection: Binding<Date?>,
+    minimumDate: Date? = nil,
+    maximumDate: Date? = nil
+  ) {
+    _underlyingSelection = selection
 
     self.minimumDate = minimumDate
     self.maximumDate = maximumDate
@@ -145,7 +164,7 @@ public struct DateInputView: View {
     .onChange(of: month) { _ in selectionPublisher.send() }
     .onChange(of: day) { _ in selectionPublisher.send() }
     .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
-      selection = newSelection
+      underlyingSelection = newSelection
     }
   }
 
