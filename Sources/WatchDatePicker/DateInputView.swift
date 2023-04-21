@@ -1,3 +1,5 @@
+#if os(watchOS)
+
 import SwiftUI
 import Combine
 
@@ -9,9 +11,6 @@ import Combine
 ///
 /// ![](DateInputView_fr.png)
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public struct DateInputView: View {
   enum Field: Hashable { case month, day, year }
 
@@ -255,9 +254,6 @@ public struct DateInputView: View {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct DateInputView_Previews: PreviewProvider {
   // TODO: move to a new view type that can be used both here and in `DatePicker`
   struct Example: View {
@@ -373,3 +369,5 @@ struct DateInputView_Previews: PreviewProvider {
     .tint(.orange)
   }
 }
+
+#endif

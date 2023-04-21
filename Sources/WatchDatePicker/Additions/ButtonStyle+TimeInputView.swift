@@ -1,20 +1,17 @@
+#if os(watchOS)
+
 import SwiftUI
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension ButtonStyle where Self == TimeComponentButtonStyle {
   static func timeComponent(isFocused: Bool = false) -> Self {
     .init(isFocused: isFocused)
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct TimeComponentButtonStyle: ButtonStyle {
   var isFocused: Bool
 
+  @Environment(\.timeInputViewComponentBorderColor) private var borderColor
   @Environment(\.timeInputViewFocusTint) private var focusTint
 
   func makeBody(configuration: Configuration) -> some View {
@@ -28,18 +25,12 @@ struct TimeComponentButtonStyle: ButtonStyle {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension ButtonStyle where Self == TimePeriodButtonStyle {
   static func timePeriod(isHighlighted: Bool = false) -> Self {
     .init(isHighlighted: isHighlighted)
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct TimePeriodButtonStyle: ButtonStyle {
   var isHighlighted: Bool
 
@@ -61,3 +52,5 @@ struct TimePeriodButtonStyle: ButtonStyle {
       }
   }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(watchOS)
+
 import SwiftUI
 
 /// Option set that determines the displayed components of a date picker.
@@ -29,9 +31,6 @@ public enum DatePickerInteractionStyle {
 ///
 /// ![](DatePicker.png)
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public struct DatePicker<Label: View>: View {
   public typealias Components = DatePickerComponents
 
@@ -247,9 +246,6 @@ public struct DatePicker<Label: View>: View {
 // MARK: - Initializers
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker {
   /// Creates an instance that selects a `Date` with an unbounded range.
   ///
@@ -337,9 +333,6 @@ extension DatePicker {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects a `Date` with an unbounded range.
   ///
@@ -427,9 +420,6 @@ extension DatePicker where Label == Text {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects a `Date` with an unbounded range.
   ///
@@ -517,9 +507,6 @@ extension DatePicker where Label == Text {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker {
   /// Creates an instance that selects an optional `Date` with an unbounded range.
   ///
@@ -611,9 +598,6 @@ extension DatePicker {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects an optional `Date` with an unbounded range.
   ///
@@ -706,9 +690,6 @@ extension DatePicker where Label == Text {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension DatePicker where Label == Text {
   /// Creates an instance that selects an optional `Date` with an unbounded range.
   ///
@@ -801,9 +782,6 @@ extension DatePicker where Label == Text {
 
 // MARK: -
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct DatePicker_Previews: PreviewProvider {
   struct Example: View {
     @State var value = Calendar.current.date(bySettingHour: 10, minute: 09, second: 0, of: Date())!
@@ -830,3 +808,5 @@ struct DatePicker_Previews: PreviewProvider {
     }
   }
 }
+
+#endif

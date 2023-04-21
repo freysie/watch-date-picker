@@ -1,3 +1,5 @@
+#if os(watchOS)
+
 import SwiftUI
 import Combine
 
@@ -7,9 +9,6 @@ import Combine
 ///
 /// ![](TimeInputView.png)
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public struct TimeInputView: View {
   @Binding var underlyingSelection: Date?
   var selection: Date { underlyingSelection ?? .now }
@@ -379,9 +378,6 @@ public struct TimeInputView: View {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct TimeInputView_Previews: PreviewProvider {
   // TODO: move to a new view type that can be used both here and in `DatePicker`
   struct Example: View {
@@ -493,3 +489,5 @@ struct TimeInputView_Previews: PreviewProvider {
     .tint(.orange)
   }
 }
+
+#endif

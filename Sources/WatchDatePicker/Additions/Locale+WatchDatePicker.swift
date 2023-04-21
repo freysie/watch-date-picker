@@ -1,3 +1,5 @@
+#if os(watchOS)
+
 import Foundation
 
 extension Locale {
@@ -26,3 +28,5 @@ extension Locale {
   /// A list of identifiers supported by Watch Date Picker.
   public static let watchDatePickerSupportedIdentifiers = Bundle.module.localizations
 }
+
+#endif

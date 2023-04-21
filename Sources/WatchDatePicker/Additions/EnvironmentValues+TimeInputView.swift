@@ -1,11 +1,10 @@
+#if os(watchOS)
+
 import SwiftUI
 
 // TODO: add full mark customization for watchOS 9 using AnyShape
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension View {
   /// Sets whether time input views use a monospaced digit font within this view.
   /// - Parameters:
@@ -78,9 +77,6 @@ public extension View {
 //}
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension EnvironmentValues {
   var timeInputViewMonospacedDigit: Bool? {
     get { self[TimeInputViewMonospacedDigitKey.self] }
@@ -147,3 +143,5 @@ struct TimeInputViewSelectionTintKey: EnvironmentKey { static let defaultValue: 
 //struct TimeInputViewHeavyMarkKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
 //@available(watchOS 9, *)
 //struct TimeInputViewSelectionIndicatorKey: EnvironmentKey { static let defaultValue: AnyShape? = nil }
+
+#endif

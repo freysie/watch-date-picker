@@ -1,9 +1,8 @@
+#if os(watchOS)
+
 import SwiftUI
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension View {
   /// Sets whether date pickers flip the order of their labels and values within this view.
   /// - Parameters:
@@ -42,9 +41,6 @@ public extension View {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension EnvironmentValues {
   var datePickerFlipsLabelAndValue: Bool? {
     get { self[DatePickerFlipsLabelAndValueKey.self] }
@@ -77,3 +73,5 @@ struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue =
 // struct DatePickerUsesBottomButtonsKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
 struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
+
+#endif

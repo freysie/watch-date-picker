@@ -1,15 +1,11 @@
+#if os(watchOS)
+
 import SwiftUI
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension ButtonStyle where Self == CircularButtonStyle {
   static func circular(_ color: Color = .gray) -> Self { .init(color: color) }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct CircularButtonStyle: ButtonStyle {
   var color: Color
 
@@ -24,16 +20,10 @@ struct CircularButtonStyle: ButtonStyle {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension ButtonStyle where Self == SmallCircularButtonStyle {
   static func smallCircular(_ color: Color) -> Self { .init(color: color) }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 struct SmallCircularButtonStyle: ButtonStyle {
   var color: Color
 
@@ -47,3 +37,5 @@ struct SmallCircularButtonStyle: ButtonStyle {
       .opacity(configuration.isPressed ? 0.5 : 1)
   }
 }
+
+#endif

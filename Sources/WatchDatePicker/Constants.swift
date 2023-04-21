@@ -1,9 +1,8 @@
+#if os(watchOS)
+
 import SwiftUI
 import WatchKit
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 enum WatchDeviceSize: Double {
   case _40mm = 162
   case _41mm = 176
@@ -16,9 +15,6 @@ enum WatchDeviceSize: Double {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension CGFloat {
   static var dateInputHeight: Self {
     switch WatchDeviceSize.current {
@@ -182,9 +178,6 @@ extension CGFloat {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension CGSize {
   static var heavyMarkSize: Self {
     switch WatchDeviceSize.current {
@@ -201,9 +194,8 @@ extension CGSize {
   }
 }
 
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 extension Color {
   static let timeComponentButtonBorder = Color(white: 0.298)
 }
+
+#endif

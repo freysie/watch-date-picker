@@ -1,9 +1,8 @@
+#if os(watchOS)
+
 import SwiftUI
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension View {
   /// Sets whether date input views show month before day within this view.
   /// - Parameters:
@@ -21,9 +20,6 @@ public extension View {
 }
 
 @available(watchOS 8, *)
-@available(macOS, unavailable)
-@available(iOS, unavailable)
-@available(tvOS, unavailable)
 public extension EnvironmentValues {
   var dateInputViewShowsMonthBeforeDay: Bool? {
     get { self[DateInputViewShowsMonthBeforeDayKey.self] }
@@ -38,3 +34,5 @@ public extension EnvironmentValues {
 
 struct DateInputViewShowsMonthBeforeDayKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct DateInputViewTextCaseKey: EnvironmentKey { static let defaultValue: Text.Case? = nil }
+
+#endif
