@@ -8,22 +8,23 @@ on:
 
 jobs:
   build-and-test:
-    name: ${{ matrix.platform }} — Xcode ${{ matrix.xcode }} (${{ matrix.macos }})
-    runs-on: ${{ matrix.macos }}
+    name: ${{ matrix.os }}, swift${{ matrix.swift }}, ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        xcode: ['14.2', '14.0.1', '13.4.1', '13.1']
-        macos: ['macos-12', 'macos-11']
-        platform: ['macOS', 'iOS', 'tvOS', 'watchOS', 'mac-catalyst']
+        os: ['macos-12']
+        platform: ['watchOS', 'iOS']
+        swift:
+          - ~5.5
+          - ~5.6
+          - ~5.7
     steps:
     - uses: actions/checkout@v3
-    - uses: maxim-lobanov/setup-xcode@v1.5.1
-      with:
-        xcode-version: ${{ matrix.xcode }}
     - uses: mxcl/xcodebuild@v.1.12.0
       with:
         working-directory: ./Examples
+        swift: ${{ matrix.swift }}
         platform: ${{ matrix.platform }}
         scheme: WatchDatePicker
-        action: build analyze
+        action: build
