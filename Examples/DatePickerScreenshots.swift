@@ -105,10 +105,10 @@ class DatePickerScreenshots: XCTestCase {
 
       app.buttons.matching(identifier: "DoneButton").element.tap()
       swipeForward(app)
-      app.saveScreenshot(as: "DatePicker_hourAndMinute-1@\(size)~\(locale)")
+      app.saveScreenshot(as: "DatePicker_hourAndMinute\(mode)-1@\(size)~\(locale)")
 
       app.buttons.element(boundBy: 0).tap()
-      app.saveScreenshot(as: "DatePicker_hourAndMinute-2@\(size)~\(locale)")
+      app.saveScreenshot(as: "DatePicker_hourAndMinute\(mode)-2@\(size)~\(locale)")
       app.buttons.matching(identifier: "DoneButton").element.tap()
     }
 
