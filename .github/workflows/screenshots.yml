@@ -1,67 +1,5 @@
-name: screenshots
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+# TODO: only take screenshots on new releases
 # FIXME: solve super strange 40mm/44mm issue
-
-jobs:
-  screenshot:
-    name: ${{ matrix.device }} (watchOS ${{ matric.os }})
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - 9.1
-        device:
-          # - 'Apple Watch Series 6 (40mm)'
-          # - 'Apple Watch Series 6 (44mm)'
-          - 'Apple Watch Series 8 (45mm)'
-          - 'Apple Watch Series 8 (41mm)'
-          - 'Apple Watch Ultra (49mm)'
-    steps:
-    - name: Install `pngcrush`
-      run: 'brew install pngcrush'
-    - name: Clone Watch Date Picker
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GH_TOKEN }}
-        path: watch-date-picker
-    - name: Clone Watch Date Picker QA
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GH_TOKEN }}
-        path: watch-date-picker-qa
-        repository: freyaalminde/watch-date-picker-qa
-#    - name: Create Simulators
-#      run: |
-#        xcrun simctl delete all
-#        xcrun simctl create 'Apple Watch Series 6 (40mm)' 'com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-6-40mm'
-#        xcrun simctl create 'Apple Watch Series 6 (44mm)' 'com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-6-44mm'
-#    - run: |
-#        xcrun simctl delete unavailable
-#        xcrun simctl list runtimes
-#        xcrun simctl list devices
-    - name: Capture Screenshots
-      uses: sersoft-gmbh/xcodebuild-action@v2
-      with:
-        project: watch-date-picker/Examples/WatchDatePickerExamples.xcodeproj
-        scheme: Examples WatchKit App
-        destination: 'platform=watchOS Simulator,OS=${{ matrix.os }},name=${{ matrix.device }}'
-    - name: Commit Changes
-      run: |
-        cd watch-date-picker-qa
-        for f in ${{ matrix.os }}/*.png; do pngcrush -ow $f; done
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add .
-        git commit -m "Update screenshots for ${{ matrix.device }}"
-        git pull --rebase
-        git push
 
 #name: screenshots
 #
@@ -73,22 +11,55 @@ jobs:
 #
 #jobs:
 #  screenshot:
+#    name: ${{ matrix.device }} (watchOS ${{ matrix.os }})
 #    runs-on: macos-latest
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os:
+#          - 9.1
+#        device:
+#          # - 'Apple Watch Series 6 (40mm)'
+#          # - 'Apple Watch Series 6 (44mm)'
+#          - 'Apple Watch Series 8 (45mm)'
+#          - 'Apple Watch Series 8 (41mm)'
+#          - 'Apple Watch Ultra (49mm)'
 #    steps:
-#    - uses: actions/checkout@v3
+#    - name: Install `pngcrush`
+#      run: 'brew install pngcrush'
+#    - name: Clone Watch Date Picker
+#      uses: actions/checkout@v3
 #      with:
+#        token: ${{ secrets.GH_TOKEN }}
 #        path: watch-date-picker
-#    - uses: actions/checkout@v3
+#    - name: Clone Watch Date Picker QA
+#      uses: actions/checkout@v3
 #      with:
+#        token: ${{ secrets.GH_TOKEN }}
 #        path: watch-date-picker-qa
 #        repository: freyaalminde/watch-date-picker-qa
-#    - run: |
-#        cd watch-date-picker
-#        make screenshots-9.1
-#        make screenshots-crush
-#        cd ../watch-date-picker-qa
+##    - name: Create Simulators
+##      run: |
+##        xcrun simctl delete all
+##        xcrun simctl create 'Apple Watch Series 6 (40mm)' 'com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-6-40mm'
+##        xcrun simctl create 'Apple Watch Series 6 (44mm)' 'com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-6-44mm'
+##    - run: |
+##        xcrun simctl delete unavailable
+##        xcrun simctl list runtimes
+##        xcrun simctl list devices
+#    - name: Capture Screenshots
+#      uses: sersoft-gmbh/xcodebuild-action@v2
+#      with:
+#        project: watch-date-picker/Examples/WatchDatePickerExamples.xcodeproj
+#        scheme: Examples WatchKit App
+#        destination: 'platform=watchOS Simulator,OS=${{ matrix.os }},name=${{ matrix.device }}'
+#    - name: Commit Changes
+#      run: |
+#        cd watch-date-picker-qa
+#        for f in ${{ matrix.os }}/*.png; do pngcrush -ow $f; done
 #        git config user.name github-actions
 #        git config user.email github-actions@github.com
 #        git add .
-#        git commit -m "Update screenshots"
+#        git commit -m "Update screenshots for ${{ matrix.device }}"
+#        git pull --rebase
 #        git push
