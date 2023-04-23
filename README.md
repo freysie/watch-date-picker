@@ -138,7 +138,7 @@ See the documentation for more options.
 
 ## Localization
 
-Watch Date Picker currently supports Arabic, Chinese (Simplified), Chinese (Traditional), Danish, Dutch, English, Finnish, French, German, Greek, Hebrew, Japanese, Romanian, Russian, Spanish, and Swedish.
+Watch Date Picker works in all languages supported by watchOS: Arabic, Bulgarian, Catalan, Chinese (Simplified), Chinese (Traditional), Croatian, Czech, Danish, Dutch, English, Finnish, French, German, Greek, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Kazakh, Korean, Malay, Norwegian, Polish, Portuguese (Brazil), Portuguese (Portugal), Romanian, Russian, Slovak, Spanish, Spanish (Latin America), Swedish, Thai, Turkish, Ukrainian, and Vietnamese.
 
 Translations are based on Apple’s glossaries, thus they should feel at home in each locale. 
 
