@@ -53,9 +53,10 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
   @Environment(\.datePickerConfirmationTint) private var confirmationTint
   @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
+  @Environment(\.datePickerDefaultSelection) private var _defaultSelection
 
   private var defaultSelection: Date {
-    displayedComponents == .date ? Calendar.current.startOfDay(for: .now) : .nextHour
+    _defaultSelection ?? (displayedComponents == .date ? Calendar.current.startOfDay(for: .now) : .nextHour)
   }
 
   @ViewBuilder private var formattedButtonTitle: some View {

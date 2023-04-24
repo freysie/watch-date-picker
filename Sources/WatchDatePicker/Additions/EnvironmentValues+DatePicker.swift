@@ -31,6 +31,14 @@ public extension View {
   func datePickerConfirmationTint(_ tint: Color?) -> some View {
     environment(\.datePickerConfirmationTint, tint)
   }
+
+  /// Sets the default selection for date pickers with optional value bindings within this view.
+  /// The default is to use the next hour or, for date-only date pickers, the beginning of the current day.
+  /// - Parameters:
+  ///   - tint: The default selection date.
+  func datePickerDefaultSelection(_ date: Date?) -> some View {
+    environment(\.datePickerDefaultSelection, date)
+  }
 }
 
 @available(watchOS 8, *)
@@ -49,10 +57,15 @@ public extension EnvironmentValues {
      get { self[DatePickerConfirmationTitleKeyKey.self] }
      set { self[DatePickerConfirmationTitleKeyKey.self] = newValue }
    }
-  
+
    var datePickerConfirmationTint: Color? {
      get { self[DatePickerConfirmationTintKey.self] }
      set { self[DatePickerConfirmationTintKey.self] = newValue }
+   }
+
+   var datePickerDefaultSelection: Date? {
+     get { self[DatePickerDefaultSelectionKey.self] }
+     set { self[DatePickerDefaultSelectionKey.self] = newValue }
    }
 }
 
@@ -60,5 +73,6 @@ struct DatePickerFlipsLabelAndValueKey: EnvironmentKey { static let defaultValue
 struct DatePickerInteractionStyleKey: EnvironmentKey { static let defaultValue = DatePickerInteractionStyle.sheet }
 struct DatePickerConfirmationTitleKeyKey: EnvironmentKey { static let defaultValue: LocalizedStringKey? = nil }
 struct DatePickerConfirmationTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
+struct DatePickerDefaultSelectionKey: EnvironmentKey { static let defaultValue: Date? = nil }
 
 #endif

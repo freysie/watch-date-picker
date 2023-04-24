@@ -46,6 +46,7 @@ struct DatePickerExamples_Previews: PreviewProvider {
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .never))
+      .datePickerDefaultSelection(defaultSelection)
     }
   }
 }
@@ -54,6 +55,7 @@ struct DatePickerExamples_Previews: PreviewProvider {
 
 let year = Calendar.current.component(.year, from: .now)
 let screenshotDate = Calendar.current.date(from: DateComponents(year: year, month: 11, day: 30, hour: 10, minute: 09))!
+let defaultSelection = Calendar.current.date(from: DateComponents(year: year, month: 11, day: 30, hour: 10, minute: 00))!
 
 let monthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: .now)!
 let monthsFromNow = Calendar.current.date(byAdding: .month, value: 3, to: .now)!
