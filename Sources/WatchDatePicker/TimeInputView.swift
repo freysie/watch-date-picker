@@ -41,6 +41,7 @@ public struct TimeInputView: View {
   }
 
   @State private var focusedComponent = Component.hour
+  @FocusState private var systemFocusedComponent: Component?
   @AccessibilityFocusState private var accessibilityFocusedComponent: Component?
 
   @State private var hour = 0
@@ -104,6 +105,7 @@ public struct TimeInputView: View {
   public init(selection: Binding<Date?>) {
     _underlyingSelection = selection
     initialSelection = selection.wrappedValue ?? .now
+    focusedComponent = .hour
 
     _hour = State(initialValue: Calendar.current.component(.hour, from: self.selection))
     _minute = State(initialValue: Calendar.current.component(.minute, from: self.selection))
@@ -327,7 +329,6 @@ public struct TimeInputView: View {
         .accessibilityValue(hourButtonAccessibilityValue)
         .accessibilityAddTraits(.updatesFrequently)
         .accessibilityRemoveTraits(.isButton)
-        .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
         .accessibilityAdjustableAction { direction in
           switch direction {
           case .increment: hour += 1
@@ -344,6 +345,8 @@ public struct TimeInputView: View {
           isContinuous: true,
           isHapticFeedbackEnabled: true
         )
+        .accessibilityFocused($accessibilityFocusedComponent, equals: .hour)
+        .focused($systemFocusedComponent, equals: .hour)
 
       timeSeparatorView
 
@@ -354,7 +357,6 @@ public struct TimeInputView: View {
         .accessibilityValue(minuteButtonAccessibilityValue)
         .accessibilityAddTraits(.updatesFrequently)
         .accessibilityRemoveTraits(.isButton)
-        .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
         .accessibilityAdjustableAction { direction in
           switch direction {
           case .increment: minute += 1
@@ -371,6 +373,8 @@ public struct TimeInputView: View {
           isContinuous: true,
           isHapticFeedbackEnabled: true
         )
+        .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
+        .focused($systemFocusedComponent, equals: .minute)
     }
     .font(
       monospacedDigit == true
@@ -378,7 +382,9 @@ public struct TimeInputView: View {
       : .system(size: .componentFontSize)
     )
     .onChange(of: accessibilityFocusedComponent) {
-      if let component = $0 { focusedComponent = component }
+      guard let component = $0 else { return }
+      focusedComponent = component
+      systemFocusedComponent = component
     }
   }
 }
