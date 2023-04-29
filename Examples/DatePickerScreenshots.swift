@@ -55,6 +55,7 @@ class DatePickerScreenshots: XCTestCase {
     guard config["XCUIAppearanceMode"] as? Int != 2 else { return }
 
     let app = XCUIApplication()
+    app.launchEnvironment = ["WDP_SCREENSHOTS": "1"]
     app.launch()
 
     let size = watchDeviceSizes[app.frame.width]!

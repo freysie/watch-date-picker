@@ -146,7 +146,7 @@ public struct DateInputView: View {
       }
       yearPicker
     }
-    .accessibilityElement(children: .contain)
+    .accessibilityElement(children: isTakingScreenshots ? .contain : .ignore)
     .pickerStyle(.wheel)
     .font(usesMonthSymbols ? .caption : .system(size: .pickerFontSize))
     .textCase(textCase)

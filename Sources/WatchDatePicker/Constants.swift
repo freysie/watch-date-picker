@@ -3,6 +3,8 @@
 import SwiftUI
 import WatchKit
 
+let isTakingScreenshots = ProcessInfo.processInfo.environment["WDP_SCREENSHOTS"] == "1"
+
 enum WatchDeviceSize: Double {
   case _40mm = 162
   case _41mm = 176

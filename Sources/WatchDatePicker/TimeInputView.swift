@@ -129,7 +129,7 @@ public struct TimeInputView: View {
           if twentyFourHour { twentyFourHourIndicator }
         }
     }
-    .accessibilityElement(children: .contain)
+    .accessibilityElement(children: isTakingScreenshots ? .contain : .ignore)
     .environment(\.layoutDirection, .leftToRight)
     .onChange(of: hour) { _ in selectionPublisher.send() }
     .onChange(of: minute) { _ in selectionPublisher.send() }

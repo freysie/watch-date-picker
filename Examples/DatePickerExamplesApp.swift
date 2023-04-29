@@ -2,7 +2,7 @@ import SwiftUI
 import WatchKit
 import WatchDatePicker
 
-// TODO: do something about the `NavigationView`-within-`TabView` situation
+let isTakingScreenshots = ProcessInfo.processInfo.environment["WDP_SCREENSHOTS"] == "1"
 
 @main
 struct DatePickerExamplesApp: App {
