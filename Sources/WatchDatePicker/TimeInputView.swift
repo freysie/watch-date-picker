@@ -262,7 +262,9 @@ public struct TimeInputView: View {
   }
 
   private var hourButtonAccessibilityValue: Text {
-    Text("\(normalizedHour) o’clock \(twentyFourHour ? "" : localizedHourPeriodSymbol)", bundle: .module)
+    let hour = normalizedHour == 0 ? 12 : normalizedHour
+    let amPM = twentyFourHour ? "" : localizedHourPeriodSymbol
+    return Text("\(hour) o’clock \(amPM)", bundle: .module)
   }
 
   private var minuteButtonAccessibilityValue: Text {
