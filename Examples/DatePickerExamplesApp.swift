@@ -8,7 +8,11 @@ let isTakingScreenshots = ProcessInfo.processInfo.environment["WDP_SCREENSHOTS"]
 struct DatePickerExamplesApp: App {
   var body: some Scene {
     WindowGroup {
-      DatePickerExamples_Previews.previews
+      if isTakingScreenshots {
+        DatePickerExamples_Previews.previews
+      } else {
+        VariousExample()
+      }
     }
   }
 }
