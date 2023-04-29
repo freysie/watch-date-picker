@@ -47,7 +47,7 @@ struct TimePeriodButtonStyle: ButtonStyle {
       .font(.system(size: .timePeriodButtonFontSize, weight: isHighlighted ? .semibold : .regular))
       .opacity(configuration.isPressed ? 0.5 : isHighlighted ? 1 : 0.8)
       .foregroundStyle(isHighlighted ? AnyShapeStyle(.black) : tint)
-      .offset(y: locale.identifier == "ar" ? -3 : 0)
+      .offset(y: ["ar", "hi"].contains(locale.identifier) ? -3 : 0)
       .background {
         RoundedRectangle(cornerRadius: .timePeriodButtonCornerRadius)
           .fill(isHighlighted ? tint : AnyShapeStyle(.black))
