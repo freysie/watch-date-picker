@@ -22,6 +22,7 @@ public struct DateInputView: View {
   @State private var year = 0
   @State private var month = 0
   @State private var day = 0
+  @State private var localeShowsMonthBeforeDay = false
   @FocusState private var focusedField: Field?
 
   private var selectionPublisher = PassthroughSubject<Void, Never>()
@@ -136,7 +137,7 @@ public struct DateInputView: View {
   /// The content and behavior of the view.
   public var body: some View {
     HStack(spacing: usesMonthSymbols ? 4 : 8) {
-      if showsMonthBeforeDay ?? locale.showsMonthBeforeDay {
+      if showsMonthBeforeDay ?? localeShowsMonthBeforeDay {
         monthPicker
         dayPicker
       } else {
@@ -157,6 +158,9 @@ public struct DateInputView: View {
     .onChange(of: day) { _ in selectionPublisher.send() }
     .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
       underlyingSelection = newSelection
+    }
+    .onAppear {
+      localeShowsMonthBeforeDay = locale.showsMonthBeforeDay
     }
   }
 

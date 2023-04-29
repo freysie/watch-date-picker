@@ -16,11 +16,12 @@ public struct TimeInputView: View {
 
   @Environment(\.locale) private var locale
   @Environment(\.timeInputViewMonospacedDigit) private var monospacedDigit
-  @Environment(\.timeInputViewTwentyFourHour) private var _twentyFourHour
+  @Environment(\.timeInputViewTwentyFourHour) private var environmentTwentyFourHour
   @Environment(\.timeInputViewTwentyFourHourIndicator) private var twentyFourHourIndicatorVisibility
   @Environment(\.timeInputViewSelectionTint) private var selectionTint
 
-  private var twentyFourHour: Bool { _twentyFourHour ?? locale.uses24HourTime }
+  @State private var twentyFourHour = false
+  @State private var timeSeparator = ":"
 
   private enum HourPeriod: Int {
     case am = 0, pm = 12
@@ -133,6 +134,10 @@ public struct TimeInputView: View {
     .onChange(of: hourPeriod) { _ in selectionPublisher.send() }
     .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
       underlyingSelection = newSelection
+    }
+    .onAppear {
+      twentyFourHour = environmentTwentyFourHour ?? locale.uses24HourTime
+      timeSeparator = locale.timeSeparator
     }
   }
 
@@ -297,24 +302,24 @@ public struct TimeInputView: View {
     }
   }
 
-  @ViewBuilder private var timeSeparator: some View {
+  @ViewBuilder private var timeSeparatorView: some View {
 #if swift(>=5.7)
     if #available(watchOS 9.1, *) {
-      Text(locale.timeSeparator)
+      Text(timeSeparator)
         .fontDesign(.default)
         .accessibilityHidden(true)
     } else {
-      Text(locale.timeSeparator)
+      Text(timeSeparator)
         .accessibilityHidden(true)
     }
 #else
-    Text(locale.timeSeparator)
+    Text(timeSeparator)
       .accessibilityHidden(true)
 #endif
   }
 
   private var pickerButtons: some View {
-    HStack(alignment: locale.timeSeparator == "." ? .firstTextBaseline : .top) {
+    HStack(alignment: timeSeparator == "." ? .firstTextBaseline : .top) {
       Button(action: { focusedComponent = .hour }) { formattedHour }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .hour))
         .focusable()
@@ -340,7 +345,7 @@ public struct TimeInputView: View {
           isHapticFeedbackEnabled: true
         )
 
-      timeSeparator
+      timeSeparatorView
 
       Button(action: { focusedComponent = .minute }) { formattedMinute }
         .buttonStyle(.timeComponent(isFocused: focusedComponent == .minute))
