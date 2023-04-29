@@ -166,7 +166,6 @@ struct SimpleDateInputViewExamples: View {
   var body: some View {
     DateInputView(selection: $value)
       .accessibility(addTraits: .isButton)
-      .accessibilityElement(children: .contain)
       .accessibilityIdentifier("DateInputView")
   }
 }
@@ -187,7 +186,6 @@ struct SimpleTimeInputViewExamples: View {
         .timeInputViewTwentyFourHourIndicator(.hidden)
     }
     .accessibility(addTraits: .isButton)
-    .accessibilityElement(children: .contain)
     .accessibilityIdentifier("TimeInputView")
     .edgesIgnoringSafeArea(.bottom)
     .padding(-10)

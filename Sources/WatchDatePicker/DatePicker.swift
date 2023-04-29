@@ -52,7 +52,6 @@ public struct DatePicker<Label: View>: View {
   @Environment(\.datePickerInteractionStyle) private var interactionStyle
   @Environment(\.datePickerConfirmationTitleKey) private var confirmationTitleKey
   @Environment(\.datePickerConfirmationTint) private var confirmationTint
-  @Environment(\.timeInputViewTwentyFourHour) private var twentyFourHour
   @Environment(\.datePickerDefaultSelection) private var _defaultSelection
 
   private var defaultSelection: Date {
