@@ -13,8 +13,8 @@ extension Locale {
     let format = DateFormatter.dateFormat(fromTemplate: "Md", options: 0, locale: self)!
     let dayCharacters: Set<Character> = ["d", "D", "f", "g"]
     let monthCharacters: Set<Character> = ["M", "L"]
-    let dayIndex = format.firstIndex(where: { dayCharacters.contains($0) }) ?? format.endIndex
-    let monthIndex = format.firstIndex(where: { monthCharacters.contains($0) }) ?? format.endIndex
+    let dayIndex = format.firstIndex { dayCharacters.contains($0) } ?? format.endIndex
+    let monthIndex = format.firstIndex { monthCharacters.contains($0) } ?? format.endIndex
     return monthIndex < dayIndex
   }
 

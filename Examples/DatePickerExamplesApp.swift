@@ -382,17 +382,6 @@ struct NavigationExamples: View {
   }
 }
 
-extension View {
-  func watchStatusBar(hidden: Bool) -> some View {
-    toolbar {
-      ToolbarItem(placement: .confirmationAction) {
-        Button("", action: {})
-          .accessibilityHidden(true)
-      }
-    }
-  }
-}
-
 struct SystemTimeInputView: View {
   @State var coordinator: Coordinator!
   @State var timeInputView: AnyObject!
@@ -400,7 +389,12 @@ struct SystemTimeInputView: View {
 
   var body: some View {
     VStack {}
-      .watchStatusBar(hidden: true)
+      .toolbar {
+        ToolbarItem(placement: .confirmationAction) {
+          Button("", action: {})
+            .accessibilityHidden(true)
+        }
+      }
       .onAppear {
         let PUICTimeInputView = objc_getClass("PUICTimeInputView") as! NSObject.Type
 

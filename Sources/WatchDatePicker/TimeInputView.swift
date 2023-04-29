@@ -10,9 +10,8 @@ import Combine
 /// ![](TimeInputView.png)
 @available(watchOS 8, *)
 public struct TimeInputView: View {
-  @Binding var underlyingSelection: Date?
-  var selection: Date { underlyingSelection ?? .nextHour }
-
+  @Binding private var underlyingSelection: Date?
+  private var selection: Date { underlyingSelection ?? .nextHour }
   private let initialSelection: Date
 
   @Environment(\.locale) private var locale
@@ -40,6 +39,23 @@ public struct TimeInputView: View {
     case hour, minute
   }
 
+  @State private var focusedComponent = Component.hour
+  @AccessibilityFocusState private var accessibilityFocusedComponent: Component?
+
+  @State private var hour = 0
+  @State private var minute = 0
+
+  private var selectionPublisher = PassthroughSubject<Void, Never>()
+
+  private var hourBinding: Binding<Double> { Binding { Double(hour) } set: { print($0); hour = Int($0) } }
+  private var minuteBinding: Binding<Double> { Binding { Double(minute) } set: { minute = Int($0) } }
+
+  private var hourMultiple: Int { twentyFourHour ? 24 : 12 }
+  private var minuteMultiple: Int { 60 }
+
+  private var normalizedHour: Int { (hour < 0 ? hourMultiple - (abs(hour) % hourMultiple) : hour) % hourMultiple }
+  private var normalizedMinute: Int { (minute < 0 ? minuteMultiple - (abs(minute) % minuteMultiple) : minute) % minuteMultiple }
+
   private var hourPeriod: HourPeriod {
     get { abs(hour < 0 ? hour - 12 : hour) % 24 < 12 ? .am : .pm }
   }
@@ -51,23 +67,9 @@ public struct TimeInputView: View {
     withTransaction(t) { hour += period.sign }
   }
 
-  @AccessibilityFocusState private var accessibilityFocusedComponent: Component?
-  @State private var focusedComponent = Component.hour
-  @State private var hour = 0
-  @State private var minute = 0
-  private var selectionPublisher = PassthroughSubject<Void, Never>()
-  private var hourBinding: Binding<Double> { Binding { Double(hour) } set: { hour = Int($0) } }
-  private var minuteBinding: Binding<Double> { Binding { Double(minute) } set: { minute = Int($0) } }
-  private var hourMultiple: Int { twentyFourHour ? 24 : 12 }
-  private var minuteMultiple: Int { 60 }
-  private var normalizedHour: Int { (hour < 0 ? hourMultiple - (abs(hour) % hourMultiple) : hour) % hourMultiple }
-  private var normalizedMinute: Int { (minute < 0 ? minuteMultiple - (abs(minute) % minuteMultiple) : minute) % minuteMultiple }
-
   private var formattedHour: Text {
-    Text(
-      twentyFourHour ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour,
-      format: .number.precision(.integerLength(2...2))
-    )
+    let hour = twentyFourHour ? normalizedHour : normalizedHour == 0 ? hourMultiple : normalizedHour
+    return Text(hour, format: .number.precision(.integerLength(2...2)))
   }
 
   private var formattedMinute: Text {
@@ -92,11 +94,7 @@ public struct TimeInputView: View {
   /// - Parameters:
   ///   - selection: The date value being displayed and selected.
   public init(selection: Binding<Date>) {
-    _underlyingSelection = Binding(selection)
-    initialSelection = selection.wrappedValue
-
-    _hour = State(initialValue: Calendar.current.component(.hour, from: self.selection))
-    _minute = State(initialValue: Calendar.current.component(.minute, from: self.selection))
+    self.init(selection: Binding(selection))
   }
 
   /// Creates a time input view instance with the specified properties.

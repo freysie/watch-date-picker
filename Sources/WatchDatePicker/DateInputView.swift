@@ -12,12 +12,12 @@ import Combine
 /// ![](DateInputView_fr.png)
 @available(watchOS 8, *)
 public struct DateInputView: View {
-  enum Field: Hashable { case month, day, year }
+  private enum Field: Hashable { case month, day, year }
 
-  @Binding var underlyingSelection: Date?
-  var selection: Date { underlyingSelection ?? .nextHour }
-  var minimumDate: Date?
-  var maximumDate: Date?
+  @Binding private var underlyingSelection: Date?
+  private var selection: Date { underlyingSelection ?? .nextHour }
+  private var minimumDate: Date?
+  private var maximumDate: Date?
 
   @State private var year = 0
   @State private var month = 0
@@ -78,15 +78,13 @@ public struct DateInputView: View {
   }
 
   private var monthSymbols: [EnumeratedSequence<[String]>.Element] {
-    // let symbols = Array(calendar.shortMonthSymbols.enumerated())
     let symbols = Array(calendar.shortStandaloneMonthSymbols.enumerated())
     return Array(symbols[monthRange])
   }
 
   private var dayRange: Range<Int> {
     var range = calendar.range(of: .day, in: .month, for: newSelection)!
-    // var range = 1..<30
-    
+
     if let minimumDate = minimumDate {
       let selectedYear = calendar.component(.year, from: minimumDate) == calendar.component(.year, from: selection)
       let selectedMonth = calendar.component(.month, from: minimumDate) == calendar.component(.month, from: selection)
@@ -112,14 +110,7 @@ public struct DateInputView: View {
     minimumDate: Date? = nil,
     maximumDate: Date? = nil
   ) {
-    _underlyingSelection = Binding(selection)
-
-    self.minimumDate = minimumDate
-    self.maximumDate = maximumDate
-
-    _year = State(initialValue: Calendar.current.component(.year, from: self.selection))
-    _month = State(initialValue: Calendar.current.component(.month, from: self.selection))
-    _day = State(initialValue: Calendar.current.component(.day, from: self.selection))
+    self.init(selection: Binding(selection), minimumDate: minimumDate, maximumDate: maximumDate)
   }
 
   /// Creates a date input view instance with the specified properties.
@@ -224,7 +215,7 @@ public struct DateInputView: View {
     // FIXME: select lower day if month’s upper bound day range is less than selection’s day, but it’s not working, aaaaaaaaaaa
     .id([month, year].map(String.init).joined(separator: "."))
     //.onChange(of: month) { _ in
-    .onReceive(selectionPublisher.debounce(for: 0.2, scheduler: RunLoop.main)) { _ in
+    .onReceive(selectionPublisher.debounce(for: 0.15, scheduler: RunLoop.main)) { _ in
       //NSLog("[WatchDatePicker] \(dayRange.upperBound - 1) <= \(day) = \(dayRange.upperBound - 1 <= day)")
       if dayRange.upperBound - 1 <= day {
         //NSLog("[WatchDatePicker] dayRange.upperBound - 1 <= day")
