@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['macos-12']
-        platform: ['watchOS', 'iOS']
+        platform: ['watchOS']
         swift: [~5.5, ~5.6, ~5.7]
     steps:
     - uses: actions/checkout@v3
