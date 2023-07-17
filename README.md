@@ -5,12 +5,12 @@ A customizable date picker for watchOS and SwiftUI.
 
 ## Installation
 
-Add the https://github.com/freyaalminde/watch-date-picker package, then add the _WatchDatePicker_ product to your app’s WatchKit extension target.
+Add the https://github.com/freysie/watch-date-picker package, then add the _WatchDatePicker_ product to your app’s WatchKit extension target.
 
 <!---->
 <!--## Documentation-->
 <!---->
-<!--Online documentation is available at [freyaalminde.github.io/documentation/watchdatepicker](https://freyaalminde.github.io/documentation/watchdatepicker/).-->
+<!--Online documentation is available at [freysie.github.io/documentation/watchdatepicker](https://freysie.github.io/documentation/watchdatepicker/).-->
 <!---->
 
 ## Overview
@@ -142,5 +142,5 @@ Watch Date Picker works in all languages supported by watchOS: Arabic, Bulgarian
 
 Translations are based on Apple’s glossaries, thus they should feel at home in each locale. 
 
-A script is run to take [screenshots for every locale and screen size](https://freyaalminde.github.io/watch-date-picker-qa/) to ensure everything renders correctly.
+A script is run to take [screenshots for every locale and screen size](https://freysie.github.io/watch-date-picker-qa/) to ensure everything renders correctly.
 
