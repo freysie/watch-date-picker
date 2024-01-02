@@ -101,6 +101,19 @@ TimeInputView(selection: $value)
 <!--```-->
 <!---->
 <!--<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/TimeInputView_pink.png?raw=true" alt="" width="190.5" />-->
+Hour only mode can be explicitly enabled or disabled with 24-hour mode regardless of locale.
+
+```swift
+DatePicker(
+    "Hour Only",
+    selection: $value,
+    displayedComponents: .hourAndMinute
+)
+.timeInputViewForHourOnly()
+.timeInputViewTwentyFourHour()
+```
+
+<img src="/Sources/WatchDatePicker/Documentation.docc/Resources/DatePicker_hour_only_24hr.png?raw=true" alt="" width="190.5" />
 
 24-hour mode can be explicitly enabled or disabled regardless of locale.
 
