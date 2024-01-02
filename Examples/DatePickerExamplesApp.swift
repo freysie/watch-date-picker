@@ -31,6 +31,8 @@ struct DatePickerExamples_Previews: PreviewProvider {
           SimpleOptionalDateAndTimeExample()
           SimpleOptionalDateExample()
           SimpleOptionalTimeExample()
+        
+          SimpleHourOnlyExample()
 
           SimpleDateInputViewExamples()
           SimpleTimeInputViewExamples()
@@ -90,6 +92,9 @@ struct VariousExample: View {
 
         DatePicker("Date & Time", selection: $value)
         
+        DatePicker("Hour Only", selection: $value, displayedComponents: .hourAndMinute)
+          .timeInputViewForHourOnly()
+        
         DatePicker("Date", selection: $value, displayedComponents: [.date])
           
         DatePicker("Time (Push)", selection: $value, displayedComponents: [.hourAndMinute])
@@ -110,6 +115,17 @@ struct SimpleDateAndTimeExample: View {
   var body: some View {
     Form {
       DatePicker("Date & Time", selection: $value)
+    }
+  }
+}
+
+struct SimpleHourOnlyExample: View {
+  @State var value = screenshotDate
+
+  var body: some View {
+    Form {
+        DatePicker("HourOnly", selection: $value, displayedComponents: .hourAndMinute)
+          .timeInputViewForHourOnly()
     }
   }
 }

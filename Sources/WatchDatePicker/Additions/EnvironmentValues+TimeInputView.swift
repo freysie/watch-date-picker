@@ -19,6 +19,12 @@ public extension View {
   func timeInputViewTwentyFourHour(_ enabled: Bool? = true) -> some View {
     environment(\.timeInputViewTwentyFourHour, enabled)
   }
+  /// Sets whether time input views use Hours Only mode within this view.
+  /// - Parameters:
+  ///   - enabled: A Boolean value that determines whether time input views use hour only mode within this view.
+  func timeInputViewForHourOnly(_ enabled: Bool? = true) -> some View {
+    environment(\.timeInputViewForHourOnly, enabled)
+  }
   
   /// Sets whether time input views show the twenty four hour mode indicator within this view.
   /// - Parameters:
@@ -94,6 +100,11 @@ public extension EnvironmentValues {
     get { self[TimeInputViewTwentyFourHourKey.self] }
     set { self[TimeInputViewTwentyFourHourKey.self] = newValue }
   }
+    
+  var timeInputViewForHourOnly: Bool? {
+    get { self[TimeInputViewForHourOnlyKey.self] }
+    set { self[TimeInputViewForHourOnlyKey.self] = newValue }
+  }
   
   var timeInputViewTwentyFourHourIndicator: Visibility {
     get { self[TimeInputViewTwentyFourHourIndicatorKey.self] }
@@ -144,6 +155,7 @@ public extension EnvironmentValues {
 
 struct TimeInputViewMonospacedDigitKey: EnvironmentKey { static let defaultValue: Bool? = nil }
 struct TimeInputViewTwentyFourHourKey: EnvironmentKey { static let defaultValue: Bool? = nil }
+struct TimeInputViewForHourOnlyKey: EnvironmentKey { static let defaultValue: Bool? = nil}
 struct TimeInputViewTwentyFourHourIndicatorKey: EnvironmentKey { static let defaultValue: Visibility = .automatic }
 struct TimeInputViewAMPMHighlightTintKey: EnvironmentKey { static let defaultValue: Color? = nil }
 struct TimeInputViewComponentBorderColorKey: EnvironmentKey { static let defaultValue: Color? = nil }

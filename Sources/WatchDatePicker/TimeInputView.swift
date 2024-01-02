@@ -17,6 +17,7 @@ public struct TimeInputView: View {
   @Environment(\.locale) private var locale
   @Environment(\.timeInputViewMonospacedDigit) private var monospacedDigit
   @Environment(\.timeInputViewTwentyFourHour) private var environmentTwentyFourHour
+  @Environment(\.timeInputViewForHourOnly) private var environmentForHourOnly
   @Environment(\.timeInputViewTwentyFourHourIndicator) private var twentyFourHourIndicatorVisibility
   @Environment(\.timeInputViewSelectionTint) private var selectionTint
 
@@ -375,6 +376,7 @@ public struct TimeInputView: View {
         )
         .accessibilityFocused($accessibilityFocusedComponent, equals: .minute)
         .focused($systemFocusedComponent, equals: .minute)
+        .disabled(environmentForHourOnly ?? false)
     }
     .font(
       monospacedDigit == true
